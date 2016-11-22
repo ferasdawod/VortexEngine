@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Base">
+      <UniqueIdentifier>{5dae1db9-f5d0-46ed-a6dc-d33794a60ab7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{316b13e5-9a25-4668-979d-c337950c57c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{4f2779aa-2875-4f12-a44c-90a1b226ee0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Systems">
+      <UniqueIdentifier>{e91e9884-96d0-453e-8d02-8ea6b608368b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Systems\Graphics">
+      <UniqueIdentifier>{c97ca331-cc68-413b-8ef0-a0cc230da81b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Systems\Graphics\Buffers">
+      <UniqueIdentifier>{2b5fe280-e229-4513-b663-6ee30fa7f285}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Systems\Utilities">
+      <UniqueIdentifier>{4855939d-476f-4942-afda-2dabdac3ffa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Systems\Input">
+      <UniqueIdentifier>{65b81a1f-3553-429d-9573-81ddee3f8e94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Actors">
+      <UniqueIdentifier>{d9bab5e4-993e-4217-a70f-194165c873f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Actors\Components">
+      <UniqueIdentifier>{3d2047ef-eca8-40cb-91e6-5b24fa79e9c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Systems\Events">
+      <UniqueIdentifier>{1dafb8cc-f910-4c70-9be0-5b7f2fc5ae59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Systems\Debugging">
+      <UniqueIdentifier>{9b875938-9c0d-432e-9ff9-01627e835b14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\3rd Party">
+      <UniqueIdentifier>{04d1476f-626f-4185-b837-93161a64237c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Actors\Components\RenderComponents">
+      <UniqueIdentifier>{a6a0b51d-deb9-4967-8efe-d527d9d9bb85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Actors\Components\LightComponents">
+      <UniqueIdentifier>{ee91d3a9-4334-4165-bfa3-9be5f5d35791}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Systems\Graphics\Effect">
+      <UniqueIdentifier>{cfc9e762-f19e-4a1e-a78e-0326adf3d0d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Systems\Graphics\Materials">
+      <UniqueIdentifier>{0beef90a-9007-47f8-94ca-3d26fbc42adc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Systems\LevelManegment">
+      <UniqueIdentifier>{0ed31ccd-f331-4140-8178-0c09795e65fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Systems\Graphics\RenderCycle">
+      <UniqueIdentifier>{43afa1ca-2b87-4a2c-9bd2-eecf4858cb7a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Actors\Actor.h">
+      <Filter>Source Files\Game\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Actors\ActorFactory.h">
+      <Filter>Source Files\Game\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Actors\ActorsDefenitions.h">
+      <Filter>Source Files\Game\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\LightComponents\LightComponent.h">
+      <Filter>Source Files\Game\Actors\Components\LightComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd Party\TinyXml\tinystr.h" />
+    <ClInclude Include="3rd Party\TinyXml\tinyxml.h" />
+    <ClInclude Include="Application\BaseApplication.h">
+      <Filter>Source Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\BaseGameApplication.h">
+      <Filter>Source Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\IApplication.h">
+      <Filter>Source Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\WindowsApplication.h">
+      <Filter>Source Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Debugging\Debug.h">
+      <Filter>Source Files\Game\Systems\Debugging</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\EventListener.h">
+      <Filter>Source Files\Game\Systems\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\EventManager.h">
+      <Filter>Source Files\Game\Systems\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\EventsTypes.h">
+      <Filter>Source Files\Game\Systems\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\IEventData.h">
+      <Filter>Source Files\Game\Systems\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Buffers\IBuffer.h">
+      <Filter>Source Files\Game\Systems\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Buffers\IndexBuffer.h">
+      <Filter>Source Files\Game\Systems\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Buffers\VertexBuffer.h">
+      <Filter>Source Files\Game\Systems\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Rendering\GraphicsDevice.h">
+      <Filter>Source Files\Game\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Rendering\GraphicsEnums.h">
+      <Filter>Source Files\Game\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Rendering\RenderManager.h">
+      <Filter>Source Files\Game\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Rendering\RenderRequest.h">
+      <Filter>Source Files\Game\Systems\Graphics\RenderCycle</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Rendering\RenderTypes.h">
+      <Filter>Source Files\Game\Systems\Graphics\RenderCycle</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Colors.h">
+      <Filter>Source Files\Game\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Material.h">
+      <Filter>Source Files\Game\Systems\Graphics\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Texture2D.h">
+      <Filter>Source Files\Game\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Vertex.h">
+      <Filter>Source Files\Game\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Input.h">
+      <Filter>Source Files\Game\Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputDevice.h">
+      <Filter>Source Files\Game\Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Keys.h">
+      <Filter>Source Files\Game\Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Level\Level.h">
+      <Filter>Source Files\Game\Systems\LevelManegment</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\D3DUtils.h">
+      <Filter>Source Files\Game\Systems\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Singleton.h">
+      <Filter>Source Files\Game\Systems\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Utils.h">
+      <Filter>Source Files\Game\Systems\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\XmlHelper.h">
+      <Filter>Source Files\Game\Systems\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Rendering\RenderTarget.h">
+      <Filter>Source Files\Game\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Rendering\ShadowMap.h">
+      <Filter>Source Files\Game\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\GameTimer.h" />
+    <ClInclude Include="Components\BaseComponent.h">
+      <Filter>Source Files\Game\Actors\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Debugging\Logger.h" />
+    <ClInclude Include="Components\Camera.h">
+      <Filter>Source Files\Game\Actors\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Transform.h">
+      <Filter>Source Files\Game\Actors\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\LightComponents\DirectionalLight.h">
+      <Filter>Source Files\Game\Actors\Components\LightComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\IComponent.h">
+      <Filter>Source Files\Game\Actors\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Rendering\DebugRenderer.h" />
+    <ClInclude Include="Graphics\Rendering\Effects\Effect.h">
+      <Filter>Source Files\Game\Systems\Graphics\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Rendering\Effects\EffectsStructures.h" />
+    <ClInclude Include="Application\SettingsManager.h">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\LightComponents\PointLight.h" />
+    <ClInclude Include="Components\LightComponents\SpotLight.h" />
+    <ClInclude Include="Resources\Resource.h" />
+    <ClInclude Include="Resources\ResHandle.h" />
+    <ClInclude Include="Resources\ResCache.h" />
+    <ClInclude Include="Resources\IResourceLoader.h" />
+    <ClInclude Include="Resources\ResourceLoaders.h" />
+    <ClInclude Include="Graphics\SubMesh.h" />
+    <ClInclude Include="Graphics\Mesh.h" />
+    <ClInclude Include="Components\MeshRenderer.h" />
+    <ClInclude Include="Utilities\Macros.h" />
+    <ClInclude Include="Resources\GeometryGenerator.h" />
+    <ClInclude Include="Graphics\Rendering\RenderSettings.h" />
+    <ClInclude Include="Math\PrimeSearch.h" />
+    <ClInclude Include="Math\Random.h" />
+    <ClInclude Include="Math\Math.h">
+      <Filter>Source Files\Game\Systems\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Performance\ProfilingManager.h" />
+    <ClInclude Include="Performance\ScopedProfilerSample.h" />
+    <ClInclude Include="Performance\ProfilingSample.h" />
+    <ClInclude Include="Graphics\Window\IWindow.h" />
+    <ClInclude Include="Graphics\Window\BaseWindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Actors\Actor.cpp">
+      <Filter>Source Files\Game\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Actors\ActorFactory.cpp">
+      <Filter>Source Files\Game\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\LightComponents\LightComponentsDefinitions.cpp">
+      <Filter>Source Files\Game\Actors\Components\LightComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd Party\TinyXml\tinystr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd Party\TinyXml\tinyxml.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd Party\TinyXml\tinyxmlerror.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd Party\TinyXml\tinyxmlparser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\BaseGameApplication.cpp">
+      <Filter>Source Files\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\WindowsApplication.cpp">
+      <Filter>Source Files\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Debugging\Debug.cpp">
+      <Filter>Source Files\Game\Systems\Debugging</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\EventListener.cpp">
+      <Filter>Source Files\Game\Systems\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\EventManager.cpp">
+      <Filter>Source Files\Game\Systems\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Rendering\GraphicsDevice.cpp">
+      <Filter>Source Files\Game\Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Rendering\RenderManager.cpp">
+      <Filter>Source Files\Game\Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Material.cpp">
+      <Filter>Source Files\Game\Systems\Graphics\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Vertex.cpp">
+      <Filter>Source Files\Game\Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\Input.cpp">
+      <Filter>Source Files\Game\Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputDevice.cpp">
+      <Filter>Source Files\Game\Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Level\Level.cpp">
+      <Filter>Source Files\Game\Systems\LevelManegment</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\D3DUtils.cpp">
+      <Filter>Source Files\Game\Systems\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Utils.cpp">
+      <Filter>Source Files\Game\Systems\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\XmlHelper.cpp">
+      <Filter>Source Files\Game\Systems\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\ComponentsDefenitions.cpp">
+      <Filter>Source Files\Game\Actors\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Rendering\RenderTarget.cpp">
+      <Filter>Source Files\Game\Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Rendering\ShadowMap.cpp">
+      <Filter>Source Files\Game\Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\GameTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Debugging\Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Rendering\DebugRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Rendering\Effects\Effect.cpp">
+      <Filter>Source Files\Game\Systems\Graphics\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Rendering\Effects\EffectStructures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SettingsManager.cpp">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\ResCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\ResourceLoaders.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Buffers\BuffersDefenitions.cpp">
+      <Filter>Source Files\Game\Systems\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\MeshRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\GeometryGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\PrimeSearch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Random.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Math.cpp">
+      <Filter>Source Files\Game\Systems\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Performance\ProfilingManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Performance\ScopedProfilerSample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Performance\ProfilingSample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Window\BaseWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TODO.txt" />
+    <Text Include="..\bin\Assets\Effects\MainEffect.fx">
+      <Filter>Shaders</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,45 @@
+stuff to do
+
+Vertex Shader :
+
+*- the input struct should have everything needed to work
+*- the members should be ordered in the right order with must have stuff at the top and optional stuff to the down
+*- this way we can have more than one vertex structure all sharing the same input layout
+*- each new vertex structure should define new data members after the old members
+*- then we can have more than one techniques each using defined data members
+
+Rendering :
+
+make the directional lights have a camera of its own
+the render manager can have a list of cameras
+the user can switch between active cameras
+the effect light view projection matrix can then be get from the light camera
+make the rendering manager sort the render request
+	- one way to do this is by creating a dedicated rendering queue class which sorts render request as they are added
+	- another way to do this is by sorting the whole queue after everyone has submitted their render items.
+
+The RAW file format
+the file stores only the height value in 8bits ( aka 1 byte)
+so we can read the whole file and move one byte at a time to get the height values
+
+General :
+*- handling the destruction of the window handle in the editor application (check the web and the d3d samples in the learning/c++)
+*- lookup : SetDebugBreak()
+
+Resource Management :
+*- the res handle only holds an index to the resource
+*- the res handle has a template method for getting the resource
+*- when loading a resource the res cashe creates a handle and gives it the resource index
+*- the res cashe has a vector of resources ( maybe another container )
+*- the res cashe can assign a default resource while it loads the original resource in the background
+*- when the loading is complete it simply replace the resource at that index with the right resource
+*- that way the res handle stays valid even though the resource has changed but it only had an index to the resource
+
+*- we can make a class whose job is to create default resources for a given type
+
+
+Culling
+*- only cull when doing color render ( no culling during shadow pass )
+*- each sub mesh should have a bounding sphere
+*- the bounding sphere is calculated when loading the mesh in the mesh loader
+*- when rendering the bounding sphere is tested against the camera view frustum and the mesh is only drawn if it's visible

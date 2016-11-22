@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "DirectX_2D_Game\DirectX_2D_Game.vcxproj", "{9D3D73C8-8C23-4694-8405-049C2B03FC37}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoApplication", "DemoApplication\DemoApplication.vcxproj", "{0868DA54-5DF3-481B-BF65-6B520FAB6773}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EditorDLL", "EditorDLL\EditorDLL.vcxproj", "{F03339B5-B663-4ED8-A5C5-D2436E50AF45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorApplication", "EditorApplication\EditorApplication.csproj", "{5AD557CA-140D-4595-B7BB-FD7FA0FB936E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F03339B5-B663-4ED8-A5C5-D2436E50AF45} = {F03339B5-B663-4ED8-A5C5-D2436E50AF45}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9D3D73C8-8C23-4694-8405-049C2B03FC37}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9D3D73C8-8C23-4694-8405-049C2B03FC37}.Debug|Win32.Build.0 = Debug|Win32
+		{9D3D73C8-8C23-4694-8405-049C2B03FC37}.Release|Win32.ActiveCfg = Release|Win32
+		{9D3D73C8-8C23-4694-8405-049C2B03FC37}.Release|Win32.Build.0 = Release|Win32
+		{0868DA54-5DF3-481B-BF65-6B520FAB6773}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0868DA54-5DF3-481B-BF65-6B520FAB6773}.Debug|Win32.Build.0 = Debug|Win32
+		{0868DA54-5DF3-481B-BF65-6B520FAB6773}.Release|Win32.ActiveCfg = Release|Win32
+		{0868DA54-5DF3-481B-BF65-6B520FAB6773}.Release|Win32.Build.0 = Release|Win32
+		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Debug|Win32.Build.0 = Debug|Win32
+		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Release|Win32.ActiveCfg = Release|Win32
+		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Release|Win32.Build.0 = Release|Win32
+		{5AD557CA-140D-4595-B7BB-FD7FA0FB936E}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{5AD557CA-140D-4595-B7BB-FD7FA0FB936E}.Release|Win32.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
