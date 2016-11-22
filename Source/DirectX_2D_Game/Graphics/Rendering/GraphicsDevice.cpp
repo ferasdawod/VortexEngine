@@ -66,7 +66,7 @@ bool GraphicsDevice::Initialize(HWND hWnd)
 		D3D_DRIVER_TYPE_WARP,
 		D3D_DRIVER_TYPE_REFERENCE,
 	};
-	UINT numDriverTypes = ARRAYSIZE(driverTypes);
+	UINT numDriverTypes = _countof(driverTypes);
 
 	D3D_FEATURE_LEVEL featureLevels[] =
 	{
@@ -75,11 +75,11 @@ bool GraphicsDevice::Initialize(HWND hWnd)
 		D3D_FEATURE_LEVEL_10_1,
 		D3D_FEATURE_LEVEL_10_0,
 	};
-	UINT numFeatureLevels = ARRAYSIZE(featureLevels);
+	UINT numFeatureLevels = _countof(featureLevels);
 
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
 	ZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
-	swapChainDesc.BufferCount = 1;
+	swapChainDesc.BufferCount = 2;
 	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	swapChainDesc.BufferDesc.Width = 0; // can be inferred from the window handle
 	swapChainDesc.BufferDesc.Height = 0; // can be inferred from the window handle
@@ -130,10 +130,12 @@ bool GraphicsDevice::Initialize(HWND hWnd)
 bool GraphicsDevice::OnResize(int newWidth, int newHeight)
 {
 	LOG_M("Resizing");
-	_pContext->OMSetRenderTargets(0, nullptr, nullptr);
+	ID3D11RenderTargetView* nullViews[] = { nullptr };
+	_pContext->OMSetRenderTargets(_countof(nullViews), nullViews, nullptr);
 
 	assert(_pRenderTargetView.Reset() == 0);
 	assert(_pDepthStencilView.Reset() == 0);
+	_pContext->Flush();
 
 	_pSwapChain->ResizeBuffers(1, newWidth, newHeight, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
 
