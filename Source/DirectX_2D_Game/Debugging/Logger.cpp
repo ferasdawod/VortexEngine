@@ -33,7 +33,7 @@ Logger::Logger()
 	spd::set_async_mode(queueSize, spdlog::async_overflow_policy::block_retry);
 	std::vector<spdlog::sink_ptr> sinks;
 	sinks.push_back(std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>());
-	sinks.push_back(std::make_shared<spdlog::sinks::daily_file_sink_mt>("log", "txt"));
+	//sinks.push_back(std::make_shared<spdlog::sinks::daily_file_sink_mt>("log", "txt"));
 	auto _logger = std::make_shared<spdlog::logger>("engine", begin(sinks), end(sinks));
 
 	_logger->info("Hello");
