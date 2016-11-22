@@ -72,7 +72,7 @@
     <IntDir>$(SolutionDir)\Temp\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
     <IncludePath>$(SolutionDir)\DirectX_2D_Game;$(SolutionDir)\_3rd Party;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\User\Documents\Visual Studio 2015\Projects\DirectX_2D_Game\_Libs\Debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)\_Libs\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
@@ -86,7 +86,7 @@
     <IntDir>$(SolutionDir)\Temp\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
     <IncludePath>$(SolutionDir)\DirectX_2D_Game;$(SolutionDir)\_3rd Party;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\User\Documents\Visual Studio 2015\Projects\DirectX_2D_Game\_Libs\Release;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)\_Libs\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
