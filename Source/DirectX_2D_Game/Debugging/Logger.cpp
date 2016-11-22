@@ -35,7 +35,7 @@ Logger::Logger()
 	sinks.push_back(std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>());
 	//sinks.push_back(std::make_shared<spdlog::sinks::daily_file_sink_mt>("log", "txt"));
 	auto _logger = std::make_shared<spdlog::logger>("engine", begin(sinks), end(sinks));
-
+	// hello
 	_logger->info("Hello");
 	_logger->error("OMG Error NOW");
 #endif
