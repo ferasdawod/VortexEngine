@@ -11,8 +11,9 @@ bool SettingsManager::Initialize(const std::string& filePath)
 	if (!_pSettingsDocument->LoadFile())
 	{
 		// if loading failed we need to initialize an empty document
-		LOG_E("Could not load the settings file, " + std::string(_pSettingsDocument->ErrorDesc()) +
-			  "\nCreating an empty settings file", 0);
+		auto msg = "Could not load the settings file, " + std::string(_pSettingsDocument->ErrorDesc()) +
+			"\nCreating an empty settings file";
+		LOG_W(msg);
 		_pSettingsDocument->Clear();
 
 		TiXmlElement* rootE = DBG_NEW TiXmlElement("Settings");

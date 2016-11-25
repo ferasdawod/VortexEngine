@@ -23,7 +23,7 @@ bool D3DUtils::CompileShaderFromFile(const WCHAR* fileName, const char* entryPoi
 		if (pErrorBlob)
 		{
 			std::string message = "Failed to compile the shader, " + std::string(reinterpret_cast<const char*>(pErrorBlob->GetBufferPointer()));
-			LOG_E(message, hr);
+			LOG_E(message.c_str(), hr);
 
 			SAFE_RELEASE(pErrorBlob);
 		}
@@ -52,7 +52,7 @@ bool D3DUtils::CreateEffectFromFile(const WCHAR* fileName, ID3DX11Effect** ppOut
 		if (errorBlob)
 		{
 			std::string message = "Failed to create the effect, " + std::string(reinterpret_cast<const char*>(errorBlob->GetBufferPointer()));
-			LOG_E(message, hr);
+			LOG_E(message.c_str(), hr);
 
 			SAFE_RELEASE(errorBlob);
 		}

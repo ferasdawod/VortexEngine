@@ -123,7 +123,7 @@ void InputDevice::Release()
 
 void InputDevice::OnUpdate()
 {
-	PROFILE("InputDevice::OnUpdate");
+	FUNC_PROFILE();
 
 	// on each new frame the current key states become the old key states
 	std::swap(_prevKeyStates, _currKeyStates);

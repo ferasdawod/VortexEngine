@@ -4,6 +4,7 @@
 #include "Debugging/Debug.h"
 
 #include <sstream>
+#include <Performance/ScopedProfilerSample.h>
 
 EventManager* EventManager::_spInstance = nullptr;
 bool EventManager::_sbInitialized = false;
@@ -71,21 +72,22 @@ bool EventManager::RemoveListener(EventListener* eventListener, EventID eventID)
 
 bool EventManager::QueueEvent(StrongEventDataPtr eventData)
 {
-	PROFILE("EventManager::QueueEvent");
+	FUNC_PROFILE();
 
 	assert(_activeQueue >= 0);
 	assert(_activeQueue < 2);
 
 	EventID evID = eventData->GetID();
 
-#if defined(DEBUG) || defined(_DEBUG)
-	std::stringstream stream;
-	stream << "Queuing Event : " << eventData->GetName() << " On Active Queue #" << _activeQueue << std::endl;
-	stream << "Event Data : " << eventData->ToString();
-	LOG_M(stream.str());
-#endif
+//#if defined(DEBUG) || defined(_DEBUG)
+//	std::stringstream stream;
+//	stream << "Queuing Event : " << eventData->GetName() << " On Active Queue #" << _activeQueue << std::endl;
+//	stream << "Event Data : " << eventData->ToString();
+//	LOG_M(stream.str());
+//#endif
 
 	auto findIt = _listenersMap.find(evID);
+	// only queue the event if someone is wants to listen to this event
 	if (findIt != _listenersMap.end())
 	{
 		_eventQueues[_activeQueue].push_back(eventData);
@@ -97,7 +99,7 @@ bool EventManager::QueueEvent(StrongEventDataPtr eventData)
 
 bool EventManager::TriggerEvent(StrongEventDataPtr eventData)
 {
-	PROFILE("EventManager::TriggerEvent");
+	FUNC_PROFILE();
 
 	assert(_activeQueue >= 0);
 	assert(_activeQueue < 2);
@@ -125,7 +127,7 @@ bool EventManager::TriggerEvent(StrongEventDataPtr eventData)
 
 void EventManager::OnUpdate(const GameTimer& gameTimer)
 {
-	PROFILE("EventManager::OnUpdate");
+	FUNC_PROFILE();
 
 	int currQueue = _activeQueue;
 	_activeQueue = (++_activeQueue) % 2;

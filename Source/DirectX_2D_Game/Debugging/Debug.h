@@ -45,44 +45,36 @@ using std::string;
 #endif // DEBUG
 
 /// helper macros for releasing com objects
-#define SAFE_RELEASE(p) { if (p) { p->Release(); p = nullptr; } }
-#define SAFE_DELETE(p)  { if (p) { delete p; p = nullptr; } }
-#define SAFE_DELETE_ARRAY(p) { if (p) { delete[] p; p = nullptr; } }
+#define SAFE_RELEASE(p)			do { if (p) { p->Release(); p = nullptr; } } while(0)
+#define SAFE_DELETE(p)			do { if (p) { delete p; p = nullptr; } } while (0)
+#define SAFE_DELETE_ARRAY(p)	do { if (p) { delete[] p; p = nullptr; } } while (0)
 
 /// helper macros for logging messages and errors
 #if defined(DEBUG) || defined(_DEBUG)
-#define LOG(msg, cat, file, function, line, hr, pause) \
+#define LOG(msg, cat) \
 do \
 { \
-	std::string msgStr(msg); \
-	std::stringstream stream; \
-	stream << "[" << cat << "] " << msgStr << std::endl; \
-	if (hr != 0) stream << "HRESULT : " << hr << std::endl; \
-	stream << "Function : " << function << std::endl; \
-	stream << "File : " << file << std::endl; \
-	stream << "Line : " << line << std::endl; \
-	msgStr = stream.str(); \
-	Logger::GetPtr()->Log(msgStr); \
-	if (pause) \
-	{ \
-		int result = MessageBoxA(nullptr, msgStr.c_str(), "Error", MB_ABORTRETRYIGNORE | MB_ICONERROR); \
-		if (result == IDABORT) \
-		{ \
-			exit(0); \
-		} \
-		else if (result == IDRETRY) \
-		{ \
-			__asm int 3 \
-		} \
-	} \
-	else \
-	{ \
-		OutputDebugString(msgStr.c_str()); \
-	} \
+	Logger::GetPtr()->Log(cat, msg); \
 } while (0)
 #else
 #define LOG(msg, cat, file, function, line, hr, pause) do { } while(0)
 #endif
 
-#define LOG_M(msg) LOG(msg, "Message", __FILE__, __FUNCTION__, __LINE__, 0, false)
-#define LOG_E(msg, hr) LOG(msg, "Error", __FILE__, __FUNCTION__, __LINE__, hr, true)
+#define LOG_M(msg) LOG(msg, MessageType::Info)
+#define LOG_W(msg) LOG(msg, MessageType::Warning)
+
+#define LOG_E(msg, hr) \
+do \
+{ \
+	LOG(msg, MessageType::Error); \
+	int result = MessageBoxA(nullptr, msg, "Error", MB_ABORTRETRYIGNORE | MB_ICONERROR); \
+	if (result == IDABORT) \
+	{ \
+		exit(0); \
+	} \
+	else if (result == IDRETRY) \
+	{ \
+		/* trigger a break point interrupt */  \
+		__asm int 3 \
+	} \
+} while (0)

@@ -36,7 +36,7 @@ using DirectX::BoundingSphere;
 
 std::shared_ptr<Resource> Texture2DLoader::LoadResource(const std::string& resourceName)
 {
-	PROFILE("Texture2DLoader::LoadResource");
+	FUNC_PROFILE();
 
 	ComPtr<ID3D11ShaderResourceView> shaderView;
 	std::wstring wideFileName = Utils::Str2WideStr(resourceName);
@@ -53,7 +53,10 @@ std::shared_ptr<Resource> Texture2DLoader::LoadResource(const std::string& resou
 											   wideFileName.c_str(), nullptr, &shaderView);
 	}
 	if (FAILED(hr))
-		LOG_E("Failed to load texture : " + resourceName, hr);
+	{
+		auto msg = "Failed to load texture : " + resourceName;
+		LOG_E(msg.c_str(), hr);
+	}
 
 	return std::shared_ptr<Resource>(DBG_NEW Texture2D(resourceName, shaderView));
 }
@@ -117,7 +120,7 @@ const float		MeshLoader::kCylinderHeight = 2.0f;
 
 std::shared_ptr<Resource> MeshLoader::LoadResource(const std::string& resourceName)
 {
-	PROFILE("MeshLoader::LoadResource");
+	FUNC_PROFILE();
 
 	if (resourceName == kBoxMeshName || resourceName == kCylinderMeshName || resourceName == kPlaneMeshName || resourceName == kSphereMeshName)
 	{
@@ -174,13 +177,22 @@ std::shared_ptr<Resource> MeshLoader::CreateMeshFromFile(const std::string& reso
 
 	const aiScene* pScene = meshImporter.ReadFile(resourceName, optionsFlags);
 	if (pScene == nullptr)
-		LOG_E("Failed to load the mesh : " + resourceName, 0);
+	{
+		auto msg = "Failed to load the mesh : " + resourceName;
+		LOG_E(msg.c_str(), 0);
+	}
 
 	if (pScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE)
-		LOG_E("the mesh : " + resourceName + " has the incomplete flag", 0);
+	{
+		auto msg = "the mesh : " + resourceName + " has the incomplete flag";
+		LOG_E(msg.c_str(), 0);
+	}
 
 	if (pScene->mNumMeshes == 0)
-		LOG_E("the mesh file : " + resourceName + " does not have any mesh data inside it", 0);
+	{
+		auto msg = "the mesh file : " + resourceName + " does not have any mesh data inside it";
+		LOG_E(msg.c_str(), 0);
+	}
 
 	std::shared_ptr<Mesh> meshPtr(DBG_NEW Mesh(resourceName));
 

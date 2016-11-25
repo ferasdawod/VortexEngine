@@ -15,7 +15,10 @@ std::shared_ptr<ResHandle> ResCache::GetHandle(const string& resourceName)
 
 	handle = LoadResource(resourceName);
 	if (!handle)
-		LOG_E("Failed to load the resource : " + resourceName, 0);
+	{
+		auto msg = "Failed to load the resource : " + resourceName;
+		LOG_E(msg.c_str(), 0);
+	}
 
 	return handle;
 }
@@ -45,11 +48,16 @@ std::shared_ptr<ResHandle> ResCache::LoadResource(const string& resourceName)
 	
 	auto loader = FindLoader(resourceName);
 	if (!loader)
-		LOG_E("Could not file a loader for resource : " + resourceName, 0);
-
+	{
+		auto msg = "Could not file a loader for resource : " + resourceName;
+		LOG_E(msg.c_str(), 0);
+	}
 	auto resource = loader->LoadResource(resourceName);
 	if (!resource)
-		LOG_E("Could not load the resource : " + resourceName, 0);
+	{
+		auto msg = "Could not load the resource : " + resourceName;
+		LOG_E(msg.c_str(), 0);
+	}
 
 	std::shared_ptr<ResHandle> handle(DBG_NEW ResHandle);
 	handle->_pOwnerCache = this;

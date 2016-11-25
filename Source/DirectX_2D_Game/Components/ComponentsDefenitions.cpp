@@ -127,7 +127,7 @@ void Camera::Initialize()
 
 void Camera::OnUpdate(const GameTimer& gameTimer)
 {
-	PROFILE("Camera::OnUpdate");
+	FUNC_PROFILE();
 
 	// TODO DELETE THIS
 	// DELETE BLOCK

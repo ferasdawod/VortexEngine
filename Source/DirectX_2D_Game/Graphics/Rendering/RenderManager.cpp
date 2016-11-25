@@ -70,7 +70,7 @@ bool RenderManager::Initialize(HWND hWnd)
 
 void RenderManager::OnRender()
 {
-	PROFILE("RenderManager::OnRender");
+	FUNC_PROFILE();
 
 	// we cant render if we dont have an active camera
 	if (_pActiveCamera.expired())
@@ -103,7 +103,7 @@ void RenderManager::OnRender()
 
 void RenderManager::RenderToShadowMap()
 {
-	PROFILE("RenderManager::RenderToShadowMap");
+	FUNC_PROFILE();
 
 	if (!_pRenderSettings->ShadowsEnabled)
 		return;
@@ -118,30 +118,21 @@ void RenderManager::RenderToShadowMap()
 
 void RenderManager::RenderToBackBuffer()
 {
-	PROFILE("RenderManager::RenderToBackBuffer");
+	FUNC_PROFILE();
 
 	_pGraphicsDevice->SetDefaultTargets();
 	_pGraphicsDevice->SetDefaultStates();
 	_pGraphicsDevice->SetCullState(_pRenderSettings->WireframeEnabled ? CullState::Wireframe : CullState::CounterClockWise);
 	_pGraphicsDevice->Clear();
 
-	{
-		PROFILE("SettingShadowMap");
-		_pEffect->SetShadowMap(_pShadowMap);
-	}
-	{
-		PROFILE("Rendering");
-		Render([](std::shared_ptr<Material> mat, std::shared_ptr<SubMesh> subMesh) { return true; });
-	}
-	{
-		PROFILE("RemovingShadowMap");
-		_pEffect->RemoveShadowMap();
-	}
+	_pEffect->SetShadowMap(_pShadowMap);
+	Render([](std::shared_ptr<Material> mat, std::shared_ptr<SubMesh> subMesh) { return true; });
+	_pEffect->RemoveShadowMap();
 }
 
 void RenderManager::Render(std::function< bool(std::shared_ptr<Material>, std::shared_ptr<SubMesh>) > validationCallback)
 {
-	PROFILE("RenderManager::Render");
+	FUNC_PROFILE();
 
 	std::shared_ptr<Camera> camera = _pActiveCamera.lock();
 	assert(camera);
@@ -208,7 +199,7 @@ void RenderManager::Render(std::function< bool(std::shared_ptr<Material>, std::s
 
 void RenderManager::ProcessDrawItem(std::shared_ptr<Material> mat, std::shared_ptr<SubMesh> subMesh, std::shared_ptr<Transform> transform)
 {
-	PROFILE("RenderManager::ProcessDrawItem");
+	FUNC_PROFILE();
 
 	_pEffect->UpdateMaterial(mat);
 	_pEffect->UpdateMatrices(transform);
@@ -220,7 +211,7 @@ void RenderManager::ProcessDrawItem(std::shared_ptr<Material> mat, std::shared_p
 
 bool RenderManager::ValidateRenderRequest(StrongRenderRequestPtr renderRequest, std::shared_ptr<Camera> camera) const
 {
-	PROFILE("RenderManager::ValidateRenderRequest");
+	FUNC_PROFILE();
 
 	if (renderRequest->GetMaterialsCount() == 0 || renderRequest->GetMeshName().empty() ||
 		renderRequest->GetTransform().expired() || renderRequest->GetOwner().expired())
@@ -242,7 +233,7 @@ bool RenderManager::ValidateRenderRequest(StrongRenderRequestPtr renderRequest, 
 
 bool RenderManager::IsVisible(std::shared_ptr<SubMesh> subMesh, std::shared_ptr<Transform> transform, std::shared_ptr<Camera> camera)
 {
-	PROFILE("RenderManager::IsVisible");
+	FUNC_PROFILE();
 
 	// frustum creation
 	BoundingFrustum camViewFrustum = camera->GetViewFrustum();

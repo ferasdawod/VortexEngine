@@ -27,7 +27,7 @@ Level::~Level()
 
 void Level::OnUpdate(const GameTimer& gameTimer)
 {
-	PROFILE("Level::OnUpdate");
+	FUNC_PROFILE();
 
 	for (auto it = _actors.cbegin(); it != _actors.cend(); it++)
 	{
@@ -57,7 +57,8 @@ bool Level::LoadLevel(const std::string& fileName)
 	std::shared_ptr<TiXmlDocument> lvlD(DBG_NEW TiXmlDocument(fileName));
 	if (!lvlD->LoadFile())
 	{
-		LOG_E("Failed to load the level from the file " + fileName, 0);
+		auto msg = "Failed to load the level from the file " + fileName;
+		LOG_E(msg.c_str(), 0);
 		return false;
 	}
 

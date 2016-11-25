@@ -122,7 +122,7 @@ StrongActorPtr ActorFactory::CreateFromXML(const std::string& fileName)
 
 StrongActorPtr ActorFactory::CreateFromXML(TiXmlElement* actorElement)
 {
-	PROFILE("ActorFactory::CreateFromXML(TiXmlElement*)");
+	FUNC_PROFILE();
 
 	Assert(actorElement->ValueStr() == std::string("Actor"), "the element is not an actor");
 
