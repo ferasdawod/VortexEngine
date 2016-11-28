@@ -19,6 +19,7 @@
 #include "3rd Party/TinyXml/tinyxml.h"
 #include "Utilities/Utils.h"
 #include "Utilities/XmlHelper.h"
+#include <Graphics/ViewPort.h>
 
 GraphicsDevice::GraphicsDevice() :
 _pDevice(nullptr),
@@ -324,6 +325,20 @@ void GraphicsDevice::SetAlphaState(AlphaState state)
 
 	if (blendState != nullptr)
 		_pContext->OMSetBlendState(blendState, MyColors::Black, 0xFFFFFFFF);
+}
+
+void GraphicsDevice::SetViewPort(const ViewPort& viewPort, bool absoluteValues /* = false */)
+{
+	D3D11_VIEWPORT _viewPort;
+	_viewPort.TopLeftX = absoluteValues ? viewPort.GetX() : viewPort.GetX() * _nBackBufferWidth;
+	_viewPort.TopLeftY = absoluteValues ? viewPort.GetY() : viewPort.GetY() * _nBackBufferHeight;
+	_viewPort.Width = absoluteValues ? viewPort.GetWidth() : viewPort.GetWidth() * _nBackBufferWidth;
+	_viewPort.Height = absoluteValues ? viewPort.GetHeight() : viewPort.GetHeight() * _nBackBufferHeight;
+
+	_viewPort.MaxDepth = 1.f;
+	_viewPort.MinDepth = 0.f;
+
+	_pContext->RSSetViewports(1, &_viewPort);
 }
 
 void GraphicsDevice::Release()

@@ -9,6 +9,7 @@
 #include "Utilities/Singleton.h"
 #include "GraphicsEnums.h"
 
+class ViewPort;
 class VertexBuffer;
 class IndexBuffer;
 class RenderTarget;
@@ -48,6 +49,7 @@ public:
 	void				SetDepthState(DepthState state);
 	void				SetCullState(CullState state);
 	void				SetAlphaState(AlphaState state);
+	void				SetViewPort(const ViewPort& viewPort, bool absoluteValues = false);
 	ComPtr<ID3D11SamplerState>	GetSampler(SamplingType type) const;
 
 public:

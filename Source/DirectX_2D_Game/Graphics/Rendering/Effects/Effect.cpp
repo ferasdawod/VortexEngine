@@ -128,6 +128,8 @@ bool Effect::LoadEffect(const std::string& effectFileName, GraphicsDevice* graph
 
 void Effect::PrepareFrame(LightsMap& lightsMap, std::shared_ptr<Camera> camera, const Color& ambientColor)
 {
+	FUNC_PROFILE();
+
 	EffectPerFrameBuffer perFrameBuff(camera, lightsMap, ambientColor, _pRenderSettings);
 	_pPerFrameBuffer->SetRawValue(&perFrameBuff, 0, sizeof(perFrameBuff));
 

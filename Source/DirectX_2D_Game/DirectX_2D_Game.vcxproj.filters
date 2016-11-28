@@ -223,6 +223,7 @@
     <ClInclude Include="Performance\ProfilingSample.h" />
     <ClInclude Include="Graphics\Window\IWindow.h" />
     <ClInclude Include="Graphics\Window\BaseWindow.h" />
+    <ClInclude Include="Graphics\ViewPort.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp">

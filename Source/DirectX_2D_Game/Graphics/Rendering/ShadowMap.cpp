@@ -3,6 +3,7 @@
 #include "GraphicsDevice.h"
 #include "Debugging/Debug.h"
 #include <DirectXTK/DirectXHelpers.h>
+#include <Graphics/ViewPort.h>
 
 // update the define in the shader to reflect this
 #define SMAP_SIZE 2048
@@ -69,27 +70,10 @@ void ShadowMap::SetAsActiveTarget()
 {
 	auto context = GraphicsDevice::GetPtr()->GetContext();
 
-	const D3D11_VIEWPORT& viewport = GetViewPort();
-	context->RSSetViewports(1, &viewport);
+	static ViewPort viewPort(0.f, 0.f, _nSize, _nSize);
+	GraphicsDevice::GetPtr()->SetViewPort(viewPort, true);
 
-	ID3D11RenderTargetView* renderTargets[1] = { 0 };
+	ID3D11RenderTargetView* renderTargets[1] = { nullptr };
 	context->OMSetRenderTargets(0, renderTargets, _DepthStencilView.Get());
 	context->ClearDepthStencilView(_DepthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
-}
-
-const D3D11_VIEWPORT& ShadowMap::GetViewPort() const
-{
-	static D3D11_VIEWPORT viewPort{ 0 };
-	static bool initialized{ false };
-	if (!initialized)
-	{
-		viewPort.Height = viewPort.Width = static_cast<FLOAT>(_nSize);
-		viewPort.TopLeftX = viewPort.TopLeftY = 0.0f;
-		viewPort.MaxDepth = 1.0f;
-		viewPort.MinDepth = 0.0f;
-
-		initialized = true;
-	}
-
-	return viewPort;
 }

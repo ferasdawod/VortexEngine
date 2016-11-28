@@ -2,6 +2,7 @@
 
 #include "Utilities/Macros.h"
 #include <wrl/client.h>
+class ViewPort;
 using Microsoft::WRL::ComPtr;
 
 struct ID3D11ShaderResourceView;
@@ -19,8 +20,6 @@ public:
 	DECLARE_PROPERTY_READ_ONLY(ComPtr<ID3D11DepthStencilView>, DepthStencilView);
 	DECLARE_PROPERTY_READ_ONLY(ComPtr<ID3D11ShaderResourceView>, ShaderResourceView);
 
-public:
-	const D3D11_VIEWPORT&					GetViewPort() const;
 private:
 	int				_nSize;
 };

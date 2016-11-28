@@ -207,6 +207,7 @@
     <ClInclude Include="Components\Camera.h" />
     <ClInclude Include="Debugging\Logger.h" />
     <ClInclude Include="Graphics\Colors.h" />
+    <ClInclude Include="Graphics\ViewPort.h" />
     <ClInclude Include="Graphics\Window\BaseWindow.h" />
     <ClInclude Include="Graphics\Window\IWindow.h" />
     <ClInclude Include="Graphics\Rendering\DebugRenderer.h" />

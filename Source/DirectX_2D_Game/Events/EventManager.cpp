@@ -77,7 +77,7 @@ bool EventManager::QueueEvent(StrongEventDataPtr eventData)
 	assert(_activeQueue >= 0);
 	assert(_activeQueue < 2);
 
-	EventID evID = eventData->GetID();
+	auto evID = eventData->GetID();
 
 //#if defined(DEBUG) || defined(_DEBUG)
 //	std::stringstream stream;
