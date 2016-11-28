@@ -278,6 +278,7 @@
     <ClCompile Include="Components\ComponentsDefenitions.cpp" />
     <ClCompile Include="Graphics\Rendering\DebugRenderer.cpp" />
     <ClCompile Include="Graphics\Rendering\Effects\EffectStructures.cpp" />
+    <ClCompile Include="Graphics\ViewPort.cpp" />
     <ClCompile Include="Graphics\Window\BaseWindow.cpp" />
     <ClCompile Include="Performance\ProfilingSample.cpp" />
     <ClCompile Include="Performance\ScopedProfilerSample.cpp" />

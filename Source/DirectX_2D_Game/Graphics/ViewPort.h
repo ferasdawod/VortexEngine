@@ -2,6 +2,8 @@
 
 #include <Utilities/Macros.h>
 
+class TiXmlElement;
+
 class ViewPort
 {
 public:
@@ -19,7 +21,9 @@ public:
 
 	ViewPort() : ViewPort(0.f, 0.f, 1.f, 1.f) {}
 
-	void Reset(float x, float y, float width, float height)
+	TiXmlElement*	ToXml() const;
+	void			Initialize(TiXmlElement* root);
+	void			Initialize(float x, float y, float width, float height)
 	{
 		_X = x;
 		_Y = y;

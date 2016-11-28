@@ -114,6 +114,24 @@ void Transform::Rotate(float yawDegrees, float pitchDegrees, float rollDegrees)
 */
 #pragma region Camera Component
 
+Camera::Camera(float fov, float nearClip, float farClip):
+	BaseComponent(STRING(Camera)),
+	_FOV(fov),
+	_NearClip(nearClip),
+	_FarClip(farClip),
+	_bViewDirty(true),
+	_bProjectionDirty(true),
+	_nAspectRatio(-1.0f),
+	_bFrustumDirty(true)
+{
+	Camera::HandleRegistering(true);
+}
+
+Camera::~Camera()
+{
+	Camera::HandleRegistering(false); 
+}
+
 void Camera::Initialize()
 {
 	// notify others that we are here
@@ -234,7 +252,6 @@ void Camera::HandleRegistering(bool isRegistering)
 	ToggleRegisteration(Event_WindowResized::kEventID, isRegistering);
 }
 
-
 bool Camera::HandleEvent(StrongEventDataPtr eventData)
 {
 	if (eventData->GetID() == Event_WindowResized::kEventID)
@@ -251,13 +268,15 @@ TiXmlElement* Camera::ToXML() const
 {
 	TiXmlElement* element = BaseComponent::ToXML();
 
-	TiXmlElement* fovE = XmlHelper::ToXml("FOV", _FOV);
-	TiXmlElement* farClipE = XmlHelper::ToXml("FarClip", _FarClip);
-	TiXmlElement* nearClipE = XmlHelper::ToXml("NearClip", _NearClip);
+	auto fovE = XmlHelper::ToXml("FOV", _FOV);
+	auto farClipE = XmlHelper::ToXml("FarClip", _FarClip);
+	auto nearClipE = XmlHelper::ToXml("NearClip", _NearClip);
+	auto viewportElement = _ViewPort.ToXml();
 
 	element->LinkEndChild(fovE);
 	element->LinkEndChild(farClipE);
 	element->LinkEndChild(nearClipE);
+	element->LinkEndChild(viewportElement);
 
 	return element;
 }
@@ -269,6 +288,9 @@ void Camera::Initialize(TiXmlElement* xmlData)
 	XmlHelper::FromXml(xmlData, "FOV", _FOV);
 	XmlHelper::FromXml(xmlData, "FarClip", _FarClip);
 	XmlHelper::FromXml(xmlData, "NearClip", _NearClip);
+
+	auto viewportElement = xmlData->FirstChildElement("ViewPort");
+	_ViewPort.Initialize(viewportElement);
 }
 
 #pragma endregion

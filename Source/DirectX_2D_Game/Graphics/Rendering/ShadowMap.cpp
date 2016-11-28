@@ -70,7 +70,7 @@ void ShadowMap::SetAsActiveTarget()
 {
 	auto context = GraphicsDevice::GetPtr()->GetContext();
 
-	static ViewPort viewPort(0.f, 0.f, _nSize, _nSize);
+	static ViewPort viewPort(0.f, 0.f, static_cast<float>(_nSize), static_cast<float>(_nSize));
 	GraphicsDevice::GetPtr()->SetViewPort(viewPort, true);
 
 	ID3D11RenderTargetView* renderTargets[1] = { nullptr };

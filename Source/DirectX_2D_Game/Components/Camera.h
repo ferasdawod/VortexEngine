@@ -9,6 +9,7 @@
 
 #include "Actors/Actor.h"
 #include "Transform.h"
+#include <Graphics/ViewPort.h>
 
 using DirectX::SimpleMath::Matrix;
 using DirectX::SimpleMath::Vector3;
@@ -24,26 +25,9 @@ public:
 	static const ComponentID	kComponentID;
 
 public:
-	Camera()
-		: Camera(DirectX::XM_PIDIV4, 0.1f, 100.0f) {	}
-
-	Camera(float fov, float nearClip, float farClip) :
-		BaseComponent(STRING(Camera)),
-		_nAspectRatio(-1.0f),
-		_FOV(fov),
-		_bViewDirty(true),
-		_bProjectionDirty(true),
-		_bFrustumDirty(true),
-		_NearClip(nearClip),
-		_FarClip(farClip)
-	{
-		HandleRegistering(true);
-	}
-
-	virtual ~Camera()
-	{
-		HandleRegistering(false); 
-	}
+	Camera() : Camera(DirectX::XM_PIDIV4, 0.1f, 100.0f) {}
+	Camera(float fov, float nearClip, float farClip);
+	virtual ~Camera();
 
 	EXPOSE_ID(kComponentID);
 
@@ -88,6 +72,7 @@ public:
 
 	DECLARE_PROPERTY(float, NearClip);
 	DECLARE_PROPERTY(float, FarClip);
+	DECLARE_PROPERTY(ViewPort, ViewPort);
 
 	float			GetAspectRatio()
 	{

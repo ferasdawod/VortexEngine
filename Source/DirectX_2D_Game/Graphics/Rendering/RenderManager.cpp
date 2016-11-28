@@ -120,9 +120,12 @@ void RenderManager::RenderToBackBuffer()
 {
 	FUNC_PROFILE();
 
+	auto camera = _pActiveCamera.lock();
+
 	_pGraphicsDevice->SetDefaultTargets();
 	_pGraphicsDevice->SetDefaultStates();
 	_pGraphicsDevice->SetCullState(_pRenderSettings->WireframeEnabled ? CullState::Wireframe : CullState::CounterClockWise);
+	_pGraphicsDevice->SetViewPort(camera->GetViewPort());
 	_pGraphicsDevice->Clear();
 
 	_pEffect->SetShadowMap(_pShadowMap);

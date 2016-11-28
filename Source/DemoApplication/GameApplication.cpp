@@ -7,6 +7,7 @@
 #include "Actors/Actor.h"
 #include "Actors/ActorFactory.h"
 #include "Components/Transform.h"
+#include <Components/Camera.h>
 #include "Level/Level.h"
 
 #include "Events/EventManager.h"
@@ -17,6 +18,7 @@
 #include "3rd Party/TinyXml/tinyxml.h"
 
 #include <sstream>
+#include <Graphics/ViewPort.h>
 
 GameApplication::GameApplication()
 {
@@ -75,6 +77,9 @@ bool GameApplication::Init()
 	auto playerTransform = _pPlayer->GetComponent<Transform>().lock();
 	playerTransform->SetPosition(Vector3(-5.0f, 5.0f, -10.0f));
 	playerTransform->Rotate(-130.0f, -30.0f, 0.0f);
+
+	auto camera = _pPlayer->GetComponent<Camera>().lock();
+	camera->SetViewPort(ViewPort(0.25f, 0.25f, 0.5f, 0.5f));
 
 	return true;
 }
