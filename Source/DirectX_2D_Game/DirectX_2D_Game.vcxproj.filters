@@ -226,6 +226,7 @@
     <ClInclude Include="Graphics\ViewPort.h" />
     <ClInclude Include="Graphics\Window\WindowInfo.h" />
     <ClInclude Include="Graphics\Window\WindowsWindow.h" />
+    <ClInclude Include="Engine\Engine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp">
@@ -358,6 +359,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Window\WindowsWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -206,6 +206,7 @@
     <ClInclude Include="Components\MeshRenderer.h" />
     <ClInclude Include="Components\Camera.h" />
     <ClInclude Include="Debugging\Logger.h" />
+    <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Graphics\Colors.h" />
     <ClInclude Include="Graphics\ViewPort.h" />
     <ClInclude Include="Graphics\Window\BaseWindow.h" />
@@ -276,6 +277,7 @@
     <ClCompile Include="Application\GameTimer.cpp" />
     <ClCompile Include="Components\MeshRenderer.cpp" />
     <ClCompile Include="Debugging\Logger.cpp" />
+    <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="Graphics\Buffers\BuffersDefenitions.cpp" />
     <ClCompile Include="Components\ComponentsDefenitions.cpp" />
     <ClCompile Include="Graphics\Rendering\DebugRenderer.cpp" />
