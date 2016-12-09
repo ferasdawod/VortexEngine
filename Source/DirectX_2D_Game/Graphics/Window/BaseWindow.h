@@ -2,11 +2,19 @@
 
 #include "IWindow.h"
 
-class BaseWindow : public IWindow
+namespace Engine
 {
-public:
-	BaseWindow(const std::string& title);
-	~BaseWindow();
+	class BaseWindow : public IWindow
+	{
+	public:
+		BaseWindow() : _handle(nullptr) {}
+		virtual ~BaseWindow() {}
 
+		WindowHandle GetHandle() override { return _handle; }
+		const Engine::WindowInfo& GetInformation() const override { return _windowInfo; }
 
-};
+	protected:
+		WindowHandle	_handle;
+		WindowInfo		_info;
+	};
+}

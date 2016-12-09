@@ -1,12 +1,20 @@
 ﻿#pragma once
 
 #include <Debugging/Debug.h>
+#include "WindowInfo.h"
 
 using WindowHandle = HWND;
 
-class IWindow
+namespace Engine
 {
-public:
-	virtual bool Initialize() = 0;
-	virtual WindowHandle GetHandle() = 0;
-};
+	class IWindow
+	{
+	public:
+		virtual ~IWindow() {}
+
+		virtual bool Initialize(const WindowInfo& info) = 0;
+		virtual WindowHandle GetHandle() = 0;
+
+		virtual const WindowInfo& GetInformation() const = 0;
+	};
+}

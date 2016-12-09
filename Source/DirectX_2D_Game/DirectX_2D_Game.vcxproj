@@ -215,6 +215,8 @@
     <ClInclude Include="Graphics\Mesh.h" />
     <ClInclude Include="Graphics\Rendering\RenderSettings.h" />
     <ClInclude Include="Graphics\SubMesh.h" />
+    <ClInclude Include="Graphics\Window\WindowInfo.h" />
+    <ClInclude Include="Graphics\Window\WindowsWindow.h" />
     <ClInclude Include="Performance\ProfilingSample.h" />
     <ClInclude Include="Performance\ScopedProfilerSample.h" />
     <ClInclude Include="Performance\ProfilingManager.h" />
@@ -279,7 +281,7 @@
     <ClCompile Include="Graphics\Rendering\DebugRenderer.cpp" />
     <ClCompile Include="Graphics\Rendering\Effects\EffectStructures.cpp" />
     <ClCompile Include="Graphics\ViewPort.cpp" />
-    <ClCompile Include="Graphics\Window\BaseWindow.cpp" />
+    <ClCompile Include="Graphics\Window\WindowsWindow.cpp" />
     <ClCompile Include="Performance\ProfilingSample.cpp" />
     <ClCompile Include="Performance\ScopedProfilerSample.cpp" />
     <ClCompile Include="Performance\ProfilingManager.cpp" />
