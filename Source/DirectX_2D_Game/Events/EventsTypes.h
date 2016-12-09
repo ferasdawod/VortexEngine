@@ -30,16 +30,16 @@ protected:
 	std::weak_ptr<RenderRequest>	_pRenderRequest;
 };
 
-class Event_SetActiveCamera : public BaseEventData
+class Event_NewCamera : public BaseEventData
 {
 	DECLARE_ID();
 
 public:
-	Event_SetActiveCamera(WeakCameraPtr camera, ActorID actorID)
-		: BaseEventData(STRING(Event_SetActiveCamera), kEventID), _pCamera(camera), _actorID(actorID)
+	Event_NewCamera(WeakCameraPtr camera, ActorID actorID)
+		: BaseEventData(STRING(Event_NewCamera), kEventID), _pCamera(camera), _actorID(actorID)
 	{	}
 
-	virtual ~Event_SetActiveCamera() {}
+	virtual ~Event_NewCamera() {}
 
 	ActorID					GetActorID() const { return _actorID; }
 	WeakCameraPtr			GetCamera() const { return _pCamera; }
@@ -130,7 +130,7 @@ protected:
 };
 
 DEFINE_ID(Event_NewRenderRequest,	0xC5D615FA);
-DEFINE_ID(Event_SetActiveCamera,	0x3F558BD2);
+DEFINE_ID(Event_NewCamera,	0x3F558BD2);
 DEFINE_ID(Event_WindowResized,		0x825C5666);
 DEFINE_ID(Event_NewLight,			0xEA643318);
 DEFINE_ID(Event_ApplicationExiting,	0x0C10DB00);

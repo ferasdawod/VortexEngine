@@ -137,7 +137,7 @@ void Camera::Initialize()
 	// notify others that we are here
 	std::shared_ptr<Camera> strongPtr = this->shared_from_this();
 	WeakCameraPtr weakPtr(strongPtr);
-	StrongEventDataPtr cameraEvent(DBG_NEW Event_SetActiveCamera(weakPtr, _Owner->GetUniqueID()));
+	StrongEventDataPtr cameraEvent(DBG_NEW Event_NewCamera(weakPtr, _Owner->GetUniqueID()));
 	EventManager::GetPtr()->QueueEvent(cameraEvent);
 
 	_bViewDirty = _bProjectionDirty = true;

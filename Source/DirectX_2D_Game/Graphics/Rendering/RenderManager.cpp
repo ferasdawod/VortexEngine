@@ -276,12 +276,13 @@ bool RenderManager::HandleEvent(StrongEventDataPtr eventData)
 
 		_renderRequests.emplace_back(casted->GetRenderRequest());
 	}
-	else if (eventData->GetID() == Event_SetActiveCamera::kEventID)
+	else if (eventData->GetID() == Event_NewCamera::kEventID)
 	{
-		std::shared_ptr<Event_SetActiveCamera> casted = std::dynamic_pointer_cast<Event_SetActiveCamera>(eventData);
+		std::shared_ptr<Event_NewCamera> casted = std::dynamic_pointer_cast<Event_NewCamera>(eventData);
 		assert(casted != nullptr);
 
 		_pActiveCamera = casted->GetCamera();
+		_cameras.push_back(casted->GetCamera());
 	}
 	else if (eventData->GetID() == Event_NewLight::kEventID)
 	{
@@ -310,7 +311,7 @@ bool RenderManager::HandleEvent(StrongEventDataPtr eventData)
 void RenderManager::HandleRegistering(bool isRegistering)
 {
 	ToggleRegisteration(Event_NewRenderRequest::kEventID, isRegistering);
-	ToggleRegisteration(Event_SetActiveCamera::kEventID, isRegistering);
+	ToggleRegisteration(Event_NewCamera::kEventID, isRegistering);
 	ToggleRegisteration(Event_NewLight::kEventID, isRegistering);
 	ToggleRegisteration(Event_SavingSettings::kEventID, isRegistering);
 }
