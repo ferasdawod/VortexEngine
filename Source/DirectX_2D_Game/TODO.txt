@@ -9,7 +9,14 @@ Vertex Shader :
 *- then we can have more than one techniques each using defined data members
 
 Rendering :
-
+*- suggested shader manegment workflow:
+	-	we define constants like:
+			#define USE_NORMAL_MAPPING, USE_LIGHTING, USE_SHADOWS, etc...
+	-	for each possible combination of defines we compile the shaders and calculate a integer mask based upon these defines:
+		example: 1011 : USE_LIGHTING + !USE_SHADOWS + USE_TEXTURING + USE_NORMAL_MAPPING
+	-	foreach render request and based on it's material we calculate the same integer value to figure out which shader to user
+	-	on rendering we use that integer as an index into the shader map to get the correct shader
+	
 make the directional lights have a camera of its own
 the render manager can have a list of cameras
 the user can switch between active cameras
