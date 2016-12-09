@@ -282,7 +282,6 @@ bool RenderManager::HandleEvent(StrongEventDataPtr eventData)
 		assert(casted != nullptr);
 
 		_pActiveCamera = casted->GetCamera();
-		_cameras.push_back(casted->GetCamera());
 	}
 	else if (eventData->GetID() == Event_NewLight::kEventID)
 	{
