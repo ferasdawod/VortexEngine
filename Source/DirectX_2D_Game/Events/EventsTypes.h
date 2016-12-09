@@ -129,11 +129,40 @@ protected:
 	std::string	_sMaterialName;
 };
 
+class PauseEvent : public BaseEventData
+{
+	DECLARE_ID();
+
+public:
+	PauseEvent() : BaseEventData(STRING(PauseEvent), kEventID) {}
+	virtual ~PauseEvent() {}
+};
+
+class ResumeEvent : public BaseEventData
+{
+	DECLARE_ID();
+
+public:
+	ResumeEvent() : BaseEventData(STRING(ResumeEvent), kEventID) {}
+	virtual ~ResumeEvent() {}
+};
+
+class ShutdownEvent : public BaseEventData
+{
+	DECLARE_ID();
+
+public:
+	ShutdownEvent() : BaseEventData(STRING(ShutdownEvent), kEventID) {}
+	virtual ~ShutdownEvent() {}
+};
+
 DEFINE_ID(Event_NewRenderRequest,	0xC5D615FA);
-DEFINE_ID(Event_NewCamera,	0x3F558BD2);
+DEFINE_ID(Event_NewCamera,			0x3F558BD2);
 DEFINE_ID(Event_WindowResized,		0x825C5666);
 DEFINE_ID(Event_NewLight,			0xEA643318);
 DEFINE_ID(Event_ApplicationExiting,	0x0C10DB00);
 DEFINE_ID(Event_SavingSettings,		0xBEE3D2F1);
 DEFINE_ID(Event_ReloadMaterial,		0x139FF06C);
-
+DEFINE_ID(PauseEvent,				0x19feb410);
+DEFINE_ID(ResumeEvent,				0xbdf52589);
+DEFINE_ID(ShutdownEvent,			0x75088e44);
