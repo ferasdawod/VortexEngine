@@ -11,7 +11,7 @@ namespace Engine
 		virtual ~BaseWindow() {}
 
 		WindowHandle GetHandle() override { return _handle; }
-		const Engine::WindowInfo& GetInformation() const override { return _windowInfo; }
+		const Engine::WindowInfo& GetInformation() const override { return _info; }
 
 	protected:
 		WindowHandle	_handle;
