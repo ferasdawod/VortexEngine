@@ -79,6 +79,7 @@ bool GameApplication::Init()
 	playerTransform->Rotate(-130.0f, -30.0f, 0.0f);
 
 	auto camera = _pPlayer->GetComponent<Camera>().lock();
+	//camera->SetViewPort(ViewPort(0, 0.5, 1, 0.5));
 
 	return true;
 }

@@ -22,13 +22,11 @@ namespace DirectX
 using DirectX::CommonStates;
 using Microsoft::WRL::ComPtr;
 
-
 class GraphicsDevice : public EventListener, public Singleton<GraphicsDevice>
 {
 public:
 	explicit						GraphicsDevice();
 									~GraphicsDevice();
-
 public:
 	bool				Initialize(HWND hWnd);
 	void				Release();
@@ -55,19 +53,19 @@ public:
 public:
 	bool				OnResize(int newWidth, int newHeight);
 
-	virtual bool		HandleEvent(StrongEventDataPtr eventData);
+	virtual bool		HandleEvent(StrongEventDataPtr eventData) override;
 
-	D3D_FEATURE_LEVEL		GetFeatureLevel() const { return _featureLevel; }
-	D3D_DRIVER_TYPE			GetDriverType() const { return _driverType; }
+	D3D_FEATURE_LEVEL	GetFeatureLevel() const { return _featureLevel; }
+	D3D_DRIVER_TYPE		GetDriverType() const { return _driverType; }
 
-	UINT					BackBufferWidth() const { return _nBackBufferWidth; }
-	UINT					BackBufferHeight() const { return _nBackBufferHeight; }
+	UINT				BackBufferWidth() const { return _nBackBufferWidth; }
+	UINT				BackBufferHeight() const { return _nBackBufferHeight; }
 
 private:
-	void					SetVertexBuffer(std::shared_ptr<VertexBuffer> buffer);
-	void					SetIndexBuffer(std::shared_ptr<IndexBuffer> buffer);
-	virtual void			HandleRegistering(bool isRegistering);
-	void					LoadSettings();
+	void				SetVertexBuffer(std::shared_ptr<VertexBuffer> buffer);
+	void				SetIndexBuffer(std::shared_ptr<IndexBuffer> buffer);
+	virtual void		HandleRegistering(bool isRegistering);
+	void				LoadSettings();
 
 public:
 	ComPtr<ID3D11Device>			GetDevice() const { return _pDevice; }

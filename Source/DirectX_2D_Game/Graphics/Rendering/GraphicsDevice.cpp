@@ -57,7 +57,6 @@ bool GraphicsDevice::Initialize(HWND hWnd)
 	UINT deviceFlags = 0;
 	deviceFlags |= D3D11_CREATE_DEVICE_SINGLETHREADED;
 #if defined(_DEBUG) || defined(_DEBUG)
-	// TODO restore this after downloading the windows 10 sdk
 	deviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
 
@@ -138,7 +137,7 @@ bool GraphicsDevice::OnResize(int newWidth, int newHeight)
 	assert(_pDepthStencilView.Reset() == 0);
 	_pContext->Flush();
 
-	_pSwapChain->ResizeBuffers(1, newWidth, newHeight, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
+	_pSwapChain->ResizeBuffers(2, newWidth, newHeight, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
 
 	ID3D11Texture2D* backBufferTex = nullptr;
 	auto hr = _pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBufferTex);
