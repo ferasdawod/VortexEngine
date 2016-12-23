@@ -1,18 +1,6 @@
 #pragma once
 
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-#include <assert.h>
 #include <string>
-#include <sstream>
-#include <memory>
-
-#include "Logger.h"
-#include "Performance/ScopedProfilerSample.h"
-
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
 
 using std::string;
 

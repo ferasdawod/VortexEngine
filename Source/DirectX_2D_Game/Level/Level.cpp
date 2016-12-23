@@ -1,14 +1,8 @@
+#include "pch.h"
+
 #include "Level.h"
 
-#include "Actors/Actor.h"
 #include "Actors/ActorFactory.h"
-#include "Debugging/Debug.h"
-#include "Input/Input.h"
-#include "Utilities/XmlHelper.h"
-#include "Application/GameTimer.h"
-
-#include "3rd Party/TinyXml/tinyxml.h"
-#include <algorithm>
 
 Level* Level::_pCurrentLevel = nullptr;
 

@@ -1,11 +1,10 @@
+#include "pch.h"
+
 #include "ResCache.h"
 
 #include "IResourceLoader.h"
 #include "ResHandle.h"
 #include "Resource.h"
-
-#include "Debugging/Debug.h"
-#include "Utilities/Utils.h"
 
 std::shared_ptr<ResHandle> ResCache::GetHandle(const string& resourceName)
 {

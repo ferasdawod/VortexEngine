@@ -1,6 +1,5 @@
 #pragma once
 
-#include <DirectXTK/SimpleMath.h>
 #include "Random.h"
 
 #define RAD_TO_DEG(x) ((x) * 180.0f / DirectX::XM_PI)

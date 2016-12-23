@@ -1,8 +1,6 @@
-#include "ViewPort.h"
+#include "pch.h"
 
-#include <Debugging/Debug.h>
-#include <3rd Party/TinyXml/tinyxml.h>
-#include <Utilities/XmlHelper.h>
+#include "ViewPort.h"
 
 TiXmlElement* ViewPort::ToXml() const
 {

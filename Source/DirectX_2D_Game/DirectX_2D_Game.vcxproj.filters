@@ -192,7 +192,6 @@
     <ClInclude Include="Components\IComponent.h">
       <Filter>Source Files\Game\Actors\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\Rendering\DebugRenderer.h" />
     <ClInclude Include="Graphics\Rendering\Effects\Effect.h">
       <Filter>Source Files\Game\Systems\Graphics\Effect</Filter>
     </ClInclude>
@@ -227,6 +226,7 @@
     <ClInclude Include="Graphics\Window\WindowInfo.h" />
     <ClInclude Include="Graphics\Window\WindowsWindow.h" />
     <ClInclude Include="Engine\Engine.h" />
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp">
@@ -255,9 +255,6 @@
     </ClCompile>
     <ClCompile Include="Application\WindowsApplication.cpp">
       <Filter>Source Files\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Debugging\Debug.cpp">
-      <Filter>Source Files\Game\Systems\Debugging</Filter>
     </ClCompile>
     <ClCompile Include="Events\EventListener.cpp">
       <Filter>Source Files\Game\Systems\Events</Filter>
@@ -310,9 +307,6 @@
     <ClCompile Include="Debugging\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\Rendering\DebugRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics\Rendering\Effects\Effect.cpp">
       <Filter>Source Files\Game\Systems\Graphics\Effect</Filter>
     </ClCompile>
@@ -362,6 +356,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

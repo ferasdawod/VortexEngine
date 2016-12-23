@@ -1,6 +1,6 @@
-#include "Vertex.h"
+#include "pch.h"
 
-#include <d3d11.h>
+#include "Vertex.h"
 
 const D3D11_INPUT_ELEMENT_DESC Vertex::InputElements[] = 
 {

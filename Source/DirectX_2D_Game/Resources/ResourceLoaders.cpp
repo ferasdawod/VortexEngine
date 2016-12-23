@@ -1,15 +1,13 @@
+#include "pch.h"
+
 #include "ResourceLoaders.h"
 
-#include <d3d11.h>
 #include <DirectXTK/WICTextureLoader.h>
 #include <DirectXTK/DDSTextureLoader.h>
 #include <DirectXTK/DirectXHelpers.h>
 #include <DirectXCollision.h>
 
 #include "Graphics/Rendering/GraphicsDevice.h"
-
-#include "Debugging/Debug.h"
-#include "Utilities/Utils.h"
 
 #include "Graphics/Texture2D.h"
 #include "Graphics/Mesh.h"
@@ -18,9 +16,6 @@
 
 #include "Graphics/Buffers/IndexBuffer.h"
 #include "Graphics/Buffers/VertexBuffer.h"
-
-#include <3rd Party/TinyXml/tinyxml.h>
-#include "Utilities/XmlHelper.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>

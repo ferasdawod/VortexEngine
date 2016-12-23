@@ -1,18 +1,13 @@
-#include "EffectsStructures.h"
+#include "pch.h"
 
-#include <algorithm>
-#include <limits>
-#include <array>
+#include "EffectsStructures.h"
 
 #include "Components/LightComponents/DirectionalLight.h"
 #include "Components/LightComponents/PointLight.h"
 #include "Components/LightComponents/SpotLight.h"
 
-#include "Components/Transform.h"
 #include "Components/Camera.h"
 #include "Graphics/Rendering/RenderSettings.h"
-
-#include "Actors/Actor.h"
 
 EffectDirectionalLight::EffectDirectionalLight()
 : _diffuse(Vector3::One),

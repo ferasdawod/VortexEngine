@@ -1,7 +1,8 @@
+#include "pch.h"
+
 #include "ProfilingManager.h"
 
 #include "ProfilingSample.h"
-#include "Debugging/Debug.h"
 #include <sstream>
 #include <iomanip>
 

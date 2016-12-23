@@ -1,7 +1,7 @@
+#include "pch.h"
+
 #include "Logger.h"
 
-#include "Debug.h"
-#include <ctime>
 
 #include <spdlog/spdlog.h>
 
@@ -43,6 +43,7 @@ void Logger::Log(MessageType type, const char* msg) const
 #endif
 }
 
+//#include <ctime>
 //std::string GetLocalTime()
 //{
 //#if defined(DEBUG) || defined(_DEBUG)

@@ -1,9 +1,9 @@
+#include "pch.h"
+
 #include "GraphicsDevice.h"
 
 #include <DirectXTK/CommonStates.h>
 #include <DirectXTK/DirectXHelpers.h>
-
-#include "Debugging/Debug.h"
 
 #include "Graphics/Buffers/VertexBuffer.h"
 #include "Graphics/Buffers/IndexBuffer.h"
@@ -11,14 +11,8 @@
 #include "Graphics/Colors.h"
 #include "RenderTarget.h"
 
-#include "Events/EventManager.h"
-#include "Events/EventsTypes.h"
-
 #include "Application/SettingsManager.h"
 
-#include "3rd Party/TinyXml/tinyxml.h"
-#include "Utilities/Utils.h"
-#include "Utilities/XmlHelper.h"
 #include <Graphics/ViewPort.h>
 
 GraphicsDevice::GraphicsDevice() :

@@ -1,7 +1,6 @@
-#include "GameTimer.h"
+#include "pch.h"
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+#include "GameTimer.h"
 
 GameTimer::GameTimer()
 : _nSecondsPerCount(0.0), _nDeltaTime(-1.0), _nBaseTime(0),

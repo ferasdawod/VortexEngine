@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #include "RenderManager.h"
 
 #include <DirectXCollision.h>
@@ -6,7 +8,6 @@ using DirectX::BoundingBox;
 using DirectX::BoundingSphere;
 using DirectX::ContainmentType;
 
-#include "Events/EventManager.h"
 #include "GraphicsDevice.h"
 #include "Effects/Effect.h"
 #include "ShadowMap.h"
@@ -15,22 +16,12 @@ using DirectX::ContainmentType;
 #include "Graphics/Material.h"
 #include "Graphics/Mesh.h"
 
-#include "Components/Transform.h"
 #include "Components/Camera.h"
 
-#include "Events/EventsTypes.h"
-#include "Input/Input.h"
 #include "Level/Level.h"
-#include "Actors/Actor.h"
 
-#include "Application/GameTimer.h"
 #include "Application/SettingsManager.h"
 #include "Resources/ResCache.h"
-
-#include "3rd Party/TinyXml/tinyxml.h"
-#include "Utilities/XmlHelper.h"
-
-#include "Debugging/Debug.h"
 
 RenderManager::RenderManager() : _pGraphicsDevice(nullptr), _pEffect(nullptr)
 {
@@ -72,13 +63,13 @@ void RenderManager::OnRender()
 {
 	FUNC_PROFILE();
 
-	// we cant render if we dont have an active camera
+	// we cant render if we don't have an active camera
 	if (_pActiveCamera.expired())
 		return;
 
 	// converting the camera weak pointer to a strong pointer
 	auto camera = _pActiveCamera.lock();
-	// if the camera is not enabled we dont need to render the scene
+	// if the camera is not enabled we don't need to render the scene
 	if (!camera->IsEnabled())
 		return;
 

@@ -1,15 +1,6 @@
+#include "pch.h"
+
 #include "Actor.h"
-
-#include "Application/GameTimer.h"
-
-#include "Components/Transform.h"
-#include "Events/EventManager.h"
-#include "Events/EventsTypes.h"
-
-#include "3rd Party/TinyXml/tinyxml.h"
-#include "Utilities/XmlHelper.h"
-
-#include "Debugging/Debug.h"
 
 ActorID Actor::_nIdCounter = static_cast<ActorID>(-1);
 const ActorID Actor::INVALID_ID = static_cast<ActorID>(-1);

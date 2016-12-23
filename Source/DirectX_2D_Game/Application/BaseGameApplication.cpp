@@ -1,14 +1,12 @@
+#include "pch.h"
+
 #include "BaseGameApplication.h"
 
-#include "Events/EventsTypes.h"
-#include "Events/EventManager.h"
 #include "SettingsManager.h"
 #include "Resources/ResCache.h"
 #include "Performance/ProfilingManager.h"
 
 #include "Resources/ResourceLoaders.h"
-
-#include "Debugging/Debug.h"
 
 bool BaseGameApplication::Init()
 {

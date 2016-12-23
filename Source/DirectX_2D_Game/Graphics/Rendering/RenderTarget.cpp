@@ -1,10 +1,9 @@
+#include "pch.h"
+
 #include "RenderTarget.h"
 
-#include <d3d11.h>
-#include <dxgi.h>
 
 #include "GraphicsDevice.h"
-#include "Debugging/Debug.h"
 
 RenderTarget::RenderTarget() :
 _DepthStencilShaderView(nullptr), _DepthStencilTexture(nullptr), _DepthStencilView(nullptr),

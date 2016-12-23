@@ -1,13 +1,8 @@
+#include "pch.h"
+
 #include "WindowsApplication.h"
 
-#include "Debugging/Debug.h"
-#include "Utilities/XmlHelper.h"
-#include "Events/EventsTypes.h"
-
 #include "SettingsManager.h"
-#include "Events/EventManager.h"
-
-#include "3rd Party/TinyXml/tinyxml.h"
 
 WindowsApplication* WindowsApplication::_instance = nullptr;
 

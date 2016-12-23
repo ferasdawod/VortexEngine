@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #include "Math.h"
 
 Random Math::g_Random;

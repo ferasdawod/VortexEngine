@@ -1,7 +1,8 @@
+#include "pch.h"
+
 #include "ShadowMap.h"
 
 #include "GraphicsDevice.h"
-#include "Debugging/Debug.h"
 #include <DirectXTK/DirectXHelpers.h>
 #include <Graphics/ViewPort.h>
 

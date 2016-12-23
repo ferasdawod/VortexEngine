@@ -1,8 +1,14 @@
+#include "pch.h"
+
 #include "ProfilingSample.h"
 
-#include <algorithm>
-#include <windows.h>
-#include <limits>
+#ifndef max
+#define max(a,b)            (((a) > (b)) ? (a) : (b))
+#endif
+
+#ifndef min
+#define min(a,b)            (((a) < (b)) ? (a) : (b))
+#endif
 
 double ProfilingSample::_nSecondsPerCount = -1.0;
 

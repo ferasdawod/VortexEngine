@@ -1,6 +1,6 @@
 #include "PrimeSearch.h"
 
-#include "Debugging/Debug.h"
+#include <assert.h>
 #include <stdlib.h>
 
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
@@ -64,7 +64,7 @@ int PrimeSearch::prime_array[] =
 
 PrimeSearch::PrimeSearch(int elements)
 {
-	Assert(elements > 0, "Can't do a PrimeSearch if you have 0 elements to search through, buddy-boy");
+	assert(elements > 0 && "Can't do a PrimeSearch if you have 0 elements to search through, buddy-boy");
 
 	maxElements = elements;
 

@@ -1,18 +1,12 @@
+#include "pch.h"
 #include "ActorFactory.h"
-#include "Actor.h"
 
-#include "Components/Transform.h"
 #include "Components/Camera.h"
 #include "Components/MeshRenderer.h"
 
 #include "Components/LightComponents/DirectionalLight.h"
 #include "Components/LightComponents/PointLight.h"
 #include "Components/LightComponents/SpotLight.h"
-
-#include "3rd Party/TinyXml/tinyxml.h"
-#include "Utilities/XmlHelper.h"
-
-#include "Debugging/Debug.h"
 
 StrongActorPtr ActorFactory::CreateEmptyActor(const std::string& actorName)
 {

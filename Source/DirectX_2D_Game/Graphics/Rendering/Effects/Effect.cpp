@@ -1,11 +1,11 @@
+#include "pch.h"
+
 #include "Effect.h"
 
 #include "Utilities/D3DUtils.h"
-#include "Utilities/Utils.h"
 
 #include "Graphics/Rendering/GraphicsDevice.h"
 #include <FX11/d3dx11effect.h>
-#include <d3d11.h>
 #include "Graphics/Material.h"
 #include "Components/Camera.h"
 #include "Graphics/Rendering/RenderRequest.h"
@@ -13,11 +13,8 @@
 #include "Graphics/Rendering/RenderSettings.h"
 #include "Graphics/Vertex.h"
 
-#include "Debugging/Debug.h"
 #include "Application/SettingsManager.h"
 
-#include "Actors/Actor.h"
-#include "Components/Transform.h"
 #include "Components/LightComponents/DirectionalLight.h"
 
 #include "Resources/ResCache.h"

@@ -1,9 +1,8 @@
+#include "pch.h"
+
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 
-#include <d3d11.h>
-
-#include "Debugging/Debug.h"
 #include "Graphics/Rendering/GraphicsDevice.h"
 
 std::shared_ptr<VertexBuffer> VertexBuffer::Create(GraphicsDevice* device, void* vertices, UINT numVertices, UINT vertexSize, bool staticBuffer /* = true */)

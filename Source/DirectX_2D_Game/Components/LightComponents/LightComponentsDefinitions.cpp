@@ -1,21 +1,12 @@
+#include "pch.h"
+
 #include "LightComponent.h"
 #include "DirectionalLight.h"
 #include "PointLight.h"
 #include "SpotLight.h"
 
-#include "Actors/Actor.h"
-#include "Components/Transform.h"
-
-#include "Events/EventManager.h"
-#include "Events/EventsTypes.h"
-
 #include "Graphics/Material.h"
 #include "Graphics/Rendering/GraphicsDevice.h"
-
-#include "Debugging/Debug.h"
-
-#include "Utilities/XmlHelper.h"
-#include "3rd Party/TinyXml/tinyxml.h"
 
 /*
  *

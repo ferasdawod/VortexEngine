@@ -1,8 +1,7 @@
+#include "pch.h"
+
 #include "Utils.h"
 
-#include <Windows.h>
-
-#include <DirectXTK/SimpleMath.h>
 #include <assimp/types.h>
 
 Vector3 Utils::aiVec2Vector3(const aiVector3D& vec)

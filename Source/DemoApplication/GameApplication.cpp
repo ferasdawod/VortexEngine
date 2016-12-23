@@ -1,5 +1,7 @@
 #include "GameApplication.h"
 
+#include <d3d11.h>
+
 #include "Input/InputDevice.h"
 #include "Input/Input.h"
 

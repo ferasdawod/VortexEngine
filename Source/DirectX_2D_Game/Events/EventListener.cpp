@@ -1,5 +1,6 @@
+#include "pch.h"
+
 #include "EventListener.h"
-#include "EventManager.h"
 
 void EventListener::ToggleRegisteration(EventID id, bool isRegistering)
 {

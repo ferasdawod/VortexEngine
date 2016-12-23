@@ -1,6 +1,6 @@
-#include "InputDevice.h"
+#include "pch.h"
 
-#include "Debugging/Debug.h"
+#include "InputDevice.h"
 
 InputDevice* InputDevice::_pInstance = nullptr;
 

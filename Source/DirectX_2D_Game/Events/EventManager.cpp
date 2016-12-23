@@ -1,10 +1,8 @@
+#include "pch.h"
+
 #include "EventManager.h"
 
-#include "Application/GameTimer.h"
-#include "Debugging/Debug.h"
-
 #include <sstream>
-#include <Performance/ScopedProfilerSample.h>
 
 EventManager* EventManager::_spInstance = nullptr;
 bool EventManager::_sbInitialized = false;

@@ -1,18 +1,9 @@
-#include "Events/EventManager.h"
-#include "Events/EventsTypes.h"
-#include "Actors/Actor.h"
-
-#include "3rd Party/TinyXml/tinyxml.h"
+#include "pch.h"
 
 #include "Camera.h"
-#include "Transform.h"
 
-#include "Debugging/Debug.h"
-#include "Utilities/XmlHelper.h"
 
 #include "Graphics/Rendering/GraphicsDevice.h"
-#include "Input/Input.h"
-#include "Application/GameTimer.h"
 
 using DirectX::SimpleMath::Vector2;
 using DirectX::SimpleMath::Vector3;

@@ -1,14 +1,8 @@
+#include "pch.h"
+
 #include "Material.h"
 
-#include "3rd Party/TinyXml/tinyxml.h"
-#include "Debugging/Debug.h"
 #include "Colors.h"
-
-#include "Utilities/XmlHelper.h"
-#include "Utilities/Utils.h"
-
-#include "Events/EventManager.h"
-#include "Events/EventsTypes.h"
 
 std::shared_ptr<Material> Material::_pDefaultMaterial;
 
@@ -50,14 +44,14 @@ TiXmlElement* Material::ToXML() const
 	auto ambientE = XmlHelper::ToXml("Ambient", _AmbientColor);
 	auto specularE = XmlHelper::ToXml("Specular", _SpecularColor);
 
-	TiXmlElement* specPowerE = XmlHelper::ToXml("SpecularPower", _SpecularPower);
-	TiXmlElement* isLitE = XmlHelper::ToXml("IsLit", _IsLit);
-	TiXmlElement* isTexE = XmlHelper::ToXml("IsTextured", _IsTextured);
-	TiXmlElement* texName = XmlHelper::ToXml("TexturePath", _TexturePath);
-	TiXmlElement* sampleTypeE = XmlHelper::ToXml("SamplingType", static_cast<int>(_TextureSampler));
-	TiXmlElement* texScaleE = XmlHelper::ToXml("TextureScale", _TextureScale);
-	TiXmlElement* texOffsetE = XmlHelper::ToXml("TextureOffset", _TextureOffset);
-	TiXmlElement* texRotationE = XmlHelper::ToXml("TextureRotation", _TextureRotation);
+	auto specPowerE = XmlHelper::ToXml("SpecularPower", _SpecularPower);
+	auto isLitE = XmlHelper::ToXml("IsLit", _IsLit);
+	auto isTexE = XmlHelper::ToXml("IsTextured", _IsTextured);
+	auto texName = XmlHelper::ToXml("TexturePath", _TexturePath);
+	auto sampleTypeE = XmlHelper::ToXml("SamplingType", static_cast<int>(_TextureSampler));
+	auto texScaleE = XmlHelper::ToXml("TextureScale", _TextureScale);
+	auto texOffsetE = XmlHelper::ToXml("TextureOffset", _TextureOffset);
+	auto texRotationE = XmlHelper::ToXml("TextureRotation", _TextureRotation);
 
 	std::string sampleCommentMsg =
 		std::string("Available Samplers : ") +
@@ -67,13 +61,13 @@ TiXmlElement* Material::ToXML() const
 		"LinearWrap = " + std::to_string(static_cast<int>(SamplingType::LinearWrap)) + ", " +
 		"AnisotropicClamp = " + std::to_string(static_cast<int>(SamplingType::AnisotropicClamp)) + ", " +
 		"AnisotropicWrap = " + std::to_string(static_cast<int>(SamplingType::AnisotropicWrap));
-	TiXmlComment* sampleCommnetE = DBG_NEW TiXmlComment(sampleCommentMsg.c_str());
+	auto sampleCommnetE = DBG_NEW TiXmlComment(sampleCommentMsg.c_str());
 
-	TiXmlElement* castShadowE = XmlHelper::ToXml("CastShadows", _CastShadows);
-	TiXmlElement* receiveShadowE = XmlHelper::ToXml("ReceiveShadows", _ReceiveShadows);
+	auto castShadowE = XmlHelper::ToXml("CastShadows", _CastShadows);
+	auto receiveShadowE = XmlHelper::ToXml("ReceiveShadows", _ReceiveShadows);
 
-	TiXmlElement* useSpecTexE = XmlHelper::ToXml("UseSpecularTexture", _UseSpecularTexture);
-	TiXmlElement* specTexNameE = XmlHelper::ToXml("SpecularTexturePath", _SpecularTexturePath);
+	auto useSpecTexE = XmlHelper::ToXml("UseSpecularTexture", _UseSpecularTexture);
+	auto specTexNameE = XmlHelper::ToXml("SpecularTexturePath", _SpecularTexturePath);
 
 	auto useNorE = XmlHelper::ToXml("UseNormalMap", _UseNormalMap);
 	auto norPathE = XmlHelper::ToXml("NormalMapTexturePath", _NormalMapTexturePath);

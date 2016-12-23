@@ -1,7 +1,5 @@
 #pragma once
 
-#include <DirectXTK/SimpleMath.h>
-#include <vector>
 
 using DirectX::SimpleMath::Vector2;
 using DirectX::SimpleMath::Vector3;

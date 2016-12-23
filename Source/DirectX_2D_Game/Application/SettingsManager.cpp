@@ -1,9 +1,6 @@
-#include "SettingsManager.h"
+#include "pch.h"
 
-#include "Events/EventsTypes.h"
-#include "Events/EventManager.h"
-#include "Debugging/Debug.h"
-#include "Utilities/XmlHelper.h"
+#include "SettingsManager.h"
 
 bool SettingsManager::Initialize(const std::string& filePath)
 {

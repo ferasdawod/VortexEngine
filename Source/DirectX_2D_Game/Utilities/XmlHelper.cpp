@@ -1,8 +1,6 @@
-#include "XmlHelper.h"
+#include "pch.h"
 
-#include <DirectXTK/SimpleMath.h>
-#include "3rd Party/TinyXml/tinyxml.h"
-#include "Debugging/Debug.h"
+#include "XmlHelper.h"
 
 TiXmlElement* XmlHelper::ToXml(const std::string& eleName, bool value)
 {

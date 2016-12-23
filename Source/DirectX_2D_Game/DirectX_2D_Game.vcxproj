@@ -97,6 +97,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>TIXML_USE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -211,13 +213,13 @@
     <ClInclude Include="Graphics\ViewPort.h" />
     <ClInclude Include="Graphics\Window\BaseWindow.h" />
     <ClInclude Include="Graphics\Window\IWindow.h" />
-    <ClInclude Include="Graphics\Rendering\DebugRenderer.h" />
     <ClInclude Include="Graphics\Rendering\Effects\EffectsStructures.h" />
     <ClInclude Include="Graphics\Mesh.h" />
     <ClInclude Include="Graphics\Rendering\RenderSettings.h" />
     <ClInclude Include="Graphics\SubMesh.h" />
     <ClInclude Include="Graphics\Window\WindowInfo.h" />
     <ClInclude Include="Graphics\Window\WindowsWindow.h" />
+    <ClInclude Include="pch.h" />
     <ClInclude Include="Performance\ProfilingSample.h" />
     <ClInclude Include="Performance\ScopedProfilerSample.h" />
     <ClInclude Include="Performance\ProfilingManager.h" />
@@ -269,10 +271,18 @@
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp" />
     <ClCompile Include="Actors\ActorFactory.cpp" />
-    <ClCompile Include="3rd Party\TinyXml\tinystr.cpp" />
-    <ClCompile Include="3rd Party\TinyXml\tinyxml.cpp" />
-    <ClCompile Include="3rd Party\TinyXml\tinyxmlerror.cpp" />
-    <ClCompile Include="3rd Party\TinyXml\tinyxmlparser.cpp" />
+    <ClCompile Include="3rd Party\TinyXml\tinystr.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="3rd Party\TinyXml\tinyxml.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="3rd Party\TinyXml\tinyxmlerror.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="3rd Party\TinyXml\tinyxmlparser.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Application\BaseGameApplication.cpp" />
     <ClCompile Include="Application\GameTimer.cpp" />
     <ClCompile Include="Components\MeshRenderer.cpp" />
@@ -280,10 +290,12 @@
     <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="Graphics\Buffers\BuffersDefenitions.cpp" />
     <ClCompile Include="Components\ComponentsDefenitions.cpp" />
-    <ClCompile Include="Graphics\Rendering\DebugRenderer.cpp" />
     <ClCompile Include="Graphics\Rendering\Effects\EffectStructures.cpp" />
     <ClCompile Include="Graphics\ViewPort.cpp" />
     <ClCompile Include="Graphics\Window\WindowsWindow.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Performance\ProfilingSample.cpp" />
     <ClCompile Include="Performance\ScopedProfilerSample.cpp" />
     <ClCompile Include="Performance\ProfilingManager.cpp" />
@@ -291,7 +303,6 @@
     <ClCompile Include="Resources\ResCache.cpp" />
     <ClCompile Include="Resources\ResourceLoaders.cpp" />
     <ClCompile Include="Utilities\D3DUtils.cpp" />
-    <ClCompile Include="Debugging\Debug.cpp" />
     <ClCompile Include="Graphics\Rendering\Effects\Effect.cpp" />
     <ClCompile Include="Events\EventManager.cpp" />
     <ClCompile Include="Graphics\Rendering\GraphicsDevice.cpp" />
@@ -306,8 +317,12 @@
     <ClCompile Include="Graphics\Rendering\RenderTarget.cpp" />
     <ClCompile Include="Application\SettingsManager.cpp" />
     <ClCompile Include="Graphics\Rendering\ShadowMap.cpp" />
-    <ClCompile Include="Math\PrimeSearch.cpp" />
-    <ClCompile Include="Math\Random.cpp" />
+    <ClCompile Include="Math\PrimeSearch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Math\Random.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Utilities\Utils.cpp" />
     <ClCompile Include="Graphics\Vertex.cpp" />
     <ClCompile Include="Application\WindowsApplication.cpp" />

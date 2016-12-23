@@ -1,8 +1,6 @@
-﻿#include "WindowsWindow.h"
+﻿#include "pch.h"
 
-#include <Windows.h>
-#include <Events/EventManager.h>
-#include <Events/EventsTypes.h>
+#include "WindowsWindow.h"
 
 bool Engine::WindowsWindow::Initialize(const WindowInfo& info)
 {

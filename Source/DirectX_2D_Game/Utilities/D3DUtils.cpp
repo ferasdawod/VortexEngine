@@ -1,7 +1,7 @@
+#include "pch.h"
+
 #include "D3DUtils.h"
 
-#include "Debugging/Debug.h"
-#include <d3d11.h>
 #include <d3dcompiler.h>
 #include <FX11/d3dx11effect.h>
 #include "Graphics/Rendering/GraphicsDevice.h"

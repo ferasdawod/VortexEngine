@@ -1,23 +1,11 @@
+#include "pch.h"
+
 #include "MeshRenderer.h"
-
-#include <d3d11.h>
-
-#include <algorithm>
 
 #include "Resources/ResCache.h"
 #include "Graphics/Material.h"
 #include "Graphics/Mesh.h"
 #include "Graphics/Rendering/RenderRequest.h"
-
-#include "Events/EventManager.h"
-#include "Events/EventsTypes.h"
-
-#include "Actors/Actor.h"
-
-#include <3rd Party/TinyXml/tinyxml.h>
-#include "Utilities/XmlHelper.h"
-
-#include "Debugging/Debug.h"
 
 void MeshRenderer::Initialize()
 {
