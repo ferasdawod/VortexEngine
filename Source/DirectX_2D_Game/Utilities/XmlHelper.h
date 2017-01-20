@@ -17,39 +17,37 @@ using DirectX::SimpleMath::Vector2;
 using DirectX::SimpleMath::Vector3;
 using DirectX::SimpleMath::Vector4;
 
-using ComponentID = unsigned long;
+class ObjectId;
 class TiXmlElement;
 
-namespace XmlHelper
+class XmlHelper
 {
-	// serialization methods
+public:
+	static TiXmlElement*	ToXml(const std::string& eleName, bool value);
+	static TiXmlElement*	ToXml(const std::string& eleName, int value);
+	static TiXmlElement*	ToXml(const std::string& eleName, float value);
+	static TiXmlElement*	ToXml(const std::string& eleName, size_t value);
+	static TiXmlElement*	ToXml(const std::string& eleName, const ObjectId& value);
+	static TiXmlElement*	ToXml(const std::string& eleName, const std::string& value);
+	
+	static TiXmlElement*	ToXml(const std::string& eleName, const Color& value);
+	static TiXmlElement*	ToXml(const std::string& eleName, const Vector2& value);
+	static TiXmlElement*	ToXml(const std::string& eleName, const Vector3& value);
+	static TiXmlElement*	ToXml(const std::string& eleName, const Vector4& value);
 
-	TiXmlElement*		ToXml(const std::string& eleName, bool value);
-	TiXmlElement*		ToXml(const std::string& eleName, int value);
-	TiXmlElement*		ToXml(const std::string& eleName, float value);
-	TiXmlElement*		ToXml(const std::string& eleName, size_t value);
-	TiXmlElement*		ToXml(const std::string& eleName, ComponentID value);
-	TiXmlElement*		ToXml(const std::string& eleName, const std::string& value);
 
-	TiXmlElement*		ToXml(const std::string& eleName, const Color& value);
-	TiXmlElement*		ToXml(const std::string& eleName, const Vector2& value);
-	TiXmlElement*		ToXml(const std::string& eleName, const Vector3& value);
-	TiXmlElement*		ToXml(const std::string& eleName, const Vector4& value);
+	static void				FromXml(const TiXmlElement* const parent, const std::string& name, bool& outVal);
+	static void				FromXml(const TiXmlElement* const parent, const std::string& name, int& outVal);
+	static void				FromXml(const TiXmlElement* const parent, const std::string& name, float& outVal);
+	static void				FromXml(const TiXmlElement* const parent, const std::string& name, size_t& outval);
+	static void				FromXml(const TiXmlElement* const parent, const std::string& name, ObjectId& outVal);
+	static void				FromXml(const TiXmlElement* const parent, const std::string& name, std::string& outVal);
 
-	// deserialization methods
+	static void				FromXml(const TiXmlElement* const parent, const std::string& name, Color& outVal);
+	static void				FromXml(const TiXmlElement* const parent, const std::string& name, Vector2& outVal);
+	static void				FromXml(const TiXmlElement* const parent, const std::string& name, Vector3& outVal);
+	static void				FromXml(const TiXmlElement* const parent, const std::string& name, Vector4& outVal);
 
-	void				FromXml(const TiXmlElement* const parent, const std::string& name, bool& outVal);
-	void				FromXml(const TiXmlElement* const parent, const std::string& name, int& outVal);
-	void				FromXml(const TiXmlElement* const parent, const std::string& name, float& outVal);
-	void				FromXml(const TiXmlElement* const parent, const std::string& name, size_t& outval);
-	void				FromXml(const TiXmlElement* const parent, const std::string& name, ComponentID& outVal);
-	void				FromXml(const TiXmlElement* const parent, const std::string& name, std::string& outVal);
-
-	void				FromXml(const TiXmlElement* const parent, const std::string& name, Color& outVal);
-	void				FromXml(const TiXmlElement* const parent, const std::string& name, Vector2& outVal);
-	void				FromXml(const TiXmlElement* const parent, const std::string& name, Vector3& outVal);
-	void				FromXml(const TiXmlElement* const parent, const std::string& name, Vector4& outVal);
-
-	bool				FindChild(const TiXmlElement* const parent, const std::string& name, TiXmlElement const ** outElement);
-	TiXmlElement*		FindOrCreate(TiXmlElement* const parent, const std::string& elementName);
-}
+	static bool				FindChild(const TiXmlElement* const parent, const std::string& name, TiXmlElement const ** outElement);
+	static TiXmlElement*	FindOrCreate(TiXmlElement* const parent, const std::string& elementName);
+};

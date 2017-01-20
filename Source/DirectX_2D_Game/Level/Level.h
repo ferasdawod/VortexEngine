@@ -6,7 +6,6 @@
 #include <unordered_map>
 #include <string>
 
-using ActorsMap = std::unordered_map<ActorID, StrongActorPtr>;
 class GameTimer;
 
 class Level
@@ -28,10 +27,10 @@ public:
 	bool				SaveLevel();
 	bool				SaveLevel(const std::string& fileName);
 						
-	WeakActorPtr		FindActor(ActorID id) const;
+	WeakActorPtr		FindActor(ObjectId id) const;
 	WeakActorPtr		FindActor(const std::string& actorName) const;
 						
-	void				DestroyActor(ActorID id);
+	void				DestroyActor(ObjectId id);
 	void				DestroyActor(const std::string& actorName);
 						
 	bool				AddActor(StrongActorPtr actor);
@@ -53,11 +52,11 @@ protected:
 	}
 
 protected:
-	ActorsMap			_actors;
-	std::string			_sLevelName;
+	std::vector<StrongActorPtr> _actors;
+	std::string _sLevelName;
 	
-	std::string			_sLevelSavePath;
-	bool				_bWasLoaded;
+	std::string	_sLevelSavePath;
+	bool _bWasLoaded;
 
-	Color				_ambientColor;
+	Color _ambientColor;
 };

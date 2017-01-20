@@ -227,6 +227,9 @@
     <ClInclude Include="Graphics\Window\WindowsWindow.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Utilities\IdGenerator.h" />
+    <ClInclude Include="Utilities\UniqueObject.h" />
+    <ClInclude Include="Utilities\ObjectId.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp">

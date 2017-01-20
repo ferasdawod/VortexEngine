@@ -217,7 +217,7 @@ bool RenderManager::ValidateRenderRequest(StrongRenderRequestPtr renderRequest, 
 	auto ownerComponent = renderRequest->GetOwner().lock();
 	assert(ownerComponent);
 
-	if (!ownerComponent->IsEnabled() || !ownerComponent->GetOwner()->GetEnabled())
+	if (!ownerComponent->IsEnabled() || !ownerComponent->GetOwner().lock()->IsEnabled())
 	{
 		return false;
 	}

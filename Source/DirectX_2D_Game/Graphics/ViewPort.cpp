@@ -22,7 +22,7 @@ TiXmlElement* ViewPort::ToXml() const
 void ViewPort::Initialize(TiXmlElement* root)
 {
 	if (root->ValueStr() != "ViewPort")
-		LOG_E("view port xml element error");
+		LOG_E("view port xml element error", 0);
 
 	XmlHelper::FromXml(root, "X", _X);
 	XmlHelper::FromXml(root, "Y", _Y);

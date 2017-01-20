@@ -23,10 +23,11 @@ void Level::OnUpdate(const GameTimer& gameTimer)
 {
 	FUNC_PROFILE();
 
-	for (auto it = _actors.cbegin(); it != _actors.cend(); it++)
+	for (auto it = _actors.cbegin(); it != _actors.cend(); ++it)
 	{
-		if (it->second->GetEnabled())
-			it->second->OnUpdate(gameTimer);
+		auto actor = *it;
+		if (actor->IsEnabled())
+			actor->OnUpdate(gameTimer);
 	}
 }
 
@@ -79,7 +80,7 @@ bool Level::LoadLevel(const std::string& fileName)
 		auto actorPtr = actorFactory.CreateFromXML(actorE);
 		if (actorPtr)
 		{
-			_actors.emplace(actorPtr->GetUniqueID(), actorPtr);
+			_actors.push_back(actorPtr);
 		}
 		else
 		{
@@ -113,8 +114,8 @@ bool Level::ReloadLevel()
 {
 	if (_bWasLoaded)
 		return LoadLevel(_sLevelSavePath);
-	else
-		return false;
+
+	return false;
 }
 
 bool Level::SaveLevel()
@@ -131,7 +132,7 @@ bool Level::SaveLevel(const std::string& fileName)
 	actorsE->SetDoubleAttribute("Count", ActorsCount());
 	for (auto it = _actors.begin(); it != _actors.end(); it++)
 	{
-		auto actorE = it->second->ToXML();
+		auto actorE = (*it)->ToXML();
 		actorsE->LinkEndChild(actorE);
 	}
 	auto ambientColorE = XmlHelper::ToXml("AmbientColor", _ambientColor);
@@ -150,12 +151,12 @@ bool Level::SaveLevel(const std::string& fileName)
 	}
 }
 
-WeakActorPtr Level::FindActor(ActorID id) const
+WeakActorPtr Level::FindActor(ObjectId id) const
 {
-	auto findit = _actors.find(id);
+	auto findit = std::find_if(_actors.begin(), _actors.end(), [&](StrongActorPtr ptr) { return ptr->GetId() == id; });
 	if (findit != _actors.end())
 	{
-		WeakActorPtr actorPtr(findit->second);
+		WeakActorPtr actorPtr(*findit);
 		return actorPtr;
 	}
 	else
@@ -167,13 +168,13 @@ WeakActorPtr Level::FindActor(ActorID id) const
 WeakActorPtr Level::FindActor(const std::string& actorName) const
 {
 	auto findIt = std::find_if(_actors.cbegin(), _actors.cend(), 
-				 [&actorName](const std::pair<ActorID, StrongActorPtr> pair) 
+				 [&actorName](StrongActorPtr ptr) 
 	{ 
-		return (pair.second->GetName() == actorName);
+		return (ptr->GetName() == actorName);
 	});
 
 	if (findIt != _actors.cend())
-		return WeakActorPtr(findIt->second);
+		return WeakActorPtr(*findIt);
 	else
 		return WeakActorPtr();
 }
@@ -181,36 +182,36 @@ WeakActorPtr Level::FindActor(const std::string& actorName) const
 void Level::DestroyActor(const std::string& actorName)
 {
 	auto findIt = std::find_if(_actors.cbegin(), _actors.cend(),
-							   [&actorName](const std::pair<ActorID, StrongActorPtr> pair)
+							   [&actorName](StrongActorPtr ptr)
 	{
-		return (pair.second->GetName() == actorName);
+		return (ptr->GetName() == actorName);
 	});
 
 	if (findIt != _actors.cend())
 	{
-		findIt->second->Destroy();
+		(*findIt)->Destroy();
 		_actors.erase(findIt);
 	}
 }
 
-void Level::DestroyActor(ActorID id)
+void Level::DestroyActor(ObjectId id)
 {
-	auto findit = _actors.find(id);
+	auto findit = std::find_if(_actors.begin(), _actors.end(), [&](StrongActorPtr ptr) { return ptr->GetId() == id; });
 	if (findit != _actors.end())
 	{
-		findit->second->Destroy();
+		(*findit)->Destroy();
 		_actors.erase(findit);
 	}
 }
 
 bool Level::AddActor(StrongActorPtr actor)
 {
-	auto id = actor->GetUniqueID();
-	auto findit = _actors.find(id);
+	auto id = actor->GetId();
+	auto findit = std::find_if(_actors.begin(), _actors.end(), [&](StrongActorPtr ptr) { return ptr->GetId() == id; });
 	// if we couldn't find the actor in our map then this is a new actor and we should add him to our list
 	if (findit == _actors.end())
 	{
-		_actors.emplace(id, actor);
+		_actors.push_back(actor);
 		return true;
 	}
 
@@ -221,9 +222,9 @@ bool Level::AddActor(StrongActorPtr actor)
 
 void Level::DestroyAllActors()
 {
-	for (auto it = _actors.begin(); it != _actors.end(); it++)
+	for (auto it = _actors.begin(); it != _actors.end(); ++it)
 	{
-		it->second->Destroy();
+		(*it)->Destroy();
 	}
 
 	_actors.clear();

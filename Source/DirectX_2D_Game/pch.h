@@ -37,6 +37,7 @@
 #include <Performance/ScopedProfilerSample.h>
 #include <Utilities/XmlHelper.h>
 #include <Debugging/Debug.h>
+#include <Utilities/IdGenerator.h>
 // TODO remove this
 #include <Utilities/Macros.h>
 // END TODO

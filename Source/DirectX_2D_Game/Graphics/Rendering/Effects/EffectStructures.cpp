@@ -18,9 +18,9 @@ _shadowStrength(1.0f)
 }
 
 EffectDirectionalLight::EffectDirectionalLight(std::shared_ptr<DirectionalLight> lightPtr)
-: _diffuse(lightPtr->GetDiffuseColor().ToVector3()),
-_strength(lightPtr->GetStrength()),
-_direction(lightPtr->GetTransform()->GetForward()),
+	: _diffuse(lightPtr->GetDiffuseColor().ToVector3()),
+	_strength(lightPtr->GetStrength()),
+	_direction(lightPtr->GetTransform().lock()->GetForward()),
 _shadowStrength(lightPtr->GetShadowStrength())
 {
 }
@@ -38,7 +38,7 @@ _pad(Vector3::One)
 EffectPointLight::EffectPointLight(std::shared_ptr<PointLight> pointLightPtr)
 : _DiffuseColor(pointLightPtr->GetDiffuseColor().ToVector3()),
 _Strength(pointLightPtr->GetStrength()),
-_Position(pointLightPtr->GetTransform()->GetPosition()),
+_Position(pointLightPtr->GetTransform().lock()->GetPosition()),
 _Falloff(pointLightPtr->GetFalloff()),
 _Range(pointLightPtr->GetRange()),
 _pad(Vector3::Zero)
@@ -61,7 +61,7 @@ _Strength(spotLightPtr->GetStrength()),
 _ConeAngle(DirectX::XMConvertToRadians(spotLightPtr->GetConeAngleDegrees())),
 _Falloff(spotLightPtr->GetFalloff())
 {
-	auto transform = spotLightPtr->GetTransform();
+	auto transform = spotLightPtr->GetTransform().lock();
 	assert(transform);
 	_Position = transform->GetPosition();
 	_Direction = transform->GetForward();
@@ -71,7 +71,7 @@ EffectPerFrameBuffer::EffectPerFrameBuffer(std::shared_ptr<Camera> camera, Light
 										   std::shared_ptr<RenderSettings> renderSettings)
 : _ViewProjectionMatrix(camera->GetViewMatrix() * camera->GetProjectionMatrix()),
 _AmbientColor(ambientColor.ToVector4()),
-_CameraPositionW(camera->GetTransform()->GetPosition()),
+_CameraPositionW(camera->GetTransform().lock()->GetPosition()),
 _DirectionalCount(0),
 _SpotCount(0),
 _PointCount(0),
@@ -80,6 +80,9 @@ _pad1(0)
 {
 	if (!renderSettings->LightingEnabled)
 		return;
+
+	auto cameraTransform = camera->GetTransform().lock();
+	assert(cameraTransform);
 
 	for (auto it = lightsMap.begin(); it != lightsMap.end(); ++it)
 	{
@@ -95,14 +98,14 @@ _pad1(0)
 		auto lightPtr = it->lock();
 		assert(lightPtr != nullptr);
 
-		if (!lightPtr->IsEnabled() || !lightPtr->GetOwner()->GetEnabled())
+		if (!lightPtr->IsEnabled() || !lightPtr->GetOwner().lock()->IsEnabled())
 			continue;
 
 		auto lightType = lightPtr->GetLightType();
 		if (lightType == LightType::Directional && _DirectionalCount < MAX_DIRECTIONAL)
 		{
 			auto directionalLight = std::static_pointer_cast<DirectionalLight>(lightPtr);
-			auto lightTrans = directionalLight->GetTransform();
+			auto lightTrans = directionalLight->GetTransform().lock();
 			assert(lightTrans);
 
 			// only the first directional light casts shadows
@@ -115,7 +118,7 @@ _pad1(0)
 				auto shadowDistance = 2.5f;
 
 				// VIEW MATRIX
-				auto lootAtPosition = camera->GetTransform()->GetPosition() + camera->GetTransform()->GetForward() * shadowDistance * 0.5f;
+				auto lootAtPosition = cameraTransform->GetPosition() + cameraTransform->GetForward() * shadowDistance * 0.5f;
 				auto pos = lootAtPosition + -1.0f * sceneBounds * lightTrans->GetForward();
 				lightTrans->SetPosition(pos);
 

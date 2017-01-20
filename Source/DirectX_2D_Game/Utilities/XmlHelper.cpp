@@ -22,9 +22,9 @@ TiXmlElement* XmlHelper::ToXml(const std::string& eleName, size_t value)
 	return ToXml(eleName, std::to_string(value));
 }
 
-TiXmlElement* XmlHelper::ToXml(const std::string& eleName, ComponentID value)
+TiXmlElement* XmlHelper::ToXml(const std::string& eleName, const ObjectId& value)
 {
-	return ToXml(eleName, std::to_string(value));
+	return ToXml(eleName, std::to_string(value.GetUnderlyingValue()));
 }
 
 TiXmlElement* XmlHelper::ToXml(const std::string& eleName, const std::string& value)
@@ -109,14 +109,16 @@ void XmlHelper::FromXml(const TiXmlElement* const parent, const std::string& nam
 	}
 }
 
-void XmlHelper::FromXml(const TiXmlElement* const parent, const std::string& name, ComponentID& outVal)
+void XmlHelper::FromXml(const TiXmlElement* const parent, const std::string& name, ObjectId& outVal)
 {
 	const TiXmlElement* element = nullptr;
 	if (FindChild(parent, name, &element))
 	{
 		std::string tmp;
 		element->QueryStringAttribute("Value", &tmp);
-		outVal = std::stoul(tmp);
+		auto value = std::stoul(tmp);
+		ObjectId id(value);
+		outVal = id;
 	}
 }
 

@@ -20,7 +20,7 @@ void LightComponent::Initialize()
 {
 	auto strongPtr = this->shared_from_this();
 	WeakLightPtr weakPtr(strongPtr);
-	StrongEventDataPtr eventPtr(DBG_NEW Event_NewLight(weakPtr, _Owner->GetUniqueID()));
+	StrongEventDataPtr eventPtr(DBG_NEW Event_NewLight(weakPtr, _pOwner->GetId()));
 	EventManager::GetPtr()->QueueEvent(eventPtr);
 }
 

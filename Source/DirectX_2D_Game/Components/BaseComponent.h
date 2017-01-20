@@ -7,37 +7,34 @@
 
 class Transform;
 
-#define EXPOSE_ID(x) virtual ComponentID GetTypeID() const override { return (x); }
+#define EXPOSE_ID(x) virtual ComponentTypeId GetTypeID() const override { return (x); }
 
 class BaseComponent : public IComponent
 {
 public:
-	BaseComponent(const std::string& componentName);
+	explicit BaseComponent(const std::string& componentName);
 	virtual ~BaseComponent() {}
 
-	virtual void				Initialize() = 0;
-	virtual void				Initialize(TiXmlElement* xmlData);
+	void Initialize() override = 0;
+	void Initialize(TiXmlElement* xmlData) override;
 
-	virtual void				OnUpdate(const GameTimer& gameTimer) = 0;
-	virtual TiXmlElement*		ToXML() const override;
+	void OnUpdate(const GameTimer& gameTimer) override = 0;
+	TiXmlElement* ToXML() const override;
 
-	virtual ComponentID			GetTypeID() const override = 0;
-	std::shared_ptr<Transform>	GetTransform() const { return _Owner->GetTransform(); }
+	ComponentTypeId GetTypeID() const override = 0;
+	std::weak_ptr<Transform> GetTransform() const { return _pOwner->GetTransform(); }
 
-	DECLARE_PROPERTY_READ_ONLY(ComponentID, UniqueID);
-	DECLARE_STRING_PROPERTY_READ_ONLY(Name);
-	DECLARE_PROPERTY(StrongActorPtr, Owner);
+	const std::string& GetName() const override { return _name; }
+	void SetName(const std::string& newName) { _name = newName; }
+	
+	WeakActorPtr GetOwner() const override { return WeakActorPtr(_pOwner); }
+	void SetOwner(StrongActorPtr owner) override { _pOwner = owner; }
 
-public:
-	bool			IsEnabled() const override final { return _Enabled; }
-	void			SetEnabled(bool val) override final { _Enabled = val; }
+	bool			IsEnabled() const override final { return _enabled; }
+	void			SetEnabled(bool val) override final { _enabled = val; }
+
 protected:
-	bool			_Enabled;
-
-private:
-	static ComponentID _nIdCounter;
-	static ComponentID	GeneraateUniqueID() { ++_nIdCounter; return _nIdCounter; }
-private:
-	static ComponentID	UniqueIDCounter() { return _nIdCounter; }
-	static void			UniqueIDCounter(ComponentID id) { _nIdCounter = id; }
+	std::string _name;
+	StrongActorPtr _pOwner;
+	bool			_enabled;
 };

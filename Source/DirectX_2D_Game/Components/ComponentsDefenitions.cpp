@@ -15,12 +15,10 @@ using DirectX::SimpleMath::Matrix;
  *Base Actor Definition
  *
  */
-#pragma region Base Actor
+#pragma region Base Component
 
-ComponentID BaseComponent::_nIdCounter = IComponent::INVALID_ID;
 
-BaseComponent::BaseComponent(const std::string& componentName)
-: _UniqueID(GeneraateUniqueID()), _Name(componentName), _Owner(nullptr), _Enabled(true)
+BaseComponent::BaseComponent(const std::string& componentName) : _name(componentName), _pOwner(nullptr), _enabled(true)
 {
 }
 
@@ -29,13 +27,13 @@ TiXmlElement* BaseComponent::ToXML() const
 	TiXmlElement* element =  DBG_NEW TiXmlElement("Component");
 	element->SetAttribute("Name", GetName().c_str());
 
-	auto idStr = std::to_string(GetUniqueID());
-	element->SetAttribute("UniqueID", idStr.c_str());
+	auto idElement = XmlHelper::ToXml("ObjectId", GetId());
+	element->LinkEndChild(idElement);
 
-	idStr = std::to_string(GetTypeID());
+	auto idStr = std::to_string(GetTypeID());
 	element->SetAttribute("TypeID", idStr.c_str());
 
-	auto enabledE = XmlHelper::ToXml("Enabled", _Enabled);
+	auto enabledE = XmlHelper::ToXml("Enabled", _enabled);
 	element->LinkEndChild(enabledE);
 
 	return element;
@@ -47,7 +45,7 @@ void BaseComponent::Initialize(TiXmlElement* xmlData)
 	xmlData->QueryStringAttribute("Name", &componentName);
 	assert(componentName == GetName());
 
-	XmlHelper::FromXml(xmlData, "Enabled", _Enabled);
+	XmlHelper::FromXml(xmlData, "Enabled", _enabled);
 }
 
 #pragma endregion
@@ -128,7 +126,7 @@ void Camera::Initialize()
 	// notify others that we are here
 	std::shared_ptr<Camera> strongPtr = this->shared_from_this();
 	WeakCameraPtr weakPtr(strongPtr);
-	StrongEventDataPtr cameraEvent(DBG_NEW Event_NewCamera(weakPtr, _Owner->GetUniqueID()));
+	StrongEventDataPtr cameraEvent(DBG_NEW Event_NewCamera(weakPtr, _pOwner->GetId()));
 	EventManager::GetPtr()->QueueEvent(cameraEvent);
 
 	_bViewDirty = _bProjectionDirty = true;
@@ -141,7 +139,7 @@ void Camera::OnUpdate(const GameTimer& gameTimer)
 	// TODO DELETE THIS
 	// DELETE BLOCK
 	
-	auto transform = _Owner->GetTransform();
+	auto transform = _pOwner->GetTransform().lock();
 	if (Input::IsKeyDown(KeyCode::W))
 	{
 		transform->Move(transform->GetWorldMat().Forward() * gameTimer.DeltaTime() * 5.0f);
@@ -183,13 +181,13 @@ void Camera::OnUpdate(const GameTimer& gameTimer)
 	{
 		transform->SetRotation(
 			transform->GetRotation() * Quaternion::CreateFromAxisAngle
-			(transform->GetWorldMat().Right(), gameTimer.DeltaTime() * -3.0f));
+			(transform->GetWorldMat().Left(), gameTimer.DeltaTime() * -3.0f));
 	}
 	if (Input::IsKeyDown(KeyCode::Down_Arrow))
 	{
 		transform->SetRotation(
 			transform->GetRotation() * Quaternion::CreateFromAxisAngle
-			(transform->GetWorldMat().Left(), gameTimer.DeltaTime() * -3.0f));
+			(transform->GetWorldMat().Right(), gameTimer.DeltaTime() * -3.0f));
 	}
 
 	auto mouseDelta = !Input::IsMouseButtonDown(MouseKeys::RightButton) ? Vector3::Zero : Input::MouseDelta();
@@ -206,7 +204,7 @@ void Camera::OnUpdate(const GameTimer& gameTimer)
 	
 	// END DELETE BLOCK
 
-	auto trans = _Owner->GetTransform();
+	auto trans = _pOwner->GetTransform().lock();
 	Quaternion currRotation = trans->GetRotation();
 	Vector3 currPosition = trans->GetPosition();
 	if (_prevRotation != currRotation || _prevPosition != currPosition)

@@ -22,7 +22,6 @@ class PointLight;
 class SpotLight;
 class Camera;
 struct RenderSettings;
-using ActorID = unsigned long;
 using WeakLightPtr = std::weak_ptr<LightComponent>;
 using LightsMap = std::list<WeakLightPtr>;
 using BOOL = int;

@@ -30,5 +30,5 @@ public:
 
 private:
 	StrongComponentPtr CreateComponentFromXML(TiXmlElement* xmlElement);
-	virtual StrongComponentPtr CreateComponentFromID(ComponentID id);
+	virtual StrongComponentPtr CreateComponentFromID(ComponentTypeId id);
 };

@@ -249,6 +249,7 @@
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Components\LightComponents\LightComponent.h" />
     <ClInclude Include="Graphics\Material.h" />
+    <ClInclude Include="Utilities\IdGenerator.h" />
     <ClInclude Include="Utilities\Macros.h" />
     <ClInclude Include="Math\Math.h" />
     <ClInclude Include="Graphics\Rendering\RenderRequest.h" />
@@ -259,9 +260,11 @@
     <ClInclude Include="Graphics\Rendering\ShadowMap.h" />
     <ClInclude Include="Math\PrimeSearch.h" />
     <ClInclude Include="Math\Random.h" />
+    <ClInclude Include="Utilities\ObjectId.h" />
     <ClInclude Include="Utilities\Singleton.h" />
     <ClInclude Include="Graphics\Texture2D.h" />
     <ClInclude Include="Components\Transform.h" />
+    <ClInclude Include="Utilities\UniqueObject.h" />
     <ClInclude Include="Utilities\Utils.h" />
     <ClInclude Include="Graphics\Vertex.h" />
     <ClInclude Include="Graphics\Buffers\VertexBuffer.h" />

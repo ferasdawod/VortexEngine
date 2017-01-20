@@ -25,6 +25,7 @@ bool BaseGameApplication::Init()
 	_pResourceCache->RegisterLoader("*.png", textureLoader);
 	_pResourceCache->RegisterLoader("*.jpg", textureLoader);
 	_pResourceCache->RegisterLoader("*.dds", textureLoader);
+	_pResourceCache->RegisterLoader("*.bmp", textureLoader);
 
 	_pResourceCache->RegisterLoader("*.obj", meshLoader);
 	_pResourceCache->RegisterLoader("*.fbx", meshLoader);

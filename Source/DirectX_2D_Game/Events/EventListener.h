@@ -6,6 +6,8 @@
 class EventListener
 {
 public:
+	virtual ~EventListener() {}
+
 	virtual bool	HandleEvent(StrongEventDataPtr eventData) = 0;
 	virtual void	HandleRegistering(bool isRegistering) = 0;
 

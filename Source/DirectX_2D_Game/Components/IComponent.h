@@ -1,35 +1,38 @@
 #pragma once
 
 #include <string>
-#include <memory>
 #include "Actors/ActorsDefenitions.h"
+#include <Utilities/UniqueObject.h>
 
 class TiXmlElement;
 class GameTimer;
 
-class IComponent
+class IComponent : public UniqueObject
 {
-public:
-	static const ComponentID INVALID_ID;
-
 public:
 	virtual ~IComponent() {}
 
-public:
-	virtual void							Initialize() = 0;
-	virtual void							Initialize(TiXmlElement* xmlData) = 0;
-	virtual void							OnUpdate(const GameTimer& gameTimer) = 0;
+	// initialize the component properties with default values
+	virtual void Initialize() = 0;
+	// initialize the component properties with values from the XML element
+	virtual void Initialize(TiXmlElement* xmlData) = 0;
+	// update the component each frame
+	virtual void OnUpdate(const GameTimer& gameTimer) = 0;
 
-	virtual ComponentID						GetTypeID() const = 0;
-	virtual ComponentID						GetUniqueID() const = 0;
-	virtual const std::string&				GetName() const = 0;
+	// return the type id for this component type
+	virtual ComponentTypeId GetTypeID() const = 0;
+	// return this component type name
+	virtual const std::string& GetName() const = 0;
 
-	virtual bool							IsEnabled() const = 0;
-	virtual void							SetEnabled(bool enabled) = 0;
+	// returns true if the component is enabled, false otherwise
+	virtual bool IsEnabled() const = 0;
+	// sets the enabled state for this component
+	virtual void SetEnabled(bool enabled) = 0;
 
-	virtual void							SetOwner(StrongActorPtr owner) = 0;
-	virtual StrongActorPtr					GetOwner() const = 0;
-	virtual TiXmlElement*					ToXML() const = 0;
+	// sets the parent actor for this component
+	virtual void SetOwner(StrongActorPtr owner) = 0;
+	// return the parent actor for this component
+	virtual WeakActorPtr GetOwner() const = 0;
+	// serialize the component properties into an XML element
+	virtual TiXmlElement* ToXML() const = 0;
 };
-
-__declspec(selectany) const ComponentID IComponent::INVALID_ID = static_cast<ComponentID>(-1);

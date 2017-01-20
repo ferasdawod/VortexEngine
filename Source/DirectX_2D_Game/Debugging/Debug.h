@@ -45,12 +45,13 @@ do \
 	Logger::GetPtr()->Log(cat, msg); \
 } while (0)
 #else
-#define LOG(msg, cat, file, function, line, hr, pause) do { } while(0)
+#define LOG(msg, cat) do { } while(0)
 #endif
 
 #define LOG_M(msg) LOG(msg, MessageType::Info)
 #define LOG_W(msg) LOG(msg, MessageType::Warning)
 
+#if defined(DEBUG) || defined(_DEBUG)
 #define LOG_E(msg, hr) \
 do \
 { \
@@ -66,3 +67,6 @@ do \
 		__asm int 3 \
 	} \
 } while (0)
+#else
+#define LOG_E(msg, hr) do { } while(0)
+#endif

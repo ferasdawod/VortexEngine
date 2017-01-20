@@ -5,7 +5,7 @@
 class PointLight : public LightComponent
 {
 public:
-	static const ComponentID	kComponentID;
+	static const ComponentTypeId	kComponentID;
 
 public:
 	PointLight() : LightComponent(LightType::Point, STRING(PointLight)), _Falloff(1.0f), _Range(2.0f) {}
@@ -25,4 +25,4 @@ public:
 	DECLARE_PROPERTY(float, Range);
 };
 
-__declspec(selectany) const ComponentID PointLight::kComponentID = 0x4BB94318;
+__declspec(selectany) const ComponentTypeId PointLight::kComponentID = 0x4BB94318;

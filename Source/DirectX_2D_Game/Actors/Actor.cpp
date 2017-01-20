@@ -2,11 +2,8 @@
 
 #include "Actor.h"
 
-ActorID Actor::_nIdCounter = static_cast<ActorID>(-1);
-const ActorID Actor::INVALID_ID = static_cast<ActorID>(-1);
 
-Actor::Actor(const std::string& name)
-: std::enable_shared_from_this<Actor>(), _Name(name), _UniqueID(GenerateUniqueID()), _Enabled(true)
+Actor::Actor(const std::string& name) : _name(name), _enabled(true)
 {
 }
 
@@ -17,9 +14,9 @@ Actor::~Actor()
 
 void Actor::OnUpdate(const GameTimer& gameTimer)
 {
-	if (!_Enabled)
+	if (!_enabled)
 	{
-		LOG_E("Someone is updating a disabled actor", 0);
+		LOG_W("disabled actor is being updated");
 		return;
 	}
 
@@ -28,71 +25,86 @@ void Actor::OnUpdate(const GameTimer& gameTimer)
 
 	while (it != end)
 	{
-		it->second->OnUpdate(gameTimer);
-		it++;
+		(*it)->OnUpdate(gameTimer);
+		++it;
 	}
 }
 
 void Actor::Destroy()
 {
 	_components.clear();
-	_UniqueID = INVALID_ID;
+	_id.Invalidate();
 }
 
 bool Actor::AddComponent(StrongComponentPtr component)
 {
-	auto findIt = _components.find(component->GetUniqueID());
+	// can't add this component if it already has a parent
+	if (component->GetOwner().lock())
+	{
+		LOG_W("attempting to add a component which belongs to another actor");
+		return false;
+	}
+
+	auto findIt = std::find_if(_components.begin(), _components.end(),
+		[&](StrongComponentPtr ptr)
+	{
+		return ptr->GetId() == component->GetId();
+	});
+
 	if (findIt != _components.end())
 		return false;
 
 	component->SetOwner(shared_from_this());
-	_components.emplace(component->GetUniqueID(), component);
+	_components.push_back(component);
 	component->Initialize();
 	
 	return true;
 }
 
-bool Actor::RemoveComponent(ComponentID uniqueComponentID)
+bool Actor::RemoveComponent(const ObjectId& uniqueComponentID)
 {
-	auto findIt = _components.find(uniqueComponentID);
+	auto findIt = std::find_if(_components.begin(), _components.end(), 
+		[&](StrongComponentPtr ptr)
+	{
+		return ptr->GetId() == uniqueComponentID;
+	});
+
 	if (findIt != _components.end())
 	{
 		_components.erase(findIt);
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+		
+	return false;
 }
 
 bool Actor::RemoveComponent(StrongComponentPtr component)
 {
-	return RemoveComponent(component->GetUniqueID());
+	return RemoveComponent(component->GetId());
 }
 
 TiXmlElement* Actor::ToXML() const
 {
 	TiXmlElement* actorElement = DBG_NEW TiXmlElement("Actor");
-	actorElement->SetAttribute("Name", _Name.c_str());
+	actorElement->SetAttribute("Name", _name.c_str());
 
-	TiXmlElement* enabledE = XmlHelper::ToXml("Enabled", _Enabled);
+	TiXmlElement* enabledE = XmlHelper::ToXml("Enabled", _enabled);
 
 	TiXmlElement* componentsElement = DBG_NEW TiXmlElement("Components");
 	componentsElement->SetDoubleAttribute("Count", _components.size());
 
-	// add the transform to the top of the list
-	auto it = _components.find(Transform::kComponentID);
-	auto trans = it->second;
+	// add the transform to the top of the 
+	auto trans = GetComponent<Transform>().lock();
 	componentsElement->LinkEndChild(trans->ToXML());
 	
-	for (auto it = _components.begin(); it != _components.end(); it++)
+	for (auto it = _components.begin(); it != _components.end(); ++it)
 	{
+		StrongComponentPtr component = *it;
+
 		// we already added the transform component
-		if (it->second->GetTypeID() == Transform::kComponentID)
+		if (component->GetTypeID() == Transform::kComponentID)
 			continue;
 
-		StrongComponentPtr component = it->second;
 		auto componentElement = component->ToXML();
 		componentsElement->LinkEndChild(componentElement);
 	}
@@ -102,10 +114,10 @@ TiXmlElement* Actor::ToXML() const
 	return actorElement;
 }
 
-std::shared_ptr<Transform> Actor::GetTransform()
+std::weak_ptr<Transform> Actor::GetTransform()
 {
-	if (_pWeakTransformPtr.expired())
-		_pWeakTransformPtr = GetComponent<Transform>();
+	if (!_pWeakTransformPtr)
+		_pWeakTransformPtr = GetComponent<Transform>().lock();
 
-	return _pWeakTransformPtr.lock();
+	return _pWeakTransformPtr;
 }

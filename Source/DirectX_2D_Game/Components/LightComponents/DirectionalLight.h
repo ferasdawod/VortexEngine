@@ -5,7 +5,7 @@
 class DirectionalLight : public LightComponent
 {
 public:
-	static const ComponentID	kComponentID;
+	static const ComponentTypeId	kComponentID;
 
 public:
 	DirectionalLight()
@@ -25,4 +25,4 @@ public:
 
 };
 
-__declspec(selectany) const ComponentID DirectionalLight::kComponentID = 0x4C0A6864;
+__declspec(selectany) const ComponentTypeId DirectionalLight::kComponentID = 0x4C0A6864;

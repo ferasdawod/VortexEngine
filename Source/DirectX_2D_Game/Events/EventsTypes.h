@@ -35,18 +35,18 @@ class Event_NewCamera : public BaseEventData
 	DECLARE_ID();
 
 public:
-	Event_NewCamera(WeakCameraPtr camera, ActorID actorID)
+	Event_NewCamera(WeakCameraPtr camera, ObjectId actorID)
 		: BaseEventData(STRING(Event_NewCamera), kEventID), _pCamera(camera), _actorID(actorID)
 	{	}
 
 	virtual ~Event_NewCamera() {}
 
-	ActorID					GetActorID() const { return _actorID; }
+	ObjectId				GetActorID() const { return _actorID; }
 	WeakCameraPtr			GetCamera() const { return _pCamera; }
 
 protected:
 	WeakCameraPtr			_pCamera;
-	ActorID					_actorID;
+	ObjectId				_actorID;
 };
 
 class Event_WindowResized : public BaseEventData
@@ -80,15 +80,15 @@ class Event_NewLight : public BaseEventData
 	DECLARE_ID();
 
 public:
-	Event_NewLight(WeakLightPtr light, ActorID ownerID) : BaseEventData(STRING(Event_NewLight), kEventID),
+	Event_NewLight(WeakLightPtr light, ObjectId ownerID) : BaseEventData(STRING(Event_NewLight), kEventID),
 		_pLight(light), _ownerID(ownerID) {}
 	virtual ~Event_NewLight() {}
 
 	WeakLightPtr	LightPtr() const { return _pLight; }
-	ActorID			OwnerID() const { return _ownerID; }
+	ObjectId		OwnerID() const { return _ownerID; }
 protected:
 	WeakLightPtr	_pLight;
-	ActorID			_ownerID;
+	ObjectId		_ownerID;
 };
 
 class Event_ApplicationExiting : public BaseEventData

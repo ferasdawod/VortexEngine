@@ -81,7 +81,7 @@ bool GameApplication::Init()
 	playerTransform->Rotate(-130.0f, -30.0f, 0.0f);
 
 	auto camera = _pPlayer->GetComponent<Camera>().lock();
-	//camera->SetViewPort(ViewPort(0, 0.5, 1, 0.5));
+	//camera->SetViewPort(ViewPort(0, 0, 0.5f, 1.f));
 
 	return true;
 }
@@ -90,10 +90,10 @@ void GameApplication::OnUpdate()
 {
 	_pInputDevice->OnUpdate();
 
-	auto lightActor = _pLevel->FindActor("Directional Light").lock()->GetTransform();
+	auto lightActor = _pLevel->FindActor("Directional Light").lock()->GetTransform().lock();
 	lightActor->Rotate(_gameTimer.DeltaTime() * 10.f, 0.0f, 0.0f);
 	
-	auto earthActor = _pLevel->FindActor("Earth Sphere").lock()->GetTransform();
+	auto earthActor = _pLevel->FindActor("Earth Sphere").lock()->GetTransform().lock();
 	earthActor->Rotate(_gameTimer.DeltaTime() * 30.f, 0.f, 0.f);
 
 	_pLevel->OnUpdate(_gameTimer);

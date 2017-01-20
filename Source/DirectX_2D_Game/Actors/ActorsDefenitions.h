@@ -5,8 +5,7 @@
 class IComponent;
 class Actor;
 
-using ActorID = unsigned long;
-using ComponentID = unsigned long;
+using ComponentTypeId = unsigned long;
 
 using StrongActorPtr = std::shared_ptr<Actor>;
 using WeakActorPtr = std::weak_ptr<Actor>;

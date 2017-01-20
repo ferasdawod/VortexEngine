@@ -5,7 +5,7 @@
 class SpotLight : public LightComponent
 {
 public:
-	static const ComponentID	kComponentID;
+	static const ComponentTypeId	kComponentID;
 
 public:
 	SpotLight() : LightComponent(LightType::Spot, STRING(SpotLight)), _ConeAngleDegrees(30.0f), _Falloff(10.0f) {}
@@ -24,4 +24,4 @@ public:
 	DECLARE_PROPERTY(float, Falloff);
 };
 
-__declspec(selectany) const ComponentID SpotLight::kComponentID = 0xFF7E686A;
+__declspec(selectany) const ComponentTypeId SpotLight::kComponentID = 0xFF7E686A;

@@ -130,7 +130,7 @@ StrongActorPtr ActorFactory::CreateFromXML(TiXmlElement* actorElement)
 	actorElement->QueryStringAttribute("Name", &actorName);
 	StrongActorPtr actor(DBG_NEW Actor(actorName));
 
-	XmlHelper::FromXml(actorElement, "Enabled", actor->_Enabled);
+	XmlHelper::FromXml(actorElement, "Enabled", actor->_enabled);
 
 	TiXmlElement* componentsElement = actorElement->FirstChildElement(std::string("Components"));
 	int numComponents = -1;
@@ -153,7 +153,7 @@ StrongComponentPtr ActorFactory::CreateComponentFromXML(TiXmlElement* xmlElement
 	if (xmlElement->ValueStr() != std::string("Component"))
 		return nullptr;
 
-	ComponentID id = IComponent::INVALID_ID;
+	ComponentTypeId id = 0;
 	string idStr = "-1";
 	xmlElement->QueryStringAttribute("TypeID", &idStr);
 
@@ -169,7 +169,7 @@ StrongComponentPtr ActorFactory::CreateComponentFromXML(TiXmlElement* xmlElement
 	return component;
 }
 
-StrongComponentPtr ActorFactory::CreateComponentFromID(ComponentID id)
+StrongComponentPtr ActorFactory::CreateComponentFromID(ComponentTypeId id)
 {
 	switch (id)
 	{

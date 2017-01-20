@@ -19,7 +19,7 @@ using RenderRequestsVector = std::vector<RenderRequestPtr>;
 class MeshRenderer : public BaseComponent, public std::enable_shared_from_this<MeshRenderer>
 {
 public:
-	static const ComponentID	kComponentID;
+	static const ComponentTypeId	kComponentID;
 
 public:
 	MeshRenderer(const std::string& meshName = "") : BaseComponent(STRING(MeshRenderer)), _MeshFilePath(meshName) {}
@@ -39,4 +39,4 @@ public:
 	DECLARE_PROPERTY_READ_ONLY(MaterialsVector, Materials);
 };
 
-__declspec(selectany) const ComponentID MeshRenderer::kComponentID = 0x6B7EA484;
+__declspec(selectany) const ComponentTypeId MeshRenderer::kComponentID = 0x6B7EA484;

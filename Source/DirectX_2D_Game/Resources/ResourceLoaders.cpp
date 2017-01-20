@@ -482,20 +482,20 @@ VertexIndexPair MeshLoader::CreateSphere()
 	auto verticalSegments = kTessellation;
 	auto horizontalSegments = kTessellation * 2;
 
-	float raduis = 1 / 2.0f;
+	auto raduis = 1 / 2.0f;
 
 	for (size_t i = 0; i <= verticalSegments; i++)
 	{
-		float v = 1 - (float)i / verticalSegments;
-		float latitude = (i * XM_PI / verticalSegments) - XM_PIDIV2;
+		auto v = 1 - static_cast<float>(i) / verticalSegments;
+		auto latitude = (i * XM_PI / verticalSegments) - XM_PIDIV2;
 		float dy, dxz;
 
 		XMScalarSinCos(&dy, &dxz, latitude);
 
 		for (size_t j = 0; j <= horizontalSegments; j++)
 		{
-			float u = (float)j / horizontalSegments;
-			float longitude = j * XM_2PI / horizontalSegments;
+			auto u = static_cast<float>(j) / horizontalSegments;
+			auto longitude = j * XM_2PI / horizontalSegments;
 			float dx, dz;
 
 			XMScalarSinCos(&dx, &dz, longitude);
@@ -510,13 +510,13 @@ VertexIndexPair MeshLoader::CreateSphere()
 		}
 	}
 
-	size_t stride = horizontalSegments + 1;
+	auto stride = horizontalSegments + 1;
 	for (size_t i = 0; i < verticalSegments; i++)
 	{
 		for (size_t j = 0; j <= horizontalSegments; j++)
 		{
-			size_t nextI = i + 1;
-			size_t nextJ = (j + 1) % stride;
+			auto nextI = i + 1;
+			auto nextJ = (j + 1) % stride;
 
 			indices.push_back(i * stride + j);
 			indices.push_back(nextI * stride + j);

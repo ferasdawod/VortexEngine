@@ -22,7 +22,7 @@ class Camera : public BaseComponent, public EventListener,
 						public std::enable_shared_from_this<Camera>
 {
 public:
-	static const ComponentID	kComponentID;
+	static const ComponentTypeId	kComponentID;
 
 public:
 	Camera() : Camera(DirectX::XM_PIDIV4, 0.1f, 100.0f) {}
@@ -52,7 +52,7 @@ public:
 
 	
 	// Returns the camera view frustum in view space
-	BoundingFrustum		GetViewFrustum()
+	BoundingFrustum	GetViewFrustum()
 	{ 
 		if (_bProjectionDirty) RebuildProjection();
 		if (_bFrustumDirty)
@@ -74,7 +74,7 @@ public:
 	DECLARE_PROPERTY(float, FarClip);
 	DECLARE_PROPERTY(ViewPort, ViewPort);
 
-	float			GetAspectRatio()
+	float GetAspectRatio()
 	{
 		if (_bProjectionDirty) RebuildProjection();
 		return _nAspectRatio;
@@ -106,4 +106,4 @@ protected:
 	BoundingFrustum						_boundingFrustum;
 };
 
-__declspec(selectany) const ComponentID Camera::kComponentID = 0x59772A72;
+__declspec(selectany) const ComponentTypeId Camera::kComponentID = 0x59772A72;
