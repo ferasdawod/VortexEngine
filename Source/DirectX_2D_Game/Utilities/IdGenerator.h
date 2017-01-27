@@ -5,7 +5,7 @@
 class IdGenerator
 {
 public:
-	static ObjectId GenerateId() { return ObjectId(_idCounter++); }
+	static ObjectId GenerateId() { return ObjectId(++_idCounter); }
 
 	static void SetIdSeed(unsigned long seed) { _idCounter = seed; }
 	static unsigned long GetIdSeed() { return _idCounter; }
