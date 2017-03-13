@@ -5,6 +5,7 @@
 #include "IResourceLoader.h"
 #include "ResHandle.h"
 #include "Resource.h"
+#include "ResourceLoaders.h"
 
 std::shared_ptr<ResHandle> ResCache::GetHandle(const string& resourceName)
 {
@@ -30,6 +31,23 @@ void ResCache::RegisterLoader(const string& pattern, std::shared_ptr<IResourceLo
 
 	_loadersMap.emplace(std::make_pair(pattern, loader));
 }
+
+void ResCache::RegisterDefaultLoaders()
+{
+	std::shared_ptr<IResourceLoader> textureLoader(DBG_NEW Texture2DLoader);
+	std::shared_ptr<IResourceLoader> meshLoader(DBG_NEW MeshLoader);
+
+	RegisterLoader("*.png", textureLoader);
+	RegisterLoader("*.jpg", textureLoader);
+	RegisterLoader("*.dds", textureLoader);
+	RegisterLoader("*.bmp", textureLoader);
+
+	RegisterLoader("*.obj", meshLoader);
+	RegisterLoader("*.fbx", meshLoader);
+	RegisterLoader("*.blend", meshLoader);
+	RegisterLoader("*.mesh", meshLoader);
+}
+
 
 std::shared_ptr<ResHandle> ResCache::FindHandle(const string& resourceName)
 {

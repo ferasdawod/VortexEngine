@@ -175,7 +175,6 @@
     <ClInclude Include="Graphics\Rendering\ShadowMap.h">
       <Filter>Source Files\Game\Systems\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Application\GameTimer.h" />
     <ClInclude Include="Components\BaseComponent.h">
       <Filter>Source Files\Game\Actors\Components</Filter>
     </ClInclude>
@@ -230,6 +229,8 @@
     <ClInclude Include="Utilities\IdGenerator.h" />
     <ClInclude Include="Utilities\UniqueObject.h" />
     <ClInclude Include="Utilities\ObjectId.h" />
+    <ClInclude Include="Engine\Game.h" />
+    <ClInclude Include="Engine\GameTimer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp">
@@ -304,9 +305,6 @@
     <ClCompile Include="Graphics\Rendering\ShadowMap.cpp">
       <Filter>Source Files\Game\Systems\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Application\GameTimer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Debugging\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -362,6 +360,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

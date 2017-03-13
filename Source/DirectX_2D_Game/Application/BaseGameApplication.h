@@ -1,7 +1,6 @@
 #pragma once
 
 #include "BaseApplication.h"
-#include "GameTimer.h"
 #include "Debugging/Logger.h"
 
 #include "Events/EventListener.h"

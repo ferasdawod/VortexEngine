@@ -6,8 +6,6 @@
 #include "Resources/ResCache.h"
 #include "Performance/ProfilingManager.h"
 
-#include "Resources/ResourceLoaders.h"
-
 bool BaseGameApplication::Init()
 {
 	_pProfilingManager.reset(DBG_NEW ProfilingManager);
@@ -19,18 +17,7 @@ bool BaseGameApplication::Init()
 	_pSettingsManager->Initialize("Settings.xml");
 
 	_pResourceCache.reset(DBG_NEW ResCache);
-	std::shared_ptr<IResourceLoader> textureLoader(DBG_NEW Texture2DLoader);
-	std::shared_ptr<IResourceLoader> meshLoader(DBG_NEW MeshLoader);
-
-	_pResourceCache->RegisterLoader("*.png", textureLoader);
-	_pResourceCache->RegisterLoader("*.jpg", textureLoader);
-	_pResourceCache->RegisterLoader("*.dds", textureLoader);
-	_pResourceCache->RegisterLoader("*.bmp", textureLoader);
-
-	_pResourceCache->RegisterLoader("*.obj", meshLoader);
-	_pResourceCache->RegisterLoader("*.fbx", meshLoader);
-	_pResourceCache->RegisterLoader("*.blend", meshLoader);
-	_pResourceCache->RegisterLoader("*.mesh", meshLoader);
+	_pResourceCache->RegisterDefaultLoaders();
 
 	return true;
 }

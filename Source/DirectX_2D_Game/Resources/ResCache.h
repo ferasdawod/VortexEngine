@@ -24,6 +24,8 @@ public:
 	std::shared_ptr<ResHandle>	GetHandle(const string& resourceName);
 	void						RegisterLoader(const string& pattern, std::shared_ptr<IResourceLoader> loader);
 
+	void RegisterDefaultLoaders();
+
 private:
 	std::shared_ptr<ResHandle>			FindHandle(const string& resourceName);
 	std::shared_ptr<ResHandle>			LoadResource(const string& resourceName);
