@@ -21,6 +21,7 @@ class Transform;
 class Camera : public BaseComponent, public EventListener,
 						public std::enable_shared_from_this<Camera>
 {
+	DECLARE_ID();
 public:
 	static const ComponentTypeId	kComponentID;
 

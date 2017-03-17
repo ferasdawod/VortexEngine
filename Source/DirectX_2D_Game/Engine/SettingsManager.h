@@ -31,11 +31,11 @@ public:
 	SettingsManager() {}
 	virtual ~SettingsManager() {}
 
-	bool				Initialize(const std::string& filePath);
-	bool				SaveToFile() const;
+	bool Initialize(const std::string& filePath);
+	bool SaveToFile() const;
 
 	template <typename T>
-	void				SaveSetting(const string& catagory, const string& name, const T& value)
+	void SaveSetting(const string& catagory, const string& name, const T& value)
 	{
 		auto catagoryE = GetCatagoryElement(catagory);
 		RemoveOldSetting(catagoryE, name);
@@ -44,7 +44,7 @@ public:
 	}
 
 	template <typename T>
-	void				GetSetting(const string& catagory, const string& name, T& outValue)
+	void GetSetting(const string& catagory, const string& name, T& outValue)
 	{
 		auto catagoryE = GetCatagoryElement(catagory);
 		XmlHelper::FromXml(catagoryE, name, outValue);

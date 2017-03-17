@@ -202,7 +202,6 @@
     <ClInclude Include="Components\BaseComponent.h" />
     <ClInclude Include="3rd Party\TinyXml\tinystr.h" />
     <ClInclude Include="3rd Party\TinyXml\tinyxml.h" />
-    <ClInclude Include="Application\BaseGameApplication.h" />
     <ClInclude Include="Components\LightComponents\PointLight.h" />
     <ClInclude Include="Components\LightComponents\SpotLight.h" />
     <ClInclude Include="Components\MeshRenderer.h" />
@@ -238,8 +237,6 @@
     <ClInclude Include="Events\EventsTypes.h" />
     <ClInclude Include="Graphics\Rendering\GraphicsDevice.h" />
     <ClInclude Include="Graphics\Rendering\GraphicsEnums.h" />
-    <ClInclude Include="Application\IApplication.h" />
-    <ClInclude Include="Application\BaseApplication.h" />
     <ClInclude Include="Graphics\Buffers\IBuffer.h" />
     <ClInclude Include="Events\IEventData.h" />
     <ClInclude Include="Events\EventListener.h" />
@@ -257,7 +254,7 @@
     <ClInclude Include="Graphics\Rendering\RenderManager.h" />
     <ClInclude Include="Graphics\Rendering\RenderTarget.h" />
     <ClInclude Include="Graphics\Rendering\RenderTypes.h" />
-    <ClInclude Include="Application\SettingsManager.h" />
+    <ClInclude Include="Engine\SettingsManager.h" />
     <ClInclude Include="Graphics\Rendering\ShadowMap.h" />
     <ClInclude Include="Math\PrimeSearch.h" />
     <ClInclude Include="Math\Random.h" />
@@ -269,7 +266,6 @@
     <ClInclude Include="Utilities\Utils.h" />
     <ClInclude Include="Graphics\Vertex.h" />
     <ClInclude Include="Graphics\Buffers\VertexBuffer.h" />
-    <ClInclude Include="Application\WindowsApplication.h" />
     <ClInclude Include="Utilities\XmlHelper.h" />
   </ItemGroup>
   <ItemGroup>
@@ -287,7 +283,6 @@
     <ClCompile Include="3rd Party\TinyXml\tinyxmlparser.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Application\BaseGameApplication.cpp" />
     <ClCompile Include="Engine\GameTimer.cpp" />
     <ClCompile Include="Components\MeshRenderer.cpp" />
     <ClCompile Include="Debugging\Logger.cpp" />
@@ -320,7 +315,7 @@
     <ClCompile Include="Math\Math.cpp" />
     <ClCompile Include="Graphics\Rendering\RenderManager.cpp" />
     <ClCompile Include="Graphics\Rendering\RenderTarget.cpp" />
-    <ClCompile Include="Application\SettingsManager.cpp" />
+    <ClCompile Include="Engine\SettingsManager.cpp" />
     <ClCompile Include="Graphics\Rendering\ShadowMap.cpp" />
     <ClCompile Include="Math\PrimeSearch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -330,7 +325,6 @@
     </ClCompile>
     <ClCompile Include="Utilities\Utils.cpp" />
     <ClCompile Include="Graphics\Vertex.cpp" />
-    <ClCompile Include="Application\WindowsApplication.cpp" />
     <ClCompile Include="Utilities\XmlHelper.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,7 @@
 
 #include "WindowsWindow.h"
 
-bool Engine::WindowsWindow::Initialize(const WindowInfo& info)
+bool Core::WindowsWindow::Initialize(const WindowInfo& info)
 {
 	_info = info;
 	auto hInstance = GetModuleHandle(nullptr);
@@ -47,13 +47,13 @@ bool Engine::WindowsWindow::Initialize(const WindowInfo& info)
 	return true;
 }
 
-void Engine::WindowsWindow::SetTitle(const string& title)
+void Core::WindowsWindow::SetTitle(const string& title)
 {
 	_info.Title = title;
 	SetWindowText(_handle, title.c_str());
 }
 
-LRESULT Engine::WindowsWindow::MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT Core::WindowsWindow::MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
 	HDC hdc;

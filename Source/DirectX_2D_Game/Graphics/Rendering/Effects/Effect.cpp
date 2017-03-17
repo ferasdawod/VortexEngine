@@ -13,7 +13,7 @@
 #include "Graphics/Rendering/RenderSettings.h"
 #include "Graphics/Vertex.h"
 
-#include "Application/SettingsManager.h"
+#include "Engine/SettingsManager.h"
 
 #include "Components/LightComponents/DirectionalLight.h"
 

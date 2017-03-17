@@ -2,6 +2,8 @@
 
 #include <memory>
 #include <string>
+#include <functional>
+#include <unordered_map>
 #include "ActorsDefenitions.h"
 
 using std::string;
@@ -28,7 +30,12 @@ public:
 
 	void			SaveActor(const StrongActorPtr actor, const string& fileName);
 
+	//template <typename T>
+	//void			RegisterComponent();
+
 private:
 	StrongComponentPtr CreateComponentFromXML(TiXmlElement* xmlElement);
 	virtual StrongComponentPtr CreateComponentFromID(ComponentTypeId id);
+
+	//std::unordered_map<ComponentTypeId, std::function<IComponent>> _componentsFactory;
 };

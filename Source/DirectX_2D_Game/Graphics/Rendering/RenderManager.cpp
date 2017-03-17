@@ -20,7 +20,7 @@ using DirectX::ContainmentType;
 
 #include "Level/Level.h"
 
-#include "Application/SettingsManager.h"
+#include "Engine/SettingsManager.h"
 #include "Resources/ResCache.h"
 
 RenderManager::RenderManager() : _pGraphicsDevice(nullptr), _pEffect(nullptr)

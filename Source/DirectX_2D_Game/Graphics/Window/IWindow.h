@@ -5,7 +5,7 @@
 
 using WindowHandle = HWND;
 
-namespace Engine
+namespace Core
 {
 	class IWindow
 	{

@@ -1,7 +1,11 @@
 ﻿#pragma once
 
-class Game
+namespace Core
 {
-public:
-	
-};
+	class Game
+	{
+	public:
+		Game() {}
+		virtual ~Game() {}
+	};
+}

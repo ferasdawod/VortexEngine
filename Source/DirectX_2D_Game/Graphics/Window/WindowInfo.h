@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace Engine
+namespace Core
 {
 	struct WindowInfo
 	{

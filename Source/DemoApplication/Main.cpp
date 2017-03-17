@@ -1,15 +1,20 @@
-#include "GameApplication.h"
+
+#include <Windows.h>
+
 #include "Debugging/Debug.h"
+#include <Engine/Engine.h>
+#include "CustomGame.h"
 
 
 int custom_main(HINSTANCE hInstance)
 {
 	DEBUG_LEAK_CHECK();
 
-	std::unique_ptr<IApplication> app(DBG_NEW GameApplication);
-	bool retValue = app->Run(hInstance);
+	Core::Engine engine;
+	std::shared_ptr<CustomGame> custom_game(DBG_NEW CustomGame);
+	engine.Run(custom_game);
 
-	return retValue ? 0 : 1;
+	return (EXIT_SUCCESS);
 }
 
 

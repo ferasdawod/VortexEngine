@@ -2,7 +2,7 @@
 
 #include "IWindow.h"
 
-namespace Engine
+namespace Core
 {
 	class BaseWindow : public IWindow
 	{
@@ -11,7 +11,7 @@ namespace Engine
 		virtual ~BaseWindow() {}
 
 		WindowHandle GetHandle() override { return _handle; }
-		const Engine::WindowInfo& GetInformation() const override { return _info; }
+		const Core::WindowInfo& GetInformation() const override { return _info; }
 
 	protected:
 		WindowHandle	_handle;

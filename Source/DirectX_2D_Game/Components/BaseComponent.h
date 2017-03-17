@@ -11,6 +11,7 @@ class Transform;
 
 class BaseComponent : public IComponent
 {
+	friend class ActorFactory;
 public:
 	explicit BaseComponent(const std::string& componentName);
 	virtual ~BaseComponent() {}

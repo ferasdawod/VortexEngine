@@ -2,7 +2,7 @@
 
 #include "BaseWindow.h"
 
-namespace Engine
+namespace Core
 {
 	class WindowsWindow : public BaseWindow
 	{
@@ -16,8 +16,5 @@ namespace Engine
 
 	protected:
 		static LRESULT CALLBACK MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-	protected:
-
 	};
 }

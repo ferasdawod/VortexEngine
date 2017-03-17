@@ -3,10 +3,12 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="GameApplication.cpp" />
+    <ClCompile Include="CustomGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApplication.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="CustomGame.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

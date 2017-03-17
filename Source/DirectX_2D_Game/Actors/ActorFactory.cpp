@@ -90,6 +90,14 @@ StrongActorPtr ActorFactory::CreateDirectionalLight()
 	return actor;
 }
 
+//template <typename T>
+//void ActorFactory::RegisterComponent()
+//{
+//	T::_typeId = 0;
+//	auto fun = []() { return StrongComponentPtr(DBG_NEW T()); };
+//	_componentsFactory.emplace(std::make_pair(T::_typeId, fun));
+//}
+
 
 StrongActorPtr ActorFactory::CreateFromXML(const std::string& fileName)
 {

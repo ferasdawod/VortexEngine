@@ -82,18 +82,6 @@
     </ClInclude>
     <ClInclude Include="3rd Party\TinyXml\tinystr.h" />
     <ClInclude Include="3rd Party\TinyXml\tinyxml.h" />
-    <ClInclude Include="Application\BaseApplication.h">
-      <Filter>Source Files\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\BaseGameApplication.h">
-      <Filter>Source Files\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\IApplication.h">
-      <Filter>Source Files\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\WindowsApplication.h">
-      <Filter>Source Files\Base</Filter>
-    </ClInclude>
     <ClInclude Include="Debugging\Debug.h">
       <Filter>Source Files\Game\Systems\Debugging</Filter>
     </ClInclude>
@@ -195,9 +183,6 @@
       <Filter>Source Files\Game\Systems\Graphics\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Rendering\Effects\EffectsStructures.h" />
-    <ClInclude Include="Application\SettingsManager.h">
-      <Filter>Source Files\Game\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="Components\LightComponents\PointLight.h" />
     <ClInclude Include="Components\LightComponents\SpotLight.h" />
     <ClInclude Include="Resources\Resource.h" />
@@ -231,6 +216,9 @@
     <ClInclude Include="Utilities\ObjectId.h" />
     <ClInclude Include="Engine\Game.h" />
     <ClInclude Include="Engine\GameTimer.h" />
+    <ClInclude Include="Engine\SettingsManager.h">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp">
@@ -253,12 +241,6 @@
     </ClCompile>
     <ClCompile Include="3rd Party\TinyXml\tinyxmlparser.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\BaseGameApplication.cpp">
-      <Filter>Source Files\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\WindowsApplication.cpp">
-      <Filter>Source Files\Base</Filter>
     </ClCompile>
     <ClCompile Include="Events\EventListener.cpp">
       <Filter>Source Files\Game\Systems\Events</Filter>
@@ -314,9 +296,6 @@
     <ClCompile Include="Graphics\Rendering\Effects\EffectStructures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SettingsManager.cpp">
-      <Filter>Source Files\Game\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="Resources\ResCache.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -367,6 +346,9 @@
     </ClCompile>
     <ClCompile Include="Engine\GameTimer.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SettingsManager.cpp">
+      <Filter>Source Files\Game\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
