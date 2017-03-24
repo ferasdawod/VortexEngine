@@ -172,12 +172,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CustomGame.cpp" />
+    <ClCompile Include="MyApplication.cpp" />
     <ClCompile Include="GameApplication.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CustomGame.h" />
+    <ClInclude Include="MyApplication.h" />
     <ClInclude Include="GameApplication.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

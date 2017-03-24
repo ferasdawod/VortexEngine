@@ -195,6 +195,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Actors\Actor.h" />
+    <ClInclude Include="Components\ComponentFactory.h" />
     <ClInclude Include="Engine\GameTimer.h" />
     <ClInclude Include="Components\IComponent.h" />
     <ClInclude Include="Actors\ActorFactory.h" />
@@ -208,7 +209,7 @@
     <ClInclude Include="Components\Camera.h" />
     <ClInclude Include="Debugging\Logger.h" />
     <ClInclude Include="Engine\Engine.h" />
-    <ClInclude Include="Engine\Game.h" />
+    <ClInclude Include="Engine\Application.h" />
     <ClInclude Include="Graphics\Colors.h" />
     <ClInclude Include="Graphics\ViewPort.h" />
     <ClInclude Include="Graphics\Window\BaseWindow.h" />
@@ -283,11 +284,12 @@
     <ClCompile Include="3rd Party\TinyXml\tinyxmlparser.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Components\ComponentFactory.cpp" />
     <ClCompile Include="Engine\GameTimer.cpp" />
     <ClCompile Include="Components\MeshRenderer.cpp" />
     <ClCompile Include="Debugging\Logger.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
-    <ClCompile Include="Engine\Game.cpp" />
+    <ClCompile Include="Engine\Application.cpp" />
     <ClCompile Include="Graphics\Buffers\BuffersDefenitions.cpp" />
     <ClCompile Include="Components\ComponentsDefenitions.cpp" />
     <ClCompile Include="Graphics\Rendering\Effects\EffectStructures.cpp" />

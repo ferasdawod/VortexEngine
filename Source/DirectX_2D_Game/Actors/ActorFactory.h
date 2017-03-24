@@ -8,10 +8,15 @@
 
 using std::string;
 class TiXmlElement;
+class ComponentFactory;
 
 class ActorFactory
 {
 public:
+	ActorFactory();
+
+	virtual ~ActorFactory() {}
+
 	StrongActorPtr	CreateEmptyActor(const string& actorName = "EmptyActor");
 
 	StrongActorPtr	CreatePlaneActor();
@@ -30,12 +35,7 @@ public:
 
 	void			SaveActor(const StrongActorPtr actor, const string& fileName);
 
-	//template <typename T>
-	//void			RegisterComponent();
-
+	std::shared_ptr<ComponentFactory> GetComponentFactory() const { return _pComponentFactory; }
 private:
-	StrongComponentPtr CreateComponentFromXML(TiXmlElement* xmlElement);
-	virtual StrongComponentPtr CreateComponentFromID(ComponentTypeId id);
-
-	//std::unordered_map<ComponentTypeId, std::function<IComponent>> _componentsFactory;
+	std::shared_ptr<ComponentFactory> _pComponentFactory;
 };

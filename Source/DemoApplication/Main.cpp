@@ -3,7 +3,7 @@
 
 #include "Debugging/Debug.h"
 #include <Engine/Engine.h>
-#include "CustomGame.h"
+#include "MyApplication.h"
 
 
 int custom_main(HINSTANCE hInstance)
@@ -11,7 +11,7 @@ int custom_main(HINSTANCE hInstance)
 	DEBUG_LEAK_CHECK();
 
 	Core::Engine engine;
-	std::shared_ptr<CustomGame> custom_game(DBG_NEW CustomGame);
+	std::shared_ptr<MyApplication> custom_game(DBG_NEW MyApplication);
 	engine.Run(custom_game);
 
 	return (EXIT_SUCCESS);

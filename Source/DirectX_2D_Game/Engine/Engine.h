@@ -18,7 +18,7 @@ class InputDevice;
 namespace Core
 {
 	class WindowsWindow;
-	class Game;
+	class Application;
 
 	class Engine : EventListener
 	{
@@ -26,10 +26,12 @@ namespace Core
 		Engine();
 		~Engine();
 
-		void Run(std::shared_ptr<Game> game);
+		void Run(std::shared_ptr<Application> application);
 
 	protected:
 		bool Initialize();
+		void RegisterComponents();
+
 		void Shutdown() const;
 
 		void UpdateSystems();
@@ -49,6 +51,8 @@ namespace Core
 		bool _isPaused;
 		bool _isRunning;
 
+		std::shared_ptr<Application>		_pApplication;
+
 		std::shared_ptr<Level>				_pLevel;
 
 		std::shared_ptr<Logger>				_pLogger;
@@ -58,7 +62,7 @@ namespace Core
 		std::shared_ptr<ProfilingManager>	_pProfilingManager;
 		std::shared_ptr<ActorFactory>		_pActorFactory;
 
-		std::shared_ptr<InputDevice>	_pInputDevice;
+		std::shared_ptr<InputDevice>		_pInputDevice;
 		std::shared_ptr<RenderManager>		_pRenderManager;
 		std::shared_ptr<WindowsWindow>		_pWindow;
 	};

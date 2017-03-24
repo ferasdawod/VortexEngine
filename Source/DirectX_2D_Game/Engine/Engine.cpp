@@ -6,14 +6,20 @@
 #include "Performance/ProfilingManager.h"
 #include "SettingsManager.h"
 #include <Actors/ActorFactory.h>
+#include <Components/ComponentFactory.h>
 #include <Graphics/Rendering/RenderManager.h>
 #include <Graphics/Window/WindowInfo.h>
 #include <Graphics/Window/WindowsWindow.h>
 #include <Level/Level.h>
 #include <Input/InputDevice.h>
 
+#include "Application.h"
 
 #include <Components/Camera.h>
+#include <Components/MeshRenderer.h>
+#include <Components/LightComponents/SpotLight.h>
+#include <Components/LightComponents/PointLight.h>
+#include <Components/LightComponents/DirectionalLight.h>
 
 namespace Core
 {
@@ -26,8 +32,10 @@ namespace Core
 	{
 	}
 
-	void Engine::Run(std::shared_ptr<Game> game)
+	void Engine::Run(std::shared_ptr<Application> application)
 	{
+		_pApplication = application;
+
 		auto result = Initialize();
 		if (!result)
 		{
@@ -55,6 +63,7 @@ namespace Core
 		_pResourceCache->RegisterDefaultLoaders();
 
 		_pActorFactory.reset(DBG_NEW ActorFactory());
+		RegisterComponents();
 
 		_pRenderManager.reset(DBG_NEW RenderManager());
 		_pWindow.reset(DBG_NEW WindowsWindow());
@@ -75,7 +84,10 @@ namespace Core
 		if (!result)
 			return false;
 
-		_pLevel = Level::CreateFromFile("Assets\\Levels\\SuperMegaLevel.level");
+		std::string levelPath;
+		SettingsManager::GetPtr()->GetSetting("Application", "DefaultLevel", levelPath);
+		_pLevel = Level::CreateFromFile(levelPath);
+
 		auto player = _pActorFactory->CreateCameraActor();
 
 		auto playerTransform = player->GetComponent<Transform>().lock();
@@ -92,6 +104,20 @@ namespace Core
 			return false;
 
 		return true;
+	}
+
+	void Engine::RegisterComponents()
+	{
+		auto componentFactory = _pActorFactory->GetComponentFactory();
+		
+		componentFactory->RegisterComponent("Transform", []() { return StrongComponentPtr(DBG_NEW Transform); });
+		componentFactory->RegisterComponent("Camera", []() { return StrongComponentPtr(DBG_NEW Camera); });
+		componentFactory->RegisterComponent("MeshRenderer", []() { return StrongComponentPtr(DBG_NEW MeshRenderer); });
+		componentFactory->RegisterComponent("DirectionalLight", []() { return StrongComponentPtr(DBG_NEW DirectionalLight); });
+		componentFactory->RegisterComponent("PointLight", []() { return StrongComponentPtr(DBG_NEW PointLight); });
+		componentFactory->RegisterComponent("SpotLight", []() { return StrongComponentPtr(DBG_NEW SpotLight); });
+
+		_pApplication->RegisterComponents(componentFactory);
 	}
 
 	void Engine::RunMainLoop()

@@ -214,11 +214,12 @@
     <ClInclude Include="Utilities\IdGenerator.h" />
     <ClInclude Include="Utilities\UniqueObject.h" />
     <ClInclude Include="Utilities\ObjectId.h" />
-    <ClInclude Include="Engine\Game.h" />
     <ClInclude Include="Engine\GameTimer.h" />
     <ClInclude Include="Engine\SettingsManager.h">
       <Filter>Source Files\Game\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Application.h" />
+    <ClInclude Include="Components\ComponentFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp">
@@ -341,14 +342,17 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\GameTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\SettingsManager.cpp">
       <Filter>Source Files\Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\ComponentFactory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

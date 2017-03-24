@@ -7,6 +7,12 @@
 #include "Components/LightComponents/DirectionalLight.h"
 #include "Components/LightComponents/PointLight.h"
 #include "Components/LightComponents/SpotLight.h"
+#include <Components/ComponentFactory.h>
+
+ActorFactory::ActorFactory()
+{
+	_pComponentFactory.reset(DBG_NEW ComponentFactory);
+}
 
 StrongActorPtr ActorFactory::CreateEmptyActor(const std::string& actorName)
 {
@@ -146,7 +152,7 @@ StrongActorPtr ActorFactory::CreateFromXML(TiXmlElement* actorElement)
 
 	for (TiXmlElement* component = componentsElement->FirstChildElement(); component; component = component->NextSiblingElement())
 	{
-		auto com = CreateComponentFromXML(component);
+		auto com = _pComponentFactory->CreateFromXML(component);
 		if (com != nullptr)
 			actor->AddComponent(com);
 	}
@@ -154,51 +160,6 @@ StrongActorPtr ActorFactory::CreateFromXML(TiXmlElement* actorElement)
 	Assert(actor->GetComponentsCount() == numComponents, "Created components count does not match the count in the file");
 
 	return actor;
-}
-
-StrongComponentPtr ActorFactory::CreateComponentFromXML(TiXmlElement* xmlElement)
-{
-	if (xmlElement->ValueStr() != std::string("Component"))
-		return nullptr;
-
-	ComponentTypeId id = 0;
-	string idStr = "-1";
-	xmlElement->QueryStringAttribute("TypeID", &idStr);
-
-	Assert(idStr != "-1", "The component id is invalid");
-
-	id = std::stoul(idStr);
-
-	auto component = CreateComponentFromID(id);
-	if (component == nullptr)
-		return nullptr;
-
-	component->Initialize(xmlElement);
-	return component;
-}
-
-StrongComponentPtr ActorFactory::CreateComponentFromID(ComponentTypeId id)
-{
-	switch (id)
-	{
-		case Transform::kComponentID:
-			return StrongComponentPtr(DBG_NEW Transform);
-		case Camera::kComponentID:
-			return StrongComponentPtr(DBG_NEW Camera);
-		// Render Components
-		case MeshRenderer::kComponentID:
-			return StrongComponentPtr(DBG_NEW MeshRenderer);
-		// light components
-		case DirectionalLight::kComponentID:
-			return StrongComponentPtr(DBG_NEW DirectionalLight);
-		case PointLight::kComponentID:
-			return StrongComponentPtr(DBG_NEW PointLight);
-		case SpotLight::kComponentID:
-			return StrongComponentPtr(DBG_NEW SpotLight);
-		default:
-			LOG_M("Found a strange component ID");
-			return nullptr;
-	}
 }
 
 void ActorFactory::SaveActor(const StrongActorPtr actor, const string& fileName)
