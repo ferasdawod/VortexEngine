@@ -6,7 +6,8 @@
 
 Level* Level::_pCurrentLevel = nullptr;
 
-Level::Level(const std::string& levelName) : _sLevelName(levelName), _ambientColor(0.2f, 0.2f, 0.2f, 1.0f)
+Level::Level(const std::string& levelName, std::shared_ptr<ActorFactory> actorFactory) 
+	: _actorFactory(actorFactory), _sLevelName(levelName),  _ambientColor(0.2f, 0.2f, 0.2f, 1.0f)
 {
 	assert(_pCurrentLevel == nullptr && "There can only be one level at any time");
 	_pCurrentLevel = this;
@@ -31,23 +32,10 @@ void Level::OnUpdate(const GameTimer& gameTimer)
 	}
 }
 
-std::shared_ptr<Level> Level::CreateFromFile(const std::string& fileName)
-{
-	std::shared_ptr<Level> lvl(DBG_NEW Level("Blah Blah Blah"));
-	if (lvl->LoadLevel(fileName))
-	{
-		return lvl;
-	}
-	
-	return std::shared_ptr<Level>();
-}
-
 bool Level::LoadLevel(const std::string& fileName)
 {
 	// first clean up any actors
 	DestroyAllActors();
-
-	ActorFactory actorFactory;
 
 	std::shared_ptr<TiXmlDocument> lvlD(DBG_NEW TiXmlDocument(fileName));
 	if (!lvlD->LoadFile())
@@ -77,7 +65,7 @@ bool Level::LoadLevel(const std::string& fileName)
 	for (TiXmlElement* actorE = actorsE->FirstChildElement(); actorE;
 		 actorE = actorE->NextSiblingElement(), ++actorIndex)
 	{
-		auto actorPtr = actorFactory.CreateFromXML(actorE);
+		auto actorPtr = _actorFactory->CreateFromXML(actorE);
 		if (actorPtr)
 		{
 			_actors.push_back(actorPtr);

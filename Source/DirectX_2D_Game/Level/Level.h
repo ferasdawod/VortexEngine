@@ -7,18 +7,15 @@
 #include <string>
 
 class GameTimer;
+class ActorFactory;
 
 class Level
 {
 public:
-	Level(const std::string& levelName);
+	Level(const std::string& levelName, std::shared_ptr<ActorFactory> actorFactory);
 	virtual ~Level();
 	
 	void				OnUpdate(const GameTimer& gameTimer);
-						
-	// creates a new level and calls load level on it and then returns it if loading was good
-	// returns null pointer if the loading failed
-	static std::shared_ptr<Level>	CreateFromFile(const std::string& fileName);
 						
 	// loads the level from a file on the disk and return true if loading was good
 	bool				LoadLevel(const std::string& fileName);
@@ -52,6 +49,8 @@ protected:
 	}
 
 protected:
+	std::shared_ptr<ActorFactory> _actorFactory;
+
 	std::vector<StrongActorPtr> _actors;
 	std::string _sLevelName;
 	
