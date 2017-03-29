@@ -86,7 +86,9 @@ namespace Core
 
 		std::string levelPath;
 		SettingsManager::GetPtr()->GetSetting("Application", "DefaultLevel", levelPath);
-		_pLevel = Level::CreateFromFile(levelPath);
+		_pLevel.reset(DBG_NEW Level("DefaultLevel", _pActorFactory));
+		if (!_pLevel->LoadLevel(levelPath))
+			return false;
 
 		auto player = _pActorFactory->CreateCameraActor();
 
