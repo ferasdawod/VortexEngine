@@ -18,7 +18,7 @@ public:
 	bool RegisterComponent(const string& name, std::function<StrongComponentPtr()> func);
 
 	StrongComponentPtr CreateFromXML(TiXmlElement* xmlElement);
-	virtual StrongComponentPtr CreateFromID(ComponentTypeId id);
+	virtual StrongComponentPtr CreateComponent(const string& name);
 
 private:
 	size_t CalculateHash(const string& str);
