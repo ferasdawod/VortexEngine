@@ -90,6 +90,7 @@ namespace Core
 		if (!_pLevel->LoadLevel(levelPath))
 			return false;
 
+		// camera 1
 		auto player = _pActorFactory->CreateCameraActor();
 
 		auto playerTransform = player->GetComponent<Transform>().lock();
@@ -97,8 +98,19 @@ namespace Core
 		playerTransform->Rotate(-130.0f, -30.0f, 0.0f);
 
 		auto camera = player->GetComponent<Camera>().lock();
-		//camera->SetViewPort(ViewPort(0, 0, 0.5f, 1.f));
+		camera->SetViewPort(ViewPort(0, 0, 0.5f, 1.f));
 		_pLevel->AddActor(player);
+
+		// camera 2
+		//player = _pActorFactory->CreateCameraActor();
+		//
+		//playerTransform = player->GetComponent<Transform>().lock();
+		//playerTransform->SetPosition(Vector3(+5.f, 5.0f, +10.0f));
+		//playerTransform->Rotate(+50.f, -30.0f, 0.0f);
+		//
+		//camera = player->GetComponent<Camera>().lock();
+		//camera->SetViewPort(ViewPort(0.5f, 0, 0.5f, 1.f));
+		//_pLevel->AddActor(player);
 		
 		_pInputDevice.reset(DBG_NEW InputDevice());
 		result = _pInputDevice->Init(GetModuleHandle(nullptr), _pWindow->GetHandle());
@@ -133,18 +145,17 @@ namespace Core
 			{
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
+				continue;
 			}
-			else
+
+			_gameTimer.Tick();
+
+			UpdateSystems();
+
+			if (!_isPaused)
 			{
-				_gameTimer.Tick();
-
-				UpdateSystems();
-
-				if (!_isPaused)
-				{
-					Update();
-					Render();
-				}
+				Update();
+				Render();
 			}
 		}
 	}

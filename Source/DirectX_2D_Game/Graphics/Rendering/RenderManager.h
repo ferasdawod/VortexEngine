@@ -3,6 +3,7 @@
 #include <memory>
 #include <list>
 #include <unordered_map>
+#include <vector>
 #include <functional>
 
 #include "Actors/ActorsDefenitions.h"
@@ -56,9 +57,9 @@ private:
 	bool			IsVisible(std::shared_ptr<SubMesh> subMesh, std::shared_ptr<Transform> transform, std::shared_ptr<Camera> camera);
 	void			ProcessDrawItem(std::shared_ptr<Material> mat, std::shared_ptr<SubMesh> subMesh, std::shared_ptr<Transform> transform);
 
-	void			RenderToShadowMap();
-	void			RenderToBackBuffer();
-	void			Render(std::function< bool(std::shared_ptr<Material>, std::shared_ptr<SubMesh>) > validationCallback);
+	void			RenderToShadowMap(std::shared_ptr<Camera> camera);
+	void			RenderToBackBuffer(std::shared_ptr<Camera> camera);
+	void			Render(std::function< bool(std::shared_ptr<Material>, std::shared_ptr<SubMesh>) > validationCallback, std::shared_ptr<Camera> camera);
 
 	virtual bool	HandleEvent(StrongEventDataPtr eventData) override;
 	virtual void	HandleRegistering(bool isRegistering) override;
@@ -71,7 +72,7 @@ private:
 
 	std::unique_ptr<GraphicsDevice>		_pGraphicsDevice;
 
-	WeakCameraPtr						_pActiveCamera;
+	std::vector<WeakCameraPtr>			_cameras;
 
 	std::shared_ptr<RenderSettings>	_pRenderSettings;
 

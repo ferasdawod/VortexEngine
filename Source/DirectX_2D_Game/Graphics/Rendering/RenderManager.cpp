@@ -64,35 +64,38 @@ void RenderManager::OnRender()
 	FUNC_PROFILE();
 
 	// we cant render if we don't have an active camera
-	if (_pActiveCamera.expired())
+	if (_cameras.size() == 0)
 		return;
 
-	// converting the camera weak pointer to a strong pointer
-	auto camera = _pActiveCamera.lock();
-	// if the camera is not enabled we don't need to render the scene
-	if (!camera->IsEnabled())
-		return;
-
-	// now would be a good time to sort the list, but we are not doing that yet
-	// TODO sort rendering requests into different sets for fast rendering
-
-	// first we apply the lighting data
 	// we first must get a reference to the current level
 	auto currLevel = Level::GetCurrent();
 	Assert(currLevel != nullptr, "Current Level Can't Be Null");
+	
+	_pGraphicsDevice->Clear();
 
-	_pEffect->PrepareFrame(_lightsMap, camera, currLevel->AmbientColor());
+	for (auto weakCamera : _cameras)
+	{
+		// converting the camera weak pointer to a strong pointer
+		auto camera = weakCamera.lock();
+		// if the camera is not enabled we don't need to render the scene
+		if (!camera->IsEnabled())
+			return;
 
-	_pEffect->SetTechnique(RenderTechnique::ShadowTech);
-	RenderToShadowMap();
+		// now would be a good time to sort the list, but we are not doing that yet
+		// TODO sort rendering requests into different sets for fast rendering
+		_pEffect->PrepareFrame(_lightsMap, camera, currLevel->AmbientColor());
 
-	_pEffect->SetTechnique(RenderTechnique::MainTech);
-	RenderToBackBuffer();
+		_pEffect->SetTechnique(RenderTechnique::ShadowTech);
+		RenderToShadowMap(camera);
 
+		_pEffect->SetTechnique(RenderTechnique::MainTech);
+		RenderToBackBuffer(camera);
+	}
+	
 	_pGraphicsDevice->Present();
 }
 
-void RenderManager::RenderToShadowMap()
+void RenderManager::RenderToShadowMap(std::shared_ptr<Camera> camera)
 {
 	FUNC_PROFILE();
 
@@ -104,32 +107,26 @@ void RenderManager::RenderToShadowMap()
 	Render([](std::shared_ptr<Material> mat, std::shared_ptr<SubMesh> subMesh)
 	{ 
 		return mat->GetIsLit() && mat->GetCastShadows();
-	});
+	}, camera);
 }
 
-void RenderManager::RenderToBackBuffer()
+void RenderManager::RenderToBackBuffer(std::shared_ptr<Camera> camera)
 {
 	FUNC_PROFILE();
-
-	auto camera = _pActiveCamera.lock();
 
 	_pGraphicsDevice->SetDefaultTargets();
 	_pGraphicsDevice->SetDefaultStates();
 	_pGraphicsDevice->SetCullState(_pRenderSettings->WireframeEnabled ? CullState::Wireframe : CullState::CounterClockWise);
 	_pGraphicsDevice->SetViewPort(camera->GetViewPort());
-	_pGraphicsDevice->Clear();
 
 	_pEffect->SetShadowMap(_pShadowMap);
-	Render([](std::shared_ptr<Material> mat, std::shared_ptr<SubMesh> subMesh) { return true; });
+	Render([](std::shared_ptr<Material> mat, std::shared_ptr<SubMesh> subMesh) { return true; }, camera);
 	_pEffect->RemoveShadowMap();
 }
 
-void RenderManager::Render(std::function< bool(std::shared_ptr<Material>, std::shared_ptr<SubMesh>) > validationCallback)
+void RenderManager::Render(std::function< bool(std::shared_ptr<Material>, std::shared_ptr<SubMesh>) > validationCallback, std::shared_ptr<Camera> camera)
 {
 	FUNC_PROFILE();
-
-	std::shared_ptr<Camera> camera = _pActiveCamera.lock();
-	assert(camera);
 
 	for (auto it = _renderRequests.cbegin(); it != _renderRequests.cend(); ++it)
 	{
@@ -272,7 +269,7 @@ bool RenderManager::HandleEvent(StrongEventDataPtr eventData)
 		std::shared_ptr<Event_NewCamera> casted = std::dynamic_pointer_cast<Event_NewCamera>(eventData);
 		assert(casted != nullptr);
 
-		_pActiveCamera = casted->GetCamera();
+		_cameras.push_back(casted->GetCamera());
 	}
 	else if (eventData->GetID() == Event_NewLight::kEventID)
 	{
