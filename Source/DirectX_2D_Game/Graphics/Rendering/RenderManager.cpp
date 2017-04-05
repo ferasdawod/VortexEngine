@@ -23,6 +23,8 @@ using DirectX::ContainmentType;
 #include "Engine/SettingsManager.h"
 #include "Resources/ResCache.h"
 
+#include <3rd Party/imgui/imgui.h>
+
 RenderManager::RenderManager() : _pGraphicsDevice(nullptr), _pEffect(nullptr)
 {
 	HandleRegistering(true);
@@ -91,6 +93,10 @@ void RenderManager::OnRender()
 		_pEffect->SetTechnique(RenderTechnique::MainTech);
 		RenderToBackBuffer(camera);
 	}
+
+
+	ImGui::ShowTestWindow();
+	ImGui::Render();
 	
 	_pGraphicsDevice->Present();
 }

@@ -9,6 +9,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#include "pch.h"
+
 #include "imgui.h"
 #include <ctype.h>          // toupper, isprint
 #include <math.h>           // sqrtf, powf, cosf, sinf, floorf, ceilf

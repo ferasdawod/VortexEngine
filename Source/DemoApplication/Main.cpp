@@ -10,9 +10,11 @@ int custom_main(HINSTANCE hInstance)
 {
 	DEBUG_LEAK_CHECK();
 
-	Core::Engine engine;
-	std::shared_ptr<MyApplication> custom_game(DBG_NEW MyApplication);
-	engine.Run(custom_game);
+	{
+		Core::Engine engine;
+		std::shared_ptr<MyApplication> custom_game(DBG_NEW MyApplication);
+		engine.Run(custom_game);
+	}
 
 	return (EXIT_SUCCESS);
 }

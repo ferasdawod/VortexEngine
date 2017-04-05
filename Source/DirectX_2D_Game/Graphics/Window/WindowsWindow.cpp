@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 
 #include "WindowsWindow.h"
+#include <3rd Party/imgui/imgui_impl_dx11.h>
 
 bool Core::WindowsWindow::Initialize(const WindowInfo& info)
 {
@@ -53,8 +54,12 @@ void Core::WindowsWindow::SetTitle(const string& title)
 	SetWindowText(_handle, title.c_str());
 }
 
+extern LRESULT ImGui_ImplDX11_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT Core::WindowsWindow::MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	if (ImGui_ImplDX11_WndProcHandler(hWnd, msg, wParam, lParam))
+		return true;
+
 	PAINTSTRUCT ps;
 	HDC hdc;
 

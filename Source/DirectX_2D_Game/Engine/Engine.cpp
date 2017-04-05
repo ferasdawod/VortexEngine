@@ -21,6 +21,10 @@
 #include <Components/LightComponents/PointLight.h>
 #include <Components/LightComponents/DirectionalLight.h>
 
+#include <3rd Party/imgui/imgui.h>
+#include <3rd Party/imgui/imgui_impl_dx11.h>
+#include <Graphics/Rendering/GraphicsDevice.h>
+
 namespace Core
 {
 	Engine::Engine() : _isPaused(true), _isRunning(false)
@@ -68,7 +72,6 @@ namespace Core
 		_pRenderManager.reset(DBG_NEW RenderManager());
 		_pWindow.reset(DBG_NEW WindowsWindow());
 
-
 		WindowInfo windowInfo;
 		SettingsManager::GetPtr()->GetSetting("Window", "X", windowInfo.X);
 		SettingsManager::GetPtr()->GetSetting("Window", "Y", windowInfo.Y);
@@ -84,6 +87,11 @@ namespace Core
 		if (!result)
 			return false;
 
+		// IMGUI Initialization
+		auto graphicsDevice = GraphicsDevice::GetPtr();
+		ImGui_ImplDX11_Init(_pWindow->GetHandle(), graphicsDevice->GetDevice().Get(), graphicsDevice->GetContext().Get());
+		//
+
 		std::string levelPath;
 		SettingsManager::GetPtr()->GetSetting("Application", "DefaultLevel", levelPath);
 		_pLevel.reset(DBG_NEW Level("DefaultLevel", _pActorFactory));
@@ -98,7 +106,7 @@ namespace Core
 		playerTransform->Rotate(-130.0f, -30.0f, 0.0f);
 
 		auto camera = player->GetComponent<Camera>().lock();
-		camera->SetViewPort(ViewPort(0, 0, 0.5f, 1.f));
+		//camera->SetViewPort(ViewPort(0, 0, 0.5f, 1.f));
 		_pLevel->AddActor(player);
 
 		// camera 2
@@ -173,9 +181,56 @@ namespace Core
 
 	void Engine::Render() const
 	{
+		ImGui_ImplDX11_NewFrame();
+
+		RenderGui();
+
 		_pRenderManager->OnRender();
 	}
 
+	void Engine::RenderGui() const
+	{
+		ImGui::SetNextWindowPos(ImVec2(100, 100));
+		ImGui::SetNextWindowSize(ImVec2(250, 250), ImGuiSetCond_FirstUseEver);
+
+		ImGuiWindowFlags window_flags = 0;
+		//window_flags |= ImGuiWindowFlags_NoTitleBar;
+		//window_flags |= ImGuiWindowFlags_ShowBorders;
+		//window_flags |= ImGuiWindowFlags_NoResize;
+		//window_flags |= ImGuiWindowFlags_NoMove;
+		//window_flags |= ImGuiWindowFlags_NoScrollbar;
+		//window_flags |= ImGuiWindowFlags_NoCollapse;
+		//window_flags |= ImGuiWindowFlags_MenuBar;
+
+		static bool isOpen = true;
+		ImGui::Begin("Hello World", &isOpen, window_flags);
+
+		ImGui::Text("Hello World");
+
+		static bool isCheck = false;
+
+		ImGui::Checkbox("Run The Game", &isCheck);
+
+		if (isCheck)
+			ImGui::Text("You Checked");
+		else
+			ImGui::Text("You No Checked");
+
+		if (ImGui::Button("Click To Run") == true)
+		{
+			isCheck = true;
+		}
+
+
+		static int speed = 10;
+
+		ImGui::SliderInt("Speed", &speed, 0, 100);
+
+		ImGui::Text("Speed = %d", speed);
+
+
+		ImGui::End();
+	}
 
 	void Engine::Shutdown() const
 	{
@@ -196,6 +251,8 @@ namespace Core
 
 		StrongEventDataPtr closeEvent(DBG_NEW Event_ApplicationExiting());
 		_pEventManager->TriggerEvent(closeEvent);
+
+		ImGui_ImplDX11_Shutdown();
 	}
 
 	void Engine::Pause()

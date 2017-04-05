@@ -220,6 +220,13 @@
     </ClInclude>
     <ClInclude Include="Engine\Application.h" />
     <ClInclude Include="Components\ComponentFactory.h" />
+    <ClInclude Include="3rd Party\imgui\imconfig.h" />
+    <ClInclude Include="3rd Party\imgui\imgui.h" />
+    <ClInclude Include="3rd Party\imgui\imgui_internal.h" />
+    <ClInclude Include="3rd Party\imgui\stb_rect_pack.h" />
+    <ClInclude Include="3rd Party\imgui\stb_textedit.h" />
+    <ClInclude Include="3rd Party\imgui\stb_truetype.h" />
+    <ClInclude Include="3rd Party\imgui\imgui_impl_dx11.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp">
@@ -352,6 +359,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Components\ComponentFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd Party\imgui\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd Party\imgui\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd Party\imgui\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd Party\imgui\imgui_impl_dx11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -37,7 +37,9 @@ namespace Core
 		void UpdateSystems();
 		void RunMainLoop();
 		void Update();
+
 		void Render() const;
+		void RenderGui() const;
 
 		// meta functions
 		void Pause();

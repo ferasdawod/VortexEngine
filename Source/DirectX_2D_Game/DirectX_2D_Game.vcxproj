@@ -194,6 +194,13 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3rd Party\imgui\imconfig.h" />
+    <ClInclude Include="3rd Party\imgui\imgui.h" />
+    <ClInclude Include="3rd Party\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="3rd Party\imgui\imgui_internal.h" />
+    <ClInclude Include="3rd Party\imgui\stb_rect_pack.h" />
+    <ClInclude Include="3rd Party\imgui\stb_textedit.h" />
+    <ClInclude Include="3rd Party\imgui\stb_truetype.h" />
     <ClInclude Include="Actors\Actor.h" />
     <ClInclude Include="Components\ComponentFactory.h" />
     <ClInclude Include="Engine\GameTimer.h" />
@@ -270,6 +277,10 @@
     <ClInclude Include="Utilities\XmlHelper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3rd Party\imgui\imgui.cpp" />
+    <ClCompile Include="3rd Party\imgui\imgui_demo.cpp" />
+    <ClCompile Include="3rd Party\imgui\imgui_draw.cpp" />
+    <ClCompile Include="3rd Party\imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="Actors\Actor.cpp" />
     <ClCompile Include="Actors\ActorFactory.cpp" />
     <ClCompile Include="3rd Party\TinyXml\tinystr.cpp">
