@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 
-#include "EditorGui.h"
+#include "GuiController.h"
 
 #include <3rd Party/imgui/ImGuizmo.h>
 #include <Components/Transform.h>
@@ -103,17 +103,17 @@ inline void SetupImGuiStyle(bool bStyleDark_, float alpha_)
 	}
 }
 
-Core::EditorGui::EditorGui(): _isDarkTheme(true), _windowsAlpha(0.9f), _bShowAboutWindow(false)
+Core::GuiController::GuiController(): _isDarkTheme(true), _windowsAlpha(0.9f), _bShowAboutWindow(false)
 {
 	HandleRegistering(true);
 }
 
-Core::EditorGui::~EditorGui()
+Core::GuiController::~GuiController()
 {
 	HandleRegistering(false);
 }
 
-bool Core::EditorGui::Initialize(std::weak_ptr<IWindow> window, std::weak_ptr<Level> level)
+bool Core::GuiController::Initialize(std::weak_ptr<IWindow> window, std::weak_ptr<Level> level)
 {
 	_pWindow = window;
 	_pLevel = level;
@@ -136,12 +136,12 @@ bool Core::EditorGui::Initialize(std::weak_ptr<IWindow> window, std::weak_ptr<Le
 	return result;
 }
 
-void Core::EditorGui::Shutdown()
+void Core::GuiController::Shutdown()
 {
 	ImGui_ImplDX11_Shutdown();
 }
 
-void Core::EditorGui::Render()
+void Core::GuiController::Render()
 {
 	SetupImGuiStyle(_isDarkTheme, _windowsAlpha);
 
@@ -159,7 +159,7 @@ void Core::EditorGui::Render()
 	DrawExtraWindows();
 }
 
-bool Core::EditorGui::HandleEvent(StrongEventDataPtr eventData)
+bool Core::GuiController::HandleEvent(StrongEventDataPtr eventData)
 {
 	auto eventId = eventData->GetID();
 	if (eventId == Event_WindowResized::kEventID)
@@ -179,13 +179,13 @@ bool Core::EditorGui::HandleEvent(StrongEventDataPtr eventData)
 	return true;
 }
 
-void Core::EditorGui::HandleRegistering(bool isRegistering)
+void Core::GuiController::HandleRegistering(bool isRegistering)
 {
 	ToggleRegisteration(Event_WindowResized::kEventID, isRegistering);
 	ToggleRegisteration(Event_NewCamera::kEventID, isRegistering);
 }
 
-void Core::EditorGui::DrawMenuBar()
+void Core::GuiController::DrawMenuBar()
 {
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -234,7 +234,7 @@ void Core::EditorGui::DrawMenuBar()
 	}
 }
 
-void Core::EditorGui::DrawActorsWindow()
+void Core::GuiController::DrawActorsWindow()
 {
 	auto level = _pLevel.lock();
 	if (!level) return;
@@ -321,19 +321,19 @@ void Core::EditorGui::DrawActorsWindow()
 	ImGui::End();
 }
 
-void Core::EditorGui::DrawAssetsWindow()
+void Core::GuiController::DrawAssetsWindow()
 {
 }
 
-void Core::EditorGui::DrawLogWindow()
+void Core::GuiController::DrawLogWindow()
 {
 }
 
-void Core::EditorGui::DrawPropertiesWindow()
+void Core::GuiController::DrawPropertiesWindow()
 {
 }
 
-void Core::EditorGui::DrawExtraWindows()
+void Core::GuiController::DrawExtraWindows()
 {
 	if (_bShowAboutWindow)
 	{

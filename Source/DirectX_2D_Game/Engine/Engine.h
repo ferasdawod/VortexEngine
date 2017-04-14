@@ -19,7 +19,7 @@ namespace Core
 {
 	class WindowsWindow;
 	class Application;
-	class EditorGui;
+	class GuiController;
 
 	class Engine : EventListener
 	{
@@ -68,6 +68,6 @@ namespace Core
 		std::shared_ptr<Level>				_pLevel;
 		std::shared_ptr<RenderManager>		_pRenderManager;
 
-		std::shared_ptr<EditorGui>			_pEditorGui;
+		std::shared_ptr<GuiController>			_pGuiController;
 	};
 }

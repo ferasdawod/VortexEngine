@@ -227,9 +227,9 @@
     <ClInclude Include="3rd Party\imgui\stb_textedit.h" />
     <ClInclude Include="3rd Party\imgui\stb_truetype.h" />
     <ClInclude Include="3rd Party\imgui\imgui_impl_dx11.h" />
-    <ClInclude Include="Engine\EditorGui.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="3rd Party\imgui\ImGuizmo.h" />
+    <ClInclude Include="Editor\GuiController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp">
@@ -376,10 +376,10 @@
     <ClCompile Include="3rd Party\imgui\imgui_impl_dx11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\EditorGui.cpp">
+    <ClCompile Include="3rd Party\imgui\ImGuizmo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="3rd Party\imgui\ImGuizmo.cpp">
+    <ClCompile Include="Editor\GuiController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -390,24 +390,8 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="EngineResource.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="cursor1.cur">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="arrow.cur">
       <Filter>Resource Files</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="icon1.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="icon2.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
 </Project>

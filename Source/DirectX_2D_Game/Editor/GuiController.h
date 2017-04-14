@@ -8,11 +8,11 @@ class Camera;
 
 namespace Core
 {
-	class EditorGui : public EventListener
+	class GuiController : public EventListener
 	{
 	public:
-		EditorGui();
-		~EditorGui();
+		GuiController();
+		~GuiController();
 
 		bool Initialize(std::weak_ptr<IWindow> window, std::weak_ptr<Level> level);
 		void Shutdown();

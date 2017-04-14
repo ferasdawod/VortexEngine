@@ -25,7 +25,7 @@
 #include <3rd Party/imgui/imgui_impl_dx11.h>
 #include <Graphics/Rendering/GraphicsDevice.h>
 
-#include "EditorGui.h"
+#include <Editor/GuiController.h>
 
 namespace Core
 {
@@ -95,8 +95,8 @@ namespace Core
 		if (!_pLevel->LoadLevel(levelPath))
 			return false;
 
-		_pEditorGui.reset(DBG_NEW EditorGui());
-		result = _pEditorGui->Initialize(_pWindow, _pLevel);
+		_pGuiController.reset(DBG_NEW GuiController());
+		result = _pGuiController->Initialize(_pWindow, _pLevel);
 		if (!result)
 			return false;
 
@@ -183,7 +183,7 @@ namespace Core
 
 	void Engine::Render() const
 	{
-		_pEditorGui->Render();
+		_pGuiController->Render();
 		_pRenderManager->OnRender();
 	}
 
@@ -207,7 +207,7 @@ namespace Core
 		StrongEventDataPtr closeEvent(DBG_NEW Event_ApplicationExiting());
 		_pEventManager->TriggerEvent(closeEvent);
 
-		_pEditorGui->Shutdown();
+		_pGuiController->Shutdown();
 	}
 
 	void Engine::Pause()

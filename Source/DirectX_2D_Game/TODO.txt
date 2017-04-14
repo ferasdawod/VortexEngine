@@ -30,7 +30,6 @@ the file stores only the height value in 8bits ( aka 1 byte)
 so we can read the whole file and move one byte at a time to get the height values
 
 General :
-*- handling the destruction of the window handle in the editor application (check the web and the d3d samples in the learning/c++)
 *- lookup : SetDebugBreak()
 
 Resource Management :

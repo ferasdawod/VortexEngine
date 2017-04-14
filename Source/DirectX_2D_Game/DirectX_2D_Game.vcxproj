@@ -290,7 +290,7 @@
     <ClInclude Include="3rd Party\imgui\stb_truetype.h" />
     <ClInclude Include="Actors\Actor.h" />
     <ClInclude Include="Components\ComponentFactory.h" />
-    <ClInclude Include="Engine\EditorGui.h" />
+    <ClInclude Include="Editor\GuiController.h" />
     <ClInclude Include="Engine\GameTimer.h" />
     <ClInclude Include="Components\IComponent.h" />
     <ClInclude Include="Actors\ActorFactory.h" />
@@ -390,7 +390,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Components\ComponentFactory.cpp" />
-    <ClCompile Include="Engine\EditorGui.cpp" />
+    <ClCompile Include="Editor\GuiController.cpp" />
     <ClCompile Include="Engine\GameTimer.cpp" />
     <ClCompile Include="Components\MeshRenderer.cpp" />
     <ClCompile Include="Debugging\Logger.cpp" />
@@ -448,15 +448,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="EngineResource.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="arrow.cur" />
-    <None Include="cursor1.cur" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="icon1.ico" />
-    <Image Include="icon2.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
