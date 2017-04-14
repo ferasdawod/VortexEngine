@@ -7,13 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine Core", "DirectX_2D_G
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoApplication", "DemoApplication\DemoApplication.vcxproj", "{0868DA54-5DF3-481B-BF65-6B520FAB6773}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EditorDLL", "EditorDLL\EditorDLL.vcxproj", "{F03339B5-B663-4ED8-A5C5-D2436E50AF45}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorApplication", "EditorApplication\EditorApplication.csproj", "{5AD557CA-140D-4595-B7BB-FD7FA0FB936E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F03339B5-B663-4ED8-A5C5-D2436E50AF45} = {F03339B5-B663-4ED8-A5C5-D2436E50AF45}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -48,26 +41,6 @@ Global
 		{0868DA54-5DF3-481B-BF65-6B520FAB6773}.Release|Win32.Build.0 = Release|Win32
 		{0868DA54-5DF3-481B-BF65-6B520FAB6773}.Release|x64.ActiveCfg = Release|x64
 		{0868DA54-5DF3-481B-BF65-6B520FAB6773}.Release|x64.Build.0 = Release|x64
-		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Debug|Win32.ActiveCfg = Debug|Win32
-		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Debug|Win32.Build.0 = Debug|Win32
-		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Debug|x64.ActiveCfg = Debug|x64
-		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Debug|x64.Build.0 = Debug|x64
-		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Editor|Win32.ActiveCfg = Editor|Win32
-		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Editor|Win32.Build.0 = Editor|Win32
-		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Editor|x64.ActiveCfg = Editor|x64
-		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Editor|x64.Build.0 = Editor|x64
-		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Release|Win32.ActiveCfg = Release|Win32
-		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Release|Win32.Build.0 = Release|Win32
-		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Release|x64.ActiveCfg = Release|x64
-		{F03339B5-B663-4ED8-A5C5-D2436E50AF45}.Release|x64.Build.0 = Release|x64
-		{5AD557CA-140D-4595-B7BB-FD7FA0FB936E}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{5AD557CA-140D-4595-B7BB-FD7FA0FB936E}.Debug|x64.ActiveCfg = Debug|x64
-		{5AD557CA-140D-4595-B7BB-FD7FA0FB936E}.Debug|x64.Build.0 = Debug|x64
-		{5AD557CA-140D-4595-B7BB-FD7FA0FB936E}.Editor|Win32.ActiveCfg = Editor|Any CPU
-		{5AD557CA-140D-4595-B7BB-FD7FA0FB936E}.Editor|x64.ActiveCfg = Editor|x64
-		{5AD557CA-140D-4595-B7BB-FD7FA0FB936E}.Release|Win32.ActiveCfg = Release|Any CPU
-		{5AD557CA-140D-4595-B7BB-FD7FA0FB936E}.Release|x64.ActiveCfg = Release|x64
-		{5AD557CA-140D-4595-B7BB-FD7FA0FB936E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
