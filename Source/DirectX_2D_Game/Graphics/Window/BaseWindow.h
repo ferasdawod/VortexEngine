@@ -10,7 +10,7 @@ namespace Core
 		BaseWindow() : _handle(nullptr) {}
 		virtual ~BaseWindow() {}
 
-		WindowHandle GetHandle() override { return _handle; }
+		WindowHandle GetHandle() const override { return _handle; }
 		const Core::WindowInfo& GetInformation() const override { return _info; }
 
 	protected:

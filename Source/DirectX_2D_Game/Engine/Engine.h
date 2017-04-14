@@ -19,6 +19,7 @@ namespace Core
 {
 	class WindowsWindow;
 	class Application;
+	class EditorGui;
 
 	class Engine : EventListener
 	{
@@ -26,7 +27,7 @@ namespace Core
 		Engine();
 		~Engine();
 
-		void Run(std::shared_ptr<Application> application);
+		void Run(std::unique_ptr<Application> application);
 
 	protected:
 		bool Initialize();
@@ -39,7 +40,6 @@ namespace Core
 		void Update();
 
 		void Render() const;
-		void RenderGui() const;
 
 		// meta functions
 		void Pause();
@@ -53,19 +53,21 @@ namespace Core
 		bool _isPaused;
 		bool _isRunning;
 
-		std::shared_ptr<Application>		_pApplication;
-
-		std::shared_ptr<Level>				_pLevel;
-
 		std::shared_ptr<Logger>				_pLogger;
 		std::shared_ptr<EventManager>		_pEventManager;
+		std::shared_ptr<WindowsWindow>		_pWindow;
+
 		std::shared_ptr<ResCache>			_pResourceCache;
 		std::shared_ptr<SettingsManager>	_pSettingsManager;
 		std::shared_ptr<ProfilingManager>	_pProfilingManager;
 		std::shared_ptr<ActorFactory>		_pActorFactory;
 
 		std::shared_ptr<InputDevice>		_pInputDevice;
+		std::unique_ptr<Application>		_pApplication;
+
+		std::shared_ptr<Level>				_pLevel;
 		std::shared_ptr<RenderManager>		_pRenderManager;
-		std::shared_ptr<WindowsWindow>		_pWindow;
+
+		std::shared_ptr<EditorGui>			_pEditorGui;
 	};
 }

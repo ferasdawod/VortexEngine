@@ -3,6 +3,8 @@
 #include "WindowsWindow.h"
 #include <3rd Party/imgui/imgui_impl_dx11.h>
 
+#include "resource1.h"
+
 bool Core::WindowsWindow::Initialize(const WindowInfo& info)
 {
 	_info = info;
@@ -24,6 +26,7 @@ bool Core::WindowsWindow::Initialize(const WindowInfo& info)
 	wcex.lpszMenuName = nullptr;
 	wcex.lpszClassName = info.Title.c_str();
 	//wcex.hIconSm = GetSmallIcon();
+	wcex.hCursor = LoadCursor(hInstance, (LPCSTR)IDC_POINTER);
 
 	if (!RegisterClassEx(&wcex))
 	{
@@ -44,6 +47,7 @@ bool Core::WindowsWindow::Initialize(const WindowInfo& info)
 
 	ShowWindow(_handle, SW_SHOWDEFAULT);
 	UpdateWindow(_handle);
+
 
 	return true;
 }

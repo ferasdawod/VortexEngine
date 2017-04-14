@@ -109,6 +109,8 @@ public:
 	// remove a component with the provided id from this actor
 	bool RemoveComponent(const ObjectId& uniqueComponentID);
 	
+	const std::vector<StrongComponentPtr>& GetComponents() const { return _components; }
+
 	// return the component count for this actor
 	int GetComponentsCount() const { return _components.size(); }
 

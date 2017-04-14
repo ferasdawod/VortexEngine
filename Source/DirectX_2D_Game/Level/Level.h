@@ -37,6 +37,8 @@ public:
 	size_t				ActorsCount() const { return _actors.size(); }
 	Color				AmbientColor() const { return _ambientColor; }
 
+	const std::vector<StrongActorPtr>& GetActors() const { return _actors; }
+
 public:
 	static Level*		GetCurrent() { return _pCurrentLevel; }
 protected:

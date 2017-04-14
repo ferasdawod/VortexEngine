@@ -12,7 +12,6 @@ namespace Core
 		Application() {}
 		virtual ~Application() {}
 
-
 		virtual void RegisterComponents(std::shared_ptr<ComponentFactory> componentFactory) {}
 	};
 }

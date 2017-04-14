@@ -25,6 +25,8 @@
 #include <3rd Party/imgui/imgui_impl_dx11.h>
 #include <Graphics/Rendering/GraphicsDevice.h>
 
+#include "EditorGui.h"
+
 namespace Core
 {
 	Engine::Engine() : _isPaused(true), _isRunning(false)
@@ -36,9 +38,9 @@ namespace Core
 	{
 	}
 
-	void Engine::Run(std::shared_ptr<Application> application)
+	void Engine::Run(std::unique_ptr<Application> application)
 	{
-		_pApplication = application;
+		_pApplication = std::move(application);
 
 		auto result = Initialize();
 		if (!result)
@@ -87,15 +89,15 @@ namespace Core
 		if (!result)
 			return false;
 
-		// IMGUI Initialization
-		auto graphicsDevice = GraphicsDevice::GetPtr();
-		ImGui_ImplDX11_Init(_pWindow->GetHandle(), graphicsDevice->GetDevice().Get(), graphicsDevice->GetContext().Get());
-		//
-
 		std::string levelPath;
 		SettingsManager::GetPtr()->GetSetting("Application", "DefaultLevel", levelPath);
 		_pLevel.reset(DBG_NEW Level("DefaultLevel", _pActorFactory));
 		if (!_pLevel->LoadLevel(levelPath))
+			return false;
+
+		_pEditorGui.reset(DBG_NEW EditorGui());
+		result = _pEditorGui->Initialize(_pWindow, _pLevel);
+		if (!result)
 			return false;
 
 		// camera 1
@@ -181,55 +183,8 @@ namespace Core
 
 	void Engine::Render() const
 	{
-		ImGui_ImplDX11_NewFrame();
-
-		RenderGui();
-
+		_pEditorGui->Render();
 		_pRenderManager->OnRender();
-	}
-
-	void Engine::RenderGui() const
-	{
-		ImGui::SetNextWindowPos(ImVec2(100, 100));
-		ImGui::SetNextWindowSize(ImVec2(250, 250), ImGuiSetCond_FirstUseEver);
-
-		ImGuiWindowFlags window_flags = 0;
-		//window_flags |= ImGuiWindowFlags_NoTitleBar;
-		//window_flags |= ImGuiWindowFlags_ShowBorders;
-		//window_flags |= ImGuiWindowFlags_NoResize;
-		//window_flags |= ImGuiWindowFlags_NoMove;
-		//window_flags |= ImGuiWindowFlags_NoScrollbar;
-		//window_flags |= ImGuiWindowFlags_NoCollapse;
-		//window_flags |= ImGuiWindowFlags_MenuBar;
-
-		static bool isOpen = true;
-		ImGui::Begin("Hello World", &isOpen, window_flags);
-
-		ImGui::Text("Hello World");
-
-		static bool isCheck = false;
-
-		ImGui::Checkbox("Run The Game", &isCheck);
-
-		if (isCheck)
-			ImGui::Text("You Checked");
-		else
-			ImGui::Text("You No Checked");
-
-		if (ImGui::Button("Click To Run") == true)
-		{
-			isCheck = true;
-		}
-
-
-		static int speed = 10;
-
-		ImGui::SliderInt("Speed", &speed, 0, 100);
-
-		ImGui::Text("Speed = %d", speed);
-
-
-		ImGui::End();
 	}
 
 	void Engine::Shutdown() const
@@ -252,7 +207,7 @@ namespace Core
 		StrongEventDataPtr closeEvent(DBG_NEW Event_ApplicationExiting());
 		_pEventManager->TriggerEvent(closeEvent);
 
-		ImGui_ImplDX11_Shutdown();
+		_pEditorGui->Shutdown();
 	}
 
 	void Engine::Pause()

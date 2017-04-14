@@ -3,6 +3,8 @@
 #include <Engine/Application.h>
 #include <memory>
 
+#include "resource.h"
+
 
 class MyApplication : public Core::Application
 {

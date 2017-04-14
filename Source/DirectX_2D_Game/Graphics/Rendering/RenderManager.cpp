@@ -95,7 +95,6 @@ void RenderManager::OnRender()
 	}
 
 
-	ImGui::ShowTestWindow();
 	ImGui::Render();
 	
 	_pGraphicsDevice->Present();

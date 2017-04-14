@@ -12,8 +12,8 @@ int custom_main(HINSTANCE hInstance)
 
 	{
 		Core::Engine engine;
-		std::shared_ptr<MyApplication> custom_game(DBG_NEW MyApplication);
-		engine.Run(custom_game);
+		std::unique_ptr<MyApplication> custom_game(DBG_NEW MyApplication);
+		engine.Run(std::move(custom_game));
 	}
 
 	return (EXIT_SUCCESS);
