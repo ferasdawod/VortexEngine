@@ -402,33 +402,47 @@ void Core::GuiController::DrawPropertiesWindow()
 				char* buff;
 				auto id = "##" + std::to_string((int)prop.GetValue());
 
+				ImGui::PushID(prop.GetValue());
 				switch (prop.GetType())
 				{
 				case PropertyType::Float:
-					ImGui::DragFloat(id.c_str(), (float*)prop.GetValue(), 0, 100);
+					ImGui::DragFloat("", (float*)prop.GetValue(), 0, 100);
 					break;
+				
 				case PropertyType::Int:
-					ImGui::DragInt(id.c_str(), (int*)prop.GetValue(), 0, 100);
+					ImGui::DragInt("", (int*)prop.GetValue(), 0, 100);
 					break;
+				
 				case PropertyType::Bool:
-					ImGui::Checkbox(id.c_str(), (bool*)prop.GetValue());
+					ImGui::Checkbox("", (bool*)prop.GetValue());
 					break;
+				
 				case PropertyType::Color:
-					ImGui::ColorEdit4(id.c_str(), (float*)prop.GetValue(), false);
+					ImGui::ColorEdit4("", (float*)prop.GetValue(), false);
 					break;
+				
 				case PropertyType::String: 
 					str = (string*)prop.GetValue();
 					buff = &((*str)[0]);
-					ImGui::InputText(id.c_str(), buff, 255);
-					
+					ImGui::InputText("", buff, 255);
 					break;
-				case PropertyType::Vector2: break;
+
+				case PropertyType::Vector2: 
+					ImGui::DragFloat2("", (float*)prop.GetValue(), 0.1, 0, 100);
+					break;
+
 				case PropertyType::Vector3:
-					ImGui::DragFloat3(id.c_str(), (float*)prop.GetValue(), 0, 100);
+					ImGui::DragFloat3("", (float*)prop.GetValue(), 0.1, 0, 100);
 					break;
-				case PropertyType::Vector4: break;
-				default:;
+
+				case PropertyType::Vector4: 
+					ImGui::DragFloat4("", (float*)prop.GetValue(), 0.1, 0, 100);
+					break;
+
+				default:
+					LOG_W("Unknown property type");
 				}
+				ImGui::PopID();
 			}
 		}
 	}
