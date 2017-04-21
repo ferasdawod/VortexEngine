@@ -4,17 +4,25 @@
 #include "PropertyDescription.h"
 #include "PropertyType.h"
 
-class PropertyBag
+namespace Core
 {
-public:
-	PropertyBag() {}
-	virtual ~PropertyBag() {}
+	class PropertyBag
+	{
+	public:
+		PropertyBag() {}
+		virtual ~PropertyBag() {}
 
-	virtual void RegisterProperties() = 0;
-	void RegisterProperty(const char* propertyName, PropertyType type, void* value);
+		const std::vector<PropertyDescription>& GetProperties() const { return _properties; }
 
-	const std::vector<PropertyDescription>& GetProperties() const { return _properties; }
+	protected:
+		virtual void RegisterProperties() = 0;
+		
+		void RegisterProperty(const char* propertyName, PropertyType type, void* value)
+		{
+			_properties.push_back(PropertyDescription(propertyName, type, value));
+		}
 
-protected:
-	std::vector<PropertyDescription> _properties;
-};
+	private:
+		std::vector<PropertyDescription> _properties;
+	};
+}

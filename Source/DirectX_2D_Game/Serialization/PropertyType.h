@@ -1,14 +1,17 @@
 #pragma once
 
-enum class PropertyType
+namespace Core
 {
-	Float,
-	Int,
-	Bool,
-	Color,
-	String,
+	enum class PropertyType
+	{
+		Float,
+		Int,
+		Bool,
+		Color,
+		String,
 
-	Vector2,
-	Vector3,
-	Vector4,
-};
+		Vector2,
+		Vector3,
+		Vector4,
+	};
+}
