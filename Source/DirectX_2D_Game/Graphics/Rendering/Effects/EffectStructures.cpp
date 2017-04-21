@@ -111,16 +111,18 @@ _pad1(0)
 			// only the first directional light casts shadows
 			if (_DirectionalCount == 0 && renderSettings->ShadowsEnabled)
 			{
+				auto shadowDistance = 20.f;
+
 				// our current world is a 14x14 grid so the far corner is according to Pythagoras theory is sqrt(x*x + y*y)
 				// this should be calculated based on the level
-				auto sceneBounds = sqrtf(10.0f * 10.0f + 10.0f * 10.0f);
-
-				auto shadowDistance = 2.5f;
+				//auto sceneBounds = sqrtf(10.0f * 10.0f + 10.0f * 10.0f);
+				auto sceneBounds = shadowDistance;
 
 				// VIEW MATRIX
-				auto lootAtPosition = cameraTransform->GetPosition() + cameraTransform->GetForward() * shadowDistance * 0.5f;
+				//auto lootAtPosition = cameraTransform->GetPosition() + cameraTransform->GetForward() * shadowDistance * 0.5f;
+				auto lootAtPosition = cameraTransform->GetPosition();
 				auto pos = lootAtPosition + -1.0f * sceneBounds * lightTrans->GetForward();
-				lightTrans->SetPosition(pos);
+				//lightTrans->SetPosition(pos);
 
 				// the look at target should be the scene center
 				//Matrix lightViewMatrix = Matrix::CreateLookAt(pos, Vector3::Zero, Vector3::Up);
