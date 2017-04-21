@@ -411,8 +411,6 @@
     <ClCompile Include="Performance\ProfilingSample.cpp" />
     <ClCompile Include="Performance\ScopedProfilerSample.cpp" />
     <ClCompile Include="Performance\ProfilingManager.cpp" />
-    <ClCompile Include="Serialization\PropertyBag.cpp" />
-    <ClCompile Include="Serialization\PropertyDescription.cpp" />
     <ClCompile Include="Resources\GeometryGenerator.cpp" />
     <ClCompile Include="Resources\ResCache.cpp" />
     <ClCompile Include="Resources\ResourceLoaders.cpp" />

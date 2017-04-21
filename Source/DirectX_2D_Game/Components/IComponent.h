@@ -8,7 +8,7 @@
 class TiXmlElement;
 class GameTimer;
 
-class IComponent : public UniqueObject, public PropertyBag
+class IComponent : public UniqueObject, public Core::PropertyBag
 {
 public:
 	virtual ~IComponent() {}

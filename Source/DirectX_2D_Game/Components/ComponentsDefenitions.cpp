@@ -98,10 +98,10 @@ void Transform::Initialize(TiXmlElement* xmlData)
 
 void Transform::RegisterProperties()
 {
-	RegisterProperty("Position", PropertyType::Vector3, &_Position);
+	RegisterProperty("Position", Core::PropertyType::Vector3, &_Position);
 	// TODO register rotation property
 	// the rotation property type needs to be changed to eular angles
-	RegisterProperty("Scale", PropertyType::Vector3, &_Scale);
+	RegisterProperty("Scale", Core::PropertyType::Vector3, &_Scale);
 }
 
 void Transform::Rotate(float yawDegrees, float pitchDegrees, float rollDegrees)
@@ -242,9 +242,9 @@ void Camera::OnUpdate(const GameTimer& gameTimer)
 
 void Camera::RegisterProperties()
 {
-	RegisterProperty("FOV", PropertyType::Float, &_FOV);
-	RegisterProperty("Near Clip", PropertyType::Float, &_NearClip);
-	RegisterProperty("Far Clip", PropertyType::Float, &_FarClip);
+	RegisterProperty("FOV", Core::PropertyType::Float, &_FOV);
+	RegisterProperty("Near Clip", Core::PropertyType::Float, &_NearClip);
+	RegisterProperty("Far Clip", Core::PropertyType::Float, &_FarClip);
 }
 
 void Camera::RebuildView()

@@ -28,8 +28,8 @@ void LightComponent::Initialize()
 
 void LightComponent::RegisterProperties()
 {
-	RegisterProperty("Strength", PropertyType::Float, &_Strength);
-	RegisterProperty("DiffuseColor", PropertyType::Color, &_DiffuseColor);
+	RegisterProperty("Strength", Core::PropertyType::Float, &_Strength);
+	RegisterProperty("DiffuseColor", Core::PropertyType::Color, &_DiffuseColor);
 }
 
 TiXmlElement* LightComponent::ToXML() const
@@ -73,7 +73,7 @@ void DirectionalLight::Initialize(TiXmlElement* xmlData)
 void DirectionalLight::RegisterProperties()
 {
 	LightComponent::RegisterProperties();
-	RegisterProperty("Shadow Strength", PropertyType::Float, &_ShadowStrength);
+	RegisterProperty("Shadow Strength", Core::PropertyType::Float, &_ShadowStrength);
 }
 
 TiXmlElement* DirectionalLight::ToXML() const
@@ -96,8 +96,8 @@ void PointLight::RegisterProperties()
 {
 	LightComponent::RegisterProperties();
 
-	RegisterProperty("Falloff", PropertyType::Float, &_Falloff);
-	RegisterProperty("Range", PropertyType::Float, &_Range);
+	RegisterProperty("Falloff", Core::PropertyType::Float, &_Falloff);
+	RegisterProperty("Range", Core::PropertyType::Float, &_Range);
 }
 
 TiXmlElement* PointLight::ToXML() const
@@ -122,8 +122,8 @@ void SpotLight::RegisterProperties()
 {
 	LightComponent::RegisterProperties();
 
-	RegisterProperty("Cone Angle", PropertyType::Float, &_ConeAngleDegrees);
-	RegisterProperty("Falloff", PropertyType::Float, &_Falloff);
+	RegisterProperty("Cone Angle", Core::PropertyType::Float, &_ConeAngleDegrees);
+	RegisterProperty("Falloff", Core::PropertyType::Float, &_Falloff);
 }
 
 TiXmlElement* SpotLight::ToXML() const

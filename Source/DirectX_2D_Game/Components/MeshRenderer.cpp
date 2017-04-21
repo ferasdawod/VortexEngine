@@ -52,7 +52,7 @@ void MeshRenderer::Initialize(TiXmlElement* xmlData)
 void MeshRenderer::RegisterProperties()
 {
 	_MeshFilePath.reserve(255);
-	RegisterProperty("Mesh Name", PropertyType::String, (void*)&_MeshFilePath);
+	RegisterProperty("Mesh Name", Core::PropertyType::String, (void*)&_MeshFilePath);
 }
 
 TiXmlElement* MeshRenderer::ToXML() const
