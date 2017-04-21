@@ -117,8 +117,8 @@ TiXmlElement* Actor::ToXML() const
 
 std::weak_ptr<Transform> Actor::GetTransform()
 {
-	if (!_pWeakTransformPtr)
-		_pWeakTransformPtr = GetComponent<Transform>().lock();
+	if (_pWeakTransformPtr.expired())
+		_pWeakTransformPtr = GetComponent<Transform>();
 
 	return _pWeakTransformPtr;
 }

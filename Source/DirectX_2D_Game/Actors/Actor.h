@@ -119,6 +119,6 @@ private:
 	bool _enabled;
 
 	std::vector<StrongComponentPtr> _components;
-	std::shared_ptr<Transform> _pWeakTransformPtr;
+	std::weak_ptr<Transform> _pWeakTransformPtr;
 };
 
