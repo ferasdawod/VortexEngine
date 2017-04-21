@@ -265,11 +265,11 @@ IMGUI_API LRESULT ImGui_ImplDX11_WndProcHandler(HWND, UINT msg, WPARAM wParam, L
         return true;
     case WM_KEYDOWN:
         if (wParam < 256)
-            io.KeysDown[wParam] = 1;
+            io.KeysDown[wParam] = true;
         return true;
     case WM_KEYUP:
         if (wParam < 256)
-            io.KeysDown[wParam] = 0;
+            io.KeysDown[wParam] = false;
         return true;
     case WM_CHAR:
         // You can also use ToAscii()+GetKeyboardState() to retrieve characters.
