@@ -376,7 +376,7 @@ void Core::GuiController::DrawPropertiesWindow()
 
 	auto name = actor->GetName();
 
-	if (ImGui::CollapsingHeader("Actor"))
+	if (ImGui::CollapsingHeader("Actor", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::Text("Name");
 		ImGui::SameLine(100);
@@ -390,53 +390,52 @@ void Core::GuiController::DrawPropertiesWindow()
 	auto& components = actor->GetComponents();
 	for (auto component : components)
 	{
-		if (ImGui::CollapsingHeader(component->GetName().c_str()))
+		if (ImGui::CollapsingHeader(component->GetName().c_str()), ImGuiTreeNodeFlags_DefaultOpen)
 		{
 			auto& props = component->GetProperties();
 			for (auto& prop : props)
 			{
-				ImGui::Text(prop.GetName());
+				ImGui::Text(prop.name);
 				ImGui::SameLine(100);
 
 				string* str;
 				char* buff;
-				auto id = "##" + std::to_string((int)prop.GetValue());
 
-				ImGui::PushID(prop.GetValue());
-				switch (prop.GetType())
+				ImGui::PushID(prop.value);
+				switch (prop.type)
 				{
 				case PropertyType::Float:
-					ImGui::DragFloat("", (float*)prop.GetValue(), 0, 100);
+					ImGui::DragFloat("", (float*)prop.value, 0, 100);
 					break;
 				
 				case PropertyType::Int:
-					ImGui::DragInt("", (int*)prop.GetValue(), 0, 100);
+					ImGui::DragInt("", (int*)prop.value, 0, 100);
 					break;
 				
 				case PropertyType::Bool:
-					ImGui::Checkbox("", (bool*)prop.GetValue());
+					ImGui::Checkbox("", (bool*)prop.value);
 					break;
 				
 				case PropertyType::Color:
-					ImGui::ColorEdit4("", (float*)prop.GetValue(), false);
+					ImGui::ColorEdit4("", (float*)prop.value, false);
 					break;
 				
 				case PropertyType::String: 
-					str = (string*)prop.GetValue();
+					str = (string*)prop.value;
 					buff = &((*str)[0]);
 					ImGui::InputText("", buff, 255);
 					break;
 
 				case PropertyType::Vector2: 
-					ImGui::DragFloat2("", (float*)prop.GetValue(), 0.1, 0, 100);
+					ImGui::DragFloat2("", (float*)prop.value, 0.1, 0, 100);
 					break;
 
 				case PropertyType::Vector3:
-					ImGui::DragFloat3("", (float*)prop.GetValue(), 0.1, 0, 100);
+					ImGui::DragFloat3("", (float*)prop.value, 0.1, 0, 100);
 					break;
 
 				case PropertyType::Vector4: 
-					ImGui::DragFloat4("", (float*)prop.GetValue(), 0.1, 0, 100);
+					ImGui::DragFloat4("", (float*)prop.value, 0.1, 0, 100);
 					break;
 
 				default:
