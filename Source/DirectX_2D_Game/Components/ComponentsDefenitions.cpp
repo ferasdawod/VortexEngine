@@ -39,6 +39,11 @@ TiXmlElement* BaseComponent::ToXML() const
 	return element;
 }
 
+void BaseComponent::Initialize()
+{
+	RegisterProperties();
+}
+
 void BaseComponent::Initialize(TiXmlElement* xmlData)
 {
 	std::string componentName("Blah Blah Blah");
@@ -71,6 +76,11 @@ TiXmlElement* Transform::ToXML() const
 	return element;
 }
 
+void Transform::Initialize()
+{
+	BaseComponent::Initialize();
+}
+
 void Transform::Initialize(TiXmlElement* xmlData)
 {
 	BaseComponent::Initialize(xmlData);
@@ -84,6 +94,14 @@ void Transform::Initialize(TiXmlElement* xmlData)
 	temp.y = DirectX::XMConvertToRadians(temp.y);
 	temp.z = DirectX::XMConvertToRadians(temp.z);
 	_Rotation = Quaternion::CreateFromYawPitchRoll(temp.x, temp.y, temp.z);
+}
+
+void Transform::RegisterProperties()
+{
+	RegisterProperty("Position", PropertyType::Vector3, &_Position);
+	// TODO register rotation property
+	// the rotation property type needs to be changed to eular angles
+	RegisterProperty("Scale", PropertyType::Vector3, &_Scale);
 }
 
 void Transform::Rotate(float yawDegrees, float pitchDegrees, float rollDegrees)
@@ -123,6 +141,8 @@ Camera::~Camera()
 
 void Camera::Initialize()
 {
+	BaseComponent::Initialize();
+
 	// notify others that we are here
 	std::shared_ptr<Camera> strongPtr = this->shared_from_this();
 	WeakCameraPtr weakPtr(strongPtr);
@@ -140,68 +160,72 @@ void Camera::OnUpdate(const GameTimer& gameTimer)
 	// DELETE BLOCK
 	
 	auto transform = _pOwner->GetTransform().lock();
-	if (Input::IsKeyDown(KeyCode::W))
+
+	if (Input::IsMouseButtonDown(MouseKeys::RightButton))
 	{
-		transform->Move(transform->GetWorldMat().Forward() * gameTimer.DeltaTime() * 5.0f);
-	}
-	if (Input::IsKeyDown(KeyCode::S))
-	{
-		transform->Move(transform->GetWorldMat().Forward() * gameTimer.DeltaTime() * -5.0f);
-	}
-	if (Input::IsKeyDown(KeyCode::D))
-	{
-		transform->Move(transform->GetWorldMat().Right() * gameTimer.DeltaTime() * 5.0f);
-	}
-	if (Input::IsKeyDown(KeyCode::A))
-	{
-		transform->Move(transform->GetWorldMat().Left() * gameTimer.DeltaTime() * 5.0f);
-	}
-	if (Input::IsKeyDown(KeyCode::E))
-	{
-		transform->Move(transform->GetWorldMat().Up() * gameTimer.DeltaTime() * 5.0f);
-	}
-	if (Input::IsKeyDown(KeyCode::Q))
-	{
-		transform->Move(transform->GetWorldMat().Down() * gameTimer.DeltaTime() * 5.0f);
+		if (Input::IsKeyDown(KeyCode::W))
+		{
+			transform->Move(transform->GetWorldMat().Forward() * gameTimer.DeltaTime() * 5.0f);
+		}
+		if (Input::IsKeyDown(KeyCode::S))
+		{
+			transform->Move(transform->GetWorldMat().Forward() * gameTimer.DeltaTime() * -5.0f);
+		}
+		if (Input::IsKeyDown(KeyCode::D))
+		{
+			transform->Move(transform->GetWorldMat().Right() * gameTimer.DeltaTime() * 5.0f);
+		}
+		if (Input::IsKeyDown(KeyCode::A))
+		{
+			transform->Move(transform->GetWorldMat().Left() * gameTimer.DeltaTime() * 5.0f);
+		}
+		if (Input::IsKeyDown(KeyCode::E))
+		{
+			transform->Move(transform->GetWorldMat().Up() * gameTimer.DeltaTime() * 5.0f);
+		}
+		if (Input::IsKeyDown(KeyCode::Q))
+		{
+			transform->Move(transform->GetWorldMat().Down() * gameTimer.DeltaTime() * 5.0f);
+		}
+
+		if (Input::IsKeyDown(KeyCode::Left_Arrow))
+		{
+			transform->SetRotation(
+				transform->GetRotation() * Quaternion::CreateFromAxisAngle
+				(Vector3::Up, gameTimer.DeltaTime() * 3.0f));
+		}
+		if (Input::IsKeyDown(KeyCode::Right_Arrow))
+		{
+			transform->SetRotation(
+				transform->GetRotation() * Quaternion::CreateFromAxisAngle
+				(Vector3::Up, gameTimer.DeltaTime() * -3.0f));
+		}
+		if (Input::IsKeyDown(KeyCode::Up_Arrow))
+		{
+			transform->SetRotation(
+				transform->GetRotation() * Quaternion::CreateFromAxisAngle
+				(transform->GetWorldMat().Left(), gameTimer.DeltaTime() * -3.0f));
+		}
+		if (Input::IsKeyDown(KeyCode::Down_Arrow))
+		{
+			transform->SetRotation(
+				transform->GetRotation() * Quaternion::CreateFromAxisAngle
+				(transform->GetWorldMat().Right(), gameTimer.DeltaTime() * -3.0f));
+		}
+
+		auto mouseDelta = Input::MouseDelta();
+		if (mouseDelta.x != 0)
+		{
+			transform->SetRotation(transform->GetRotation() * Quaternion::CreateFromAxisAngle(
+				Vector3::Down, gameTimer.DeltaTime() * mouseDelta.x * 0.2f));
+		}
+		if (mouseDelta.y != 0)
+		{
+			transform->SetRotation(transform->GetRotation() * Quaternion::CreateFromAxisAngle(
+				transform->GetWorldMat().Left(), gameTimer.DeltaTime() * mouseDelta.y * 0.2f));
+		}
 	}
 
-	if (Input::IsKeyDown(KeyCode::Left_Arrow))
-	{
-		transform->SetRotation(
-			transform->GetRotation() * Quaternion::CreateFromAxisAngle
-			(Vector3::Up, gameTimer.DeltaTime() * 3.0f));
-	}
-	if (Input::IsKeyDown(KeyCode::Right_Arrow))
-	{
-		transform->SetRotation(
-			transform->GetRotation() * Quaternion::CreateFromAxisAngle
-			(Vector3::Up, gameTimer.DeltaTime() * -3.0f));
-	}
-	if (Input::IsKeyDown(KeyCode::Up_Arrow))
-	{
-		transform->SetRotation(
-			transform->GetRotation() * Quaternion::CreateFromAxisAngle
-			(transform->GetWorldMat().Left(), gameTimer.DeltaTime() * -3.0f));
-	}
-	if (Input::IsKeyDown(KeyCode::Down_Arrow))
-	{
-		transform->SetRotation(
-			transform->GetRotation() * Quaternion::CreateFromAxisAngle
-			(transform->GetWorldMat().Right(), gameTimer.DeltaTime() * -3.0f));
-	}
-
-	auto mouseDelta = !Input::IsMouseButtonDown(MouseKeys::RightButton) ? Vector3::Zero : Input::MouseDelta();
-	if (mouseDelta.x != 0)
-	{
-		transform->SetRotation(transform->GetRotation() * Quaternion::CreateFromAxisAngle(
-			Vector3::Down, gameTimer.DeltaTime() * mouseDelta.x * 0.2f));
-	}
-	if (mouseDelta.y != 0)
-	{
-		transform->SetRotation(transform->GetRotation() * Quaternion::CreateFromAxisAngle(
-			transform->GetWorldMat().Left(), gameTimer.DeltaTime() * mouseDelta.y * 0.2f));
-	}
-	
 	// END DELETE BLOCK
 
 	auto trans = _pOwner->GetTransform().lock();
@@ -214,6 +238,13 @@ void Camera::OnUpdate(const GameTimer& gameTimer)
 
 	_prevPosition = currPosition;
 	_prevRotation = currRotation;
+}
+
+void Camera::RegisterProperties()
+{
+	RegisterProperty("FOV", PropertyType::Float, &_FOV);
+	RegisterProperty("Near Clip", PropertyType::Float, &_NearClip);
+	RegisterProperty("Far Clip", PropertyType::Float, &_FarClip);
 }
 
 void Camera::RebuildView()

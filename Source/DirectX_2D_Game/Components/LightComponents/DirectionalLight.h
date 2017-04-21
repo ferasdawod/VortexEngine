@@ -21,6 +21,8 @@ public:
 
 	virtual void			OnUpdate(const GameTimer& gameTimer) override {}
 	
+	virtual void			RegisterProperties() override;
+
 	virtual TiXmlElement*	ToXML() const override;
 
 };

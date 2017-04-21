@@ -24,9 +24,11 @@ public:
 
 	EXPOSE_ID(kComponentID);
 
-	virtual void		Initialize() {}
+	virtual void		Initialize() override;
 	virtual void		Initialize(TiXmlElement* xmlData) override;
 	virtual void		OnUpdate(const GameTimer& gameTimer) { }
+
+	void RegisterProperties() override;
 
 public:
 	DECLARE_PROPERTY(Vector3, Position);

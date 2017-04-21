@@ -9,6 +9,8 @@
 
 void MeshRenderer::Initialize()
 {
+	BaseComponent::Initialize();
+
 	if (_MeshFilePath.empty())
 	{
 		LOG_M("Mesh renderer does not have any mesh to render");
@@ -45,6 +47,12 @@ void MeshRenderer::Initialize(TiXmlElement* xmlData)
 			}
 		}
 	}
+}
+
+void MeshRenderer::RegisterProperties()
+{
+	_MeshFilePath.reserve(255);
+	RegisterProperty("Mesh Name", PropertyType::String, (void*)&_MeshFilePath);
 }
 
 TiXmlElement* MeshRenderer::ToXML() const

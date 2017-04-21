@@ -230,6 +230,9 @@
     <ClInclude Include="resource1.h" />
     <ClInclude Include="3rd Party\imgui\ImGuizmo.h" />
     <ClInclude Include="Editor\GuiController.h" />
+    <ClInclude Include="Serialization\PropertyDescription.h" />
+    <ClInclude Include="Serialization\PropertyBag.h" />
+    <ClInclude Include="Serialization\PropertyType.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp">
@@ -380,6 +383,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Editor\GuiController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Serialization\PropertyDescription.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Serialization\PropertyBag.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

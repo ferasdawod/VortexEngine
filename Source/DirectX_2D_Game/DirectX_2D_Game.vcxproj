@@ -319,6 +319,8 @@
     <ClInclude Include="Performance\ProfilingSample.h" />
     <ClInclude Include="Performance\ScopedProfilerSample.h" />
     <ClInclude Include="Performance\ProfilingManager.h" />
+    <ClInclude Include="Serialization\PropertyBag.h" />
+    <ClInclude Include="Serialization\PropertyDescription.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="Resources\GeometryGenerator.h" />
     <ClInclude Include="Resources\IResourceLoader.h" />
@@ -326,6 +328,7 @@
     <ClInclude Include="Resources\ResHandle.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\ResourceLoaders.h" />
+    <ClInclude Include="Serialization\PropertyType.h" />
     <ClInclude Include="Utilities\D3DUtils.h" />
     <ClInclude Include="Debugging\Debug.h" />
     <ClInclude Include="Components\LightComponents\DirectionalLight.h" />
@@ -408,6 +411,8 @@
     <ClCompile Include="Performance\ProfilingSample.cpp" />
     <ClCompile Include="Performance\ScopedProfilerSample.cpp" />
     <ClCompile Include="Performance\ProfilingManager.cpp" />
+    <ClCompile Include="Serialization\PropertyBag.cpp" />
+    <ClCompile Include="Serialization\PropertyDescription.cpp" />
     <ClCompile Include="Resources\GeometryGenerator.cpp" />
     <ClCompile Include="Resources\ResCache.cpp" />
     <ClCompile Include="Resources\ResourceLoaders.cpp" />

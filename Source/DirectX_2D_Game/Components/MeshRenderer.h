@@ -32,6 +32,8 @@ public:
 
 	virtual void OnUpdate(const GameTimer& gameTimer) { }
 
+	void RegisterProperties() override;
+
 	virtual TiXmlElement* ToXML() const override;
 
 	DECLARE_STRING_PROPERTY(MeshFilePath);

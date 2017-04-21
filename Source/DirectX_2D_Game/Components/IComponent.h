@@ -3,11 +3,12 @@
 #include <string>
 #include "Actors/ActorsDefenitions.h"
 #include <Utilities/UniqueObject.h>
+#include <Serialization/PropertyBag.h>
 
 class TiXmlElement;
 class GameTimer;
 
-class IComponent : public UniqueObject
+class IComponent : public UniqueObject, public PropertyBag
 {
 public:
 	virtual ~IComponent() {}
@@ -18,6 +19,9 @@ public:
 	virtual void Initialize(TiXmlElement* xmlData) = 0;
 	// update the component each frame
 	virtual void OnUpdate(const GameTimer& gameTimer) = 0;
+
+	// register this component properties
+	virtual void RegisterProperties() = 0;
 
 	// return the type id for this component type
 	virtual ComponentTypeId GetTypeID() const = 0;

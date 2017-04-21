@@ -30,6 +30,9 @@ public:
 
 	virtual void			OnUpdate(const GameTimer& gameTimer) = 0;
 
+	virtual void RegisterProperties() override;
+
+
 	virtual TiXmlElement*	ToXML() const override;
 
 	DECLARE_PROPERTY(LightType, LightType);

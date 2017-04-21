@@ -16,11 +16,13 @@ public:
 	explicit BaseComponent(const std::string& componentName);
 	virtual ~BaseComponent() {}
 
-	void Initialize() override = 0;
+	void Initialize() override;
 	void Initialize(TiXmlElement* xmlData) override;
 
 	void OnUpdate(const GameTimer& gameTimer) override = 0;
 	TiXmlElement* ToXML() const override;
+
+	virtual void RegisterProperties() = 0;
 
 	ComponentTypeId GetTypeID() const override = 0;
 	std::weak_ptr<Transform> GetTransform() const { return _pOwner->GetTransform(); }

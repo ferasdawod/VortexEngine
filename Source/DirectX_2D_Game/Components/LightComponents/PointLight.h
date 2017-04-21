@@ -18,6 +18,8 @@ public:
 
 	virtual void OnUpdate(const GameTimer& gameTimer) {}
 
+	virtual void			RegisterProperties() override;
+
 	virtual TiXmlElement* ToXML() const override;
 
 	// The higher is value the harder the edges of the light will be
