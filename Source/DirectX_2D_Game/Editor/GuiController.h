@@ -5,6 +5,7 @@
 class GraphicsDevice;
 class Level;
 class Camera;
+class Actor;
 
 namespace Core
 {
@@ -43,5 +44,8 @@ namespace Core
 
 		int _windowWidth;
 		int _windowHeight;
+
+		long _selectedActorId;
+		std::weak_ptr<Actor> _pSelectedActor;
 	};
 }

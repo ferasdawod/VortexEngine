@@ -13,6 +13,8 @@
 
 #include <Debugging/Logger.h>
 
+#include <Input/Input.h>
+
 namespace ImGuizmo {
 	struct matrix_t;
 }
@@ -103,7 +105,7 @@ inline void SetupImGuiStyle(bool bStyleDark_, float alpha_)
 	}
 }
 
-Core::GuiController::GuiController(): _isDarkTheme(true), _windowsAlpha(0.9f), _bShowAboutWindow(false)
+Core::GuiController::GuiController() : _isDarkTheme(true), _windowsAlpha(0.9f), _bShowAboutWindow(false), _selectedActorId(-1)
 {
 	HandleRegistering(true);
 }
@@ -120,7 +122,7 @@ bool Core::GuiController::Initialize(std::weak_ptr<IWindow> window, std::weak_pt
 
 	auto win = window.lock();
 	auto device = GraphicsDevice::GetPtr();
-	
+
 	auto result = ImGui_ImplDX11_Init(win->GetHandle(), device->GetDevice().Get(), device->GetContext().Get());
 
 	auto windowInformation = win->GetInformation();
@@ -132,7 +134,7 @@ bool Core::GuiController::Initialize(std::weak_ptr<IWindow> window, std::weak_pt
 	ImGuiIO& io = ImGui::GetIO();
 	//io.Fonts->AddFontDefault();
 	io.Fonts->AddFontFromFileTTF("Assets/Fonts/Roboto-Regular.ttf", 16.f);
-	
+
 	return result;
 }
 
@@ -148,7 +150,7 @@ void Core::GuiController::Render()
 	ImGui_ImplDX11_NewFrame();
 	ImGuizmo::BeginFrame();
 
-	ImGui::ShowTestWindow();
+	//ImGui::ShowTestWindow();
 
 	DrawMenuBar();
 	DrawActorsWindow();
@@ -165,7 +167,7 @@ bool Core::GuiController::HandleEvent(StrongEventDataPtr eventData)
 	if (eventId == Event_WindowResized::kEventID)
 	{
 		auto casted = std::dynamic_pointer_cast<Event_WindowResized>(eventData);
-		
+
 		_windowWidth = casted->Width();
 		_windowHeight = casted->Height();
 	}
@@ -243,11 +245,11 @@ void Core::GuiController::DrawActorsWindow()
 
 
 	ImGui::SetNextWindowPos(ImVec2(0, 25));
-	ImGui::SetNextWindowSize(ImVec2(_windowWidth * 0.2f, _windowHeight - 30));
-	
+	ImGui::SetNextWindowSize(ImVec2(_windowWidth * 0.15f, _windowHeight - 30));
+
 	ImGuiWindowFlags windowFlags = 0;
 	windowFlags |= ImGuiWindowFlags_NoResize;
-	
+
 	ImGui::Begin("Actors", nullptr, windowFlags);
 
 	if (ImGui::TreeNode("Scene Root"))
@@ -258,46 +260,64 @@ void Core::GuiController::DrawActorsWindow()
 
 			// gizmo testing
 
-			auto camera = _pCamera.lock();
-			if (!camera) continue;;
+			if (actor->GetId().GetUnderlyingValue() == _selectedActorId)
+			{
+				auto camera = _pCamera.lock();
+				if (!camera) continue;;
 
-			ImGuizmo::OPERATION operation = ImGuizmo::TRANSLATE;
-			ImGuizmo::MODE mode = ImGuizmo::WORLD;
+				static ImGuizmo::OPERATION operation = ImGuizmo::TRANSLATE;
+				static ImGuizmo::MODE mode = ImGuizmo::WORLD;
 
-			if (actor->GetName() != "Earth Sphere") continue;
-			auto transform = actor->GetComponent<Transform>().lock();
-			
-			auto position = transform->GetPosition();
-			Quaternion rotation;
-			auto scale = transform->GetScale();
+				if (!Input::IsMouseButtonDown(MouseKeys::RightButton))
+				{
+					if (Input::IsKeyPressed(KeyCode::Q))
+						operation = ImGuizmo::TRANSLATE;
+					else if (Input::IsKeyPressed(KeyCode::W))
+						operation = ImGuizmo::ROTATE;
+					else if (Input::IsKeyPressed(KeyCode::E))
+						operation = ImGuizmo::SCALE;
 
-			
-			auto matrix = transform->GetWorldMat();
-			auto mat = (float*)matrix.m;
+					if (Input::IsKeyPressed(KeyCode::Z))
+						mode = ImGuizmo::WORLD;
+					else if (Input::IsKeyPressed(KeyCode::X))
+						mode = ImGuizmo::LOCAL;
+				}
+				auto transform = actor->GetComponent<Transform>().lock();
 
-			auto& io = ImGui::GetIO();
-
-			auto viewMatrix = camera->GetViewMatrix();
-			auto projectionMatrix = camera->GetProjectionMatrix();
-
-			auto view = (float*)viewMatrix.m;
-			auto projection = (float*)projectionMatrix.m;
+				auto position = transform->GetPosition();
+				Quaternion rotation;
+				auto scale = transform->GetScale();
 
 
-			ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
-			ImGuizmo::Manipulate(view, projection, operation, mode, mat);
+				auto matrix = transform->GetWorldMat();
+				auto mat = (float*)matrix.m;
 
-			matrix.Decompose(scale, rotation, position);
+				auto& io = ImGui::GetIO();
 
-			transform->SetPosition(position);
-			
+				auto viewMatrix = camera->GetViewMatrix();
+				auto projectionMatrix = camera->GetProjectionMatrix();
 
-			//ImGuizmo::DrawCube(view, projection, mat);
+				auto view = (float*)viewMatrix.m;
+				auto projection = (float*)projectionMatrix.m;
+
+
+				ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+				ImGuizmo::Manipulate(view, projection, operation, mode, mat);
+
+				matrix.Decompose(scale, rotation, position);
+
+				if (operation == ImGuizmo::TRANSLATE)
+					transform->SetPosition(position);
+				else if (operation == ImGuizmo::ROTATE)
+					transform->SetRotation(rotation);
+				else 
+					transform->SetScale(scale);
+			}
 
 
 			// end gizmo testing
 
-			if (ImGui::TreeNode(actor.get(), name.c_str()))
+			/*if (ImGui::TreeNode(actor.get(), name.c_str()))
 			{
 				ImGui::SameLine(200);
 				ImGui::Button("Edit");
@@ -306,12 +326,20 @@ void Core::GuiController::DrawActorsWindow()
 
 				for (auto component : components)
 				{
-					ImGui::TextColored(ImVec4(0.2f, 0.2f, 0.8f, 1.f) ,component->GetName().c_str());
+					ImGui::Text(component->GetName().c_str());
 					ImGui::SameLine(200);
 					ImGui::Button("Edit");
 				}
 
 				ImGui::TreePop();
+			}*/
+
+			ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | (_selectedActorId == actor->GetId().GetUnderlyingValue() ? ImGuiTreeNodeFlags_Selected : 0);
+			ImGui::TreeNodeEx(actor.get(), node_flags | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen, name.c_str());
+			if (ImGui::IsItemClicked())
+			{
+				_selectedActorId = actor->GetId().GetUnderlyingValue();
+				_pSelectedActor = actor;
 			}
 		}
 
@@ -331,6 +359,82 @@ void Core::GuiController::DrawLogWindow()
 
 void Core::GuiController::DrawPropertiesWindow()
 {
+	auto actor = _pSelectedActor.lock();
+	if (!actor) return;
+
+
+	auto width = _windowWidth * 0.3f;
+	auto height = _windowHeight;
+
+	ImGui::SetNextWindowPos(ImVec2(_windowWidth - width, 25));
+	ImGui::SetNextWindowSize(ImVec2(width, height - 30));
+
+	ImGuiWindowFlags windowFlags = 0;
+	windowFlags |= ImGuiWindowFlags_NoResize;
+
+	ImGui::Begin("Properties", nullptr, windowFlags);
+
+	auto name = actor->GetName();
+
+	if (ImGui::CollapsingHeader("Actor"))
+	{
+		ImGui::Text("Name");
+		ImGui::SameLine(100);
+
+		auto name = actor->GetName();
+		name.reserve(255);
+		ImGui::InputText("##name", &name[0], 255);
+		actor->SetName(name);
+	}
+
+	auto& components = actor->GetComponents();
+	for (auto component : components)
+	{
+		if (ImGui::CollapsingHeader(component->GetName().c_str()))
+		{
+			auto& props = component->GetProperties();
+			for (auto& prop : props)
+			{
+				ImGui::Text(prop.GetName());
+				ImGui::SameLine(100);
+
+				string* str;
+				char* buff;
+				auto id = "##" + std::to_string((int)prop.GetValue());
+
+				switch (prop.GetType())
+				{
+				case PropertyType::Float:
+					ImGui::DragFloat(id.c_str(), (float*)prop.GetValue(), 0, 100);
+					break;
+				case PropertyType::Int:
+					ImGui::DragInt(id.c_str(), (int*)prop.GetValue(), 0, 100);
+					break;
+				case PropertyType::Bool:
+					ImGui::Checkbox(id.c_str(), (bool*)prop.GetValue());
+					break;
+				case PropertyType::Color:
+					ImGui::ColorEdit4(id.c_str(), (float*)prop.GetValue(), false);
+					break;
+				case PropertyType::String: 
+					str = (string*)prop.GetValue();
+					buff = &((*str)[0]);
+					ImGui::InputText(id.c_str(), buff, 255);
+					
+					break;
+				case PropertyType::Vector2: break;
+				case PropertyType::Vector3:
+					ImGui::DragFloat3(id.c_str(), (float*)prop.GetValue(), 0, 100);
+					break;
+				case PropertyType::Vector4: break;
+				default:;
+				}
+			}
+		}
+	}
+
+
+	ImGui::End();
 }
 
 void Core::GuiController::DrawExtraWindows()
@@ -342,5 +446,5 @@ void Core::GuiController::DrawExtraWindows()
 		ImGui::Begin("About", &_bShowAboutWindow, windowFlags);
 		ImGui::Text("Hello and welcome to our great editor");
 		ImGui::End();
-	}	
+	}
 }

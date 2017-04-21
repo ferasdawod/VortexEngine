@@ -5,6 +5,7 @@
 
 Actor::Actor(const std::string& name) : _name(name), _enabled(true)
 {
+	_name.reserve(255);
 }
 
 Actor::~Actor()
