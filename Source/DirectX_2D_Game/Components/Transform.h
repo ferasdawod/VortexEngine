@@ -28,32 +28,21 @@ public:
 	virtual void		Initialize(TiXmlElement* xmlData) override;
 	virtual void		OnUpdate(const GameTimer& gameTimer) { }
 
-	void RegisterProperties() override;
+	virtual void		RegisterProperties() override;
 
 public:
-	DECLARE_PROPERTY(Vector3, Position);
 
 	void				Move(Vector3 offset) { _Position += offset; }
-
-	DECLARE_PROPERTY(Vector3, Scale);
-	DECLARE_PROPERTY(Quaternion, Rotation);
-
 	void				Rotate(float yawDegrees, float pitchDegrees, float rollDegrees);
 
-	Vector3	GetForward() const
-	{
-		return Matrix::CreateFromQuaternion(_Rotation).Forward();
-	}
+	DECLARE_PROPERTY(Vector3, Position);
+	DECLARE_PROPERTY(Quaternion, Rotation);
+	DECLARE_PROPERTY(Vector3, Scale);
 
-	Vector3	GetUp() const
-	{
-		return Matrix::CreateFromQuaternion(_Rotation).Up();
-	}
 
-	Vector3	GetRight() const
-	{
-		return Matrix::CreateFromQuaternion(_Rotation).Right();
-	}
+	Vector3	GetForward() const { return Matrix::CreateFromQuaternion(_Rotation).Forward(); }
+	Vector3	GetUp() const { return Matrix::CreateFromQuaternion(_Rotation).Up(); }
+	Vector3	GetRight() const { return Matrix::CreateFromQuaternion(_Rotation).Right(); }
 
 	Matrix GetWorldMat() const
 	{ 
