@@ -133,7 +133,7 @@ bool Core::GuiController::Initialize(std::weak_ptr<IWindow> window, std::weak_pt
 
 	ImGuiIO& io = ImGui::GetIO();
 	//io.Fonts->AddFontDefault();
-	io.Fonts->AddFontFromFileTTF("Assets/Fonts/Roboto-Regular.ttf", 16.f);
+	io.Fonts->AddFontFromFileTTF("Assets/Fonts/Roboto-Regular.ttf", 14.f);
 
 	return result;
 }
