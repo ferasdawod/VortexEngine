@@ -3,11 +3,11 @@
 
 # custom rules
 !_Libs\
-##!_Libs\Debug\Effects11d.lib
-##!_Libs\Debug\Effects11d.pdb
+!_Libs\Debug\Effects11d.lib
+!_Libs\Debug\Effects11d.pdb
 
-##!_Libs\Release\Effects11.lib
-##!_Libs\Release\Effects11.pdb
+!_Libs\Release\Effects11.lib
+!_Libs\Release\Effects11.pdb
 
 # User-specific files
 *.suo
