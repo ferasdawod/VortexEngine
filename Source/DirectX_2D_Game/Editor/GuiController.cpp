@@ -150,7 +150,7 @@ void Core::GuiController::Render()
 	ImGui_ImplDX11_NewFrame();
 	ImGuizmo::BeginFrame();
 
-	//ImGui::ShowTestWindow();
+	ImGui::ShowTestWindow();
 
 	DrawMenuBar();
 	DrawActorsWindow();
