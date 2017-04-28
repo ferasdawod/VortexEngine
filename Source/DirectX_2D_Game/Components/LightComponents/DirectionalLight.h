@@ -19,7 +19,7 @@ public:
 	virtual void			Initialize() override { LightComponent::Initialize(); }
 	virtual void			Initialize(TiXmlElement* xmlData) override;
 
-	virtual void			OnUpdate(const GameTimer& gameTimer) override {}
+	virtual void			OnUpdate(float deltaTime) override {}
 	
 	virtual void			RegisterProperties() override;
 

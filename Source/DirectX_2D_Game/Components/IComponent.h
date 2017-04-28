@@ -18,7 +18,7 @@ public:
 	// initialize the component properties with values from the XML element
 	virtual void Initialize(TiXmlElement* xmlData) = 0;
 	// update the component each frame
-	virtual void OnUpdate(const GameTimer& gameTimer) = 0;
+	virtual void OnUpdate(float deltaTime) = 0;
 
 	// register this component properties
 	virtual void RegisterProperties() = 0;

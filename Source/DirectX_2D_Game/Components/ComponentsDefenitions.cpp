@@ -152,12 +152,14 @@ void Camera::Initialize()
 	_bViewDirty = _bProjectionDirty = true;
 }
 
-void Camera::OnUpdate(const GameTimer& gameTimer)
+void Camera::OnUpdate(float deltaTime)
 {
 	FUNC_PROFILE();
 
 	// TODO DELETE THIS
 	// DELETE BLOCK
+
+	//LOG_M("GameTimer = " + std::to_string(deltaTime));
 	
 	auto transform = _pOwner->GetTransform().lock();
 
@@ -165,64 +167,64 @@ void Camera::OnUpdate(const GameTimer& gameTimer)
 	{
 		if (Input::IsKeyDown(KeyCode::W))
 		{
-			transform->Move(transform->GetWorldMat().Forward() * gameTimer.DeltaTime() * 5.0f);
+			transform->Move(transform->GetWorldMat().Forward() * deltaTime * 5.0f);
 		}
 		if (Input::IsKeyDown(KeyCode::S))
 		{
-			transform->Move(transform->GetWorldMat().Forward() * gameTimer.DeltaTime() * -5.0f);
+			transform->Move(transform->GetWorldMat().Forward() * deltaTime * -5.0f);
 		}
 		if (Input::IsKeyDown(KeyCode::D))
 		{
-			transform->Move(transform->GetWorldMat().Right() * gameTimer.DeltaTime() * 5.0f);
+			transform->Move(transform->GetWorldMat().Right() * deltaTime * 5.0f);
 		}
 		if (Input::IsKeyDown(KeyCode::A))
 		{
-			transform->Move(transform->GetWorldMat().Left() * gameTimer.DeltaTime() * 5.0f);
+			transform->Move(transform->GetWorldMat().Left() * deltaTime * 5.0f);
 		}
 		if (Input::IsKeyDown(KeyCode::E))
 		{
-			transform->Move(transform->GetWorldMat().Up() * gameTimer.DeltaTime() * 5.0f);
+			transform->Move(transform->GetWorldMat().Up() * deltaTime * 5.0f);
 		}
 		if (Input::IsKeyDown(KeyCode::Q))
 		{
-			transform->Move(transform->GetWorldMat().Down() * gameTimer.DeltaTime() * 5.0f);
+			transform->Move(transform->GetWorldMat().Down() * deltaTime * 5.0f);
 		}
 
 		if (Input::IsKeyDown(KeyCode::Left_Arrow))
 		{
 			transform->SetRotation(
 				transform->GetRotation() * Quaternion::CreateFromAxisAngle
-				(Vector3::Up, gameTimer.DeltaTime() * 3.0f));
+				(Vector3::Up, deltaTime * 3.0f));
 		}
 		if (Input::IsKeyDown(KeyCode::Right_Arrow))
 		{
 			transform->SetRotation(
 				transform->GetRotation() * Quaternion::CreateFromAxisAngle
-				(Vector3::Up, gameTimer.DeltaTime() * -3.0f));
+				(Vector3::Up, deltaTime * -3.0f));
 		}
 		if (Input::IsKeyDown(KeyCode::Up_Arrow))
 		{
 			transform->SetRotation(
 				transform->GetRotation() * Quaternion::CreateFromAxisAngle
-				(transform->GetWorldMat().Left(), gameTimer.DeltaTime() * -3.0f));
+				(transform->GetWorldMat().Left(), deltaTime * -3.0f));
 		}
 		if (Input::IsKeyDown(KeyCode::Down_Arrow))
 		{
 			transform->SetRotation(
 				transform->GetRotation() * Quaternion::CreateFromAxisAngle
-				(transform->GetWorldMat().Right(), gameTimer.DeltaTime() * -3.0f));
+				(transform->GetWorldMat().Right(), deltaTime * -3.0f));
 		}
 
 		auto mouseDelta = Input::MouseDelta();
 		if (mouseDelta.x != 0)
 		{
 			transform->SetRotation(transform->GetRotation() * Quaternion::CreateFromAxisAngle(
-				Vector3::Down, gameTimer.DeltaTime() * mouseDelta.x * 0.2f));
+				Vector3::Down, deltaTime * mouseDelta.x * 0.2f));
 		}
 		if (mouseDelta.y != 0)
 		{
 			transform->SetRotation(transform->GetRotation() * Quaternion::CreateFromAxisAngle(
-				transform->GetWorldMat().Left(), gameTimer.DeltaTime() * mouseDelta.y * 0.2f));
+				transform->GetWorldMat().Left(), deltaTime * mouseDelta.y * 0.2f));
 		}
 	}
 

@@ -30,7 +30,7 @@ public:
 	virtual void Initialize();
 	virtual void Initialize(TiXmlElement* xmlData);
 
-	virtual void OnUpdate(const GameTimer& gameTimer) { }
+	virtual void OnUpdate(float deltaTime) override { }
 
 	void RegisterProperties() override;
 

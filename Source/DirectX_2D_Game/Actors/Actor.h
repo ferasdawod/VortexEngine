@@ -21,7 +21,7 @@ public:
 	~Actor();
 
 	// called each frame to update the actor and its components
-	void OnUpdate(const GameTimer& gameTimer);
+	void OnUpdate(float deltaTime);
 	
 	// called to destroy the actor along with all of its components
 	void Destroy();

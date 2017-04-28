@@ -123,7 +123,7 @@ bool EventManager::TriggerEvent(StrongEventDataPtr eventData)
 	return goingGood;
 }
 
-void EventManager::OnUpdate(const GameTimer& gameTimer)
+void EventManager::OnUpdate(float deltaTime)
 {
 	FUNC_PROFILE();
 

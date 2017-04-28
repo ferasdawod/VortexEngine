@@ -74,6 +74,8 @@ namespace Core
 		_pRenderManager.reset(DBG_NEW RenderManager());
 		_pWindow.reset(DBG_NEW WindowsWindow());
 
+		SettingsManager::GetPtr()->GetSetting("Engine", "UpdateRate", _updateRate);
+
 		WindowInfo windowInfo;
 		SettingsManager::GetPtr()->GetSetting("Window", "X", windowInfo.X);
 		SettingsManager::GetPtr()->GetSetting("Window", "Y", windowInfo.Y);
@@ -148,6 +150,10 @@ namespace Core
 	{
 		_gameTimer.Reset();
 		_isRunning = true;
+
+		double updateInterval = 1.f / _updateRate;
+		double timeSinceLastUpdate = 0;
+
 		while (_isRunning)
 		{
 			MSG msg;
@@ -160,25 +166,32 @@ namespace Core
 
 			_gameTimer.Tick();
 
-			UpdateSystems();
+			timeSinceLastUpdate += _gameTimer.DeltaTime();
 
-			if (!_isPaused)
+			while (timeSinceLastUpdate >= updateInterval)
 			{
-				Update();
-				Render();
+				UpdateSystems(updateInterval);
+				
+				if (!_isPaused)
+				{
+					Update(updateInterval);
+					Render();
+				}
+
+				timeSinceLastUpdate -= updateInterval;
 			}
 		}
 	}
 
-	void Engine::UpdateSystems()
+	void Engine::UpdateSystems(float deltaTime)
 	{
 		_pInputDevice->OnUpdate();
-		_pEventManager->OnUpdate(_gameTimer);
+		_pEventManager->OnUpdate(deltaTime);
 	}
 
-	void Engine::Update()
+	void Engine::Update(float deltaTime)
 	{
-		_pLevel->OnUpdate(_gameTimer);
+		_pLevel->OnUpdate(deltaTime);
 	}
 
 	void Engine::Render() const

@@ -13,7 +13,7 @@ Actor::~Actor()
 	Assert(_components.empty(), "The components list must be empty");
 }
 
-void Actor::OnUpdate(const GameTimer& gameTimer)
+void Actor::OnUpdate(float deltaTime)
 {
 	if (!_enabled)
 	{
@@ -26,7 +26,7 @@ void Actor::OnUpdate(const GameTimer& gameTimer)
 
 	while (it != end)
 	{
-		(*it)->OnUpdate(gameTimer);
+		(*it)->OnUpdate(deltaTime);
 		++it;
 	}
 }

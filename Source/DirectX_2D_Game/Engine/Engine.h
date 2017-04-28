@@ -35,9 +35,9 @@ namespace Core
 
 		void Shutdown() const;
 
-		void UpdateSystems();
+		void UpdateSystems(float deltaTime);
 		void RunMainLoop();
-		void Update();
+		void Update(float deltaTime);
 
 		void Render() const;
 
@@ -52,6 +52,7 @@ namespace Core
 		GameTimer _gameTimer;
 		bool _isPaused;
 		bool _isRunning;
+		int _updateRate;
 
 		std::shared_ptr<Logger>				_pLogger;
 		std::shared_ptr<EventManager>		_pEventManager;

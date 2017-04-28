@@ -26,7 +26,7 @@ public:
 
 	virtual void		Initialize() override;
 	virtual void		Initialize(TiXmlElement* xmlData) override;
-	virtual void		OnUpdate(const GameTimer& gameTimer) { }
+	virtual void		OnUpdate(float deltaTime) override { }
 
 	virtual void		RegisterProperties() override;
 

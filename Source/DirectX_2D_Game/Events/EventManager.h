@@ -25,7 +25,7 @@ public:
 	bool			QueueEvent(StrongEventDataPtr eventData);
 	bool			TriggerEvent(StrongEventDataPtr eventData);
 
-	void			OnUpdate(const GameTimer& gameTimer);
+	void			OnUpdate(float deltaTime);
 
 	static EventManager&				Get() { assert(_spInstance != nullptr); return *_spInstance; }
 	static EventManager*				GetPtr() { assert(_spInstance != nullptr); return _spInstance; }

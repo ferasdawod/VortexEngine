@@ -15,7 +15,7 @@ public:
 	Level(const std::string& levelName, std::shared_ptr<ActorFactory> actorFactory);
 	virtual ~Level();
 	
-	void				OnUpdate(const GameTimer& gameTimer);
+	void				OnUpdate(float deltaTime);
 						
 	// loads the level from a file on the disk and return true if loading was good
 	bool				LoadLevel(const std::string& fileName);

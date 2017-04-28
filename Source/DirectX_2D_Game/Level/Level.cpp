@@ -20,7 +20,7 @@ Level::~Level()
 	_pCurrentLevel = nullptr;
 }
 
-void Level::OnUpdate(const GameTimer& gameTimer)
+void Level::OnUpdate(float deltaTime)
 {
 	FUNC_PROFILE();
 
@@ -28,7 +28,7 @@ void Level::OnUpdate(const GameTimer& gameTimer)
 	{
 		auto actor = *it;
 		if (actor->IsEnabled())
-			actor->OnUpdate(gameTimer);
+			actor->OnUpdate(deltaTime);
 	}
 }
 

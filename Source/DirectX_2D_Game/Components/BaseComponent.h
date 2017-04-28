@@ -19,7 +19,7 @@ public:
 	void Initialize() override;
 	void Initialize(TiXmlElement* xmlData) override;
 
-	void OnUpdate(const GameTimer& gameTimer) override = 0;
+	void OnUpdate(float deltaTime) override = 0;
 	TiXmlElement* ToXML() const override;
 
 	virtual void RegisterProperties() = 0;
