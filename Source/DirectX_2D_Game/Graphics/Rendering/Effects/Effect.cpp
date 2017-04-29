@@ -31,10 +31,10 @@ using DirectX::SimpleMath::Vector3;
 using DirectX::SimpleMath::Vector2;
 
 Effect::Effect(std::shared_ptr<RenderSettings> renderSettings) :
-_pEffect(nullptr), _pGraphicsDevice(nullptr), _pMatricesBuffer(nullptr),
-_pInputLayout(nullptr), _pMaterialBuffer(nullptr), _pShadowPassTechnique(nullptr), _pNormalMapTexture(nullptr),
-_pPerFrameBuffer(nullptr), _pMainTechnique(nullptr), _currentTech(RenderTechnique::MainTech), _pSpecularTexture(nullptr),
-_pDiffuseTexture(nullptr), _pShadowMapTexture(nullptr), _pDiffuseSampler(nullptr), _pShadowSampler(nullptr)
+_pGraphicsDevice(nullptr), _pEffect(nullptr), _pInputLayout(nullptr),
+_pMainTechnique(nullptr), _pShadowPassTechnique(nullptr), _pMaterialBuffer(nullptr), _pMatricesBuffer(nullptr),
+_pPerFrameBuffer(nullptr), _currentTech(RenderTechnique::MainTech), _pDiffuseTexture(nullptr), _pDiffuseSampler(nullptr),
+_pSpecularTexture(nullptr), _pNormalMapTexture(nullptr), _pShadowMapTexture(nullptr), _pShadowSampler(nullptr), _pSettingsBuffer(nullptr)
 {
 	assert(renderSettings);
 	_pRenderSettings = renderSettings;

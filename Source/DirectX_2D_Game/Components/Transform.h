@@ -32,7 +32,7 @@ public:
 
 public:
 
-	void				Move(Vector3 offset) { _Position += offset; }
+	void				Move(const Vector3& offset) { _Position += offset; }
 	void				Rotate(float yawDegrees, float pitchDegrees, float rollDegrees);
 
 	DECLARE_PROPERTY(Vector3, Position);

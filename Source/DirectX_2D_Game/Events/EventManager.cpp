@@ -35,7 +35,7 @@ bool EventManager::AddListener(EventListener* eventListener, EventID eventID)
 	auto it = listeners.begin();
 	auto end = listeners.end();
 
-	for (; it != end; it++)
+	for (; it != end; ++it)
 	{
 		EventListener* listener = *it;
 		if (listener == eventListener)
@@ -55,7 +55,7 @@ bool EventManager::RemoveListener(EventListener* eventListener, EventID eventID)
 		return false;
 
 	ListenersList& listeners = findIt->second;
-	for (auto it = listeners.begin(); it != listeners.end(); it++)
+	for (auto it = listeners.begin(); it != listeners.end(); ++it)
 	{
 		EventListener* listener = *it;
 		if (listener == eventListener)
@@ -128,7 +128,7 @@ void EventManager::OnUpdate(float deltaTime)
 	FUNC_PROFILE();
 
 	int currQueue = _activeQueue;
-	_activeQueue = (++_activeQueue) % 2;
+	_activeQueue = (_activeQueue + 1) % 2;
 	
 	assert(_eventQueues[_activeQueue].empty());
 
@@ -143,7 +143,7 @@ void EventManager::OnUpdate(float deltaTime)
 		{
 			const ListenersList& listeners = findIt->second;
 			for (auto it = listeners.begin();
-				 it != listeners.end(); it++)
+				 it != listeners.end(); ++it)
 			{
 				EventListener* l = *it;
 				auto handled = l->HandleEvent(currEventData);

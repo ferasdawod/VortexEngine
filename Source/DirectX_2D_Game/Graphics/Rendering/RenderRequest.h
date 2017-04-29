@@ -25,7 +25,6 @@ public:
 	size_t						GetMaterialsCount() const { return _Materials.size(); }
 	std::shared_ptr<Material>	GetMaterial(size_t index)
 	{
-		assert(index >= 0);
 		assert(index < _Materials.size());
 
 		return _Materials[index];

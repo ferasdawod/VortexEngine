@@ -21,7 +21,7 @@ bool Input::IsKeyPressed(KeyCode key)
 
 bool Input::IsKeyReleased(KeyCode key)
 {
-	return InputDevice::Get()->IsKeyDown(key);
+	return InputDevice::Get()->IsKeyReleased(key);
 }
 
 Vector3 Input::MouseDelta()

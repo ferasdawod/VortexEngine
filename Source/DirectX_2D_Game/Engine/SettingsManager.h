@@ -28,7 +28,7 @@ using std::string;
 class SettingsManager : public Singleton<SettingsManager>
 {
 public:
-	SettingsManager() {}
+	SettingsManager() : _bIsInitialized(false) {}
 	virtual ~SettingsManager() {}
 
 	bool Initialize(const std::string& filePath);

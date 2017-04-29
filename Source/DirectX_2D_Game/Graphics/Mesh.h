@@ -22,7 +22,6 @@ public:
 
 	SubMeshPtr	GetSubMesh(size_t index)
 	{
-		assert(index >= 0);
 		assert(index < _subMeshes.size());
 
 		return _subMeshes[index];

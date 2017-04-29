@@ -72,7 +72,7 @@ inline void SetupImGuiStyle(bool bStyleDark_, float alpha_)
 
 	if (bStyleDark_)
 	{
-		for (int i = 0; i <= ImGuiCol_COUNT; i++)
+		for (int i = 0; i < ImGuiCol_COUNT; i++)
 		{
 			ImVec4& col = style.Colors[i];
 			float H, S, V;
@@ -91,7 +91,7 @@ inline void SetupImGuiStyle(bool bStyleDark_, float alpha_)
 	}
 	else
 	{
-		for (int i = 0; i <= ImGuiCol_COUNT; i++)
+		for (int i = 0; i < ImGuiCol_COUNT; i++)
 		{
 			ImVec4& col = style.Colors[i];
 			if (col.w < 1.00f)
@@ -105,7 +105,7 @@ inline void SetupImGuiStyle(bool bStyleDark_, float alpha_)
 	}
 }
 
-Core::GuiController::GuiController() : _isDarkTheme(true), _windowsAlpha(0.9f), _bShowAboutWindow(false), _selectedActorId(-1)
+Core::GuiController::GuiController() : _isDarkTheme(true), _windowsAlpha(0.9f), _bShowAboutWindow(false), _selectedActorId(-1), _windowWidth(-1), _windowHeight(-1)
 {
 	HandleRegistering(true);
 }
@@ -390,7 +390,7 @@ void Core::GuiController::DrawPropertiesWindow()
 	auto& components = actor->GetComponents();
 	for (auto component : components)
 	{
-		if (ImGui::CollapsingHeader(component->GetName().c_str()), ImGuiTreeNodeFlags_DefaultOpen)
+		if (ImGui::CollapsingHeader(component->GetName().c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 		{
 			auto& props = component->GetProperties();
 			for (auto& prop : props)

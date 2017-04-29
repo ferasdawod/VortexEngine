@@ -23,7 +23,9 @@ _pRenderTargetView(nullptr),
 _pDepthStencilView(nullptr),
 _featureLevel(D3D_FEATURE_LEVEL_9_1),
 _clearColor(MyColors::Magenta),
-_nVSyncCount(1)
+_nVSyncCount(1),
+_nBackBufferWidth(0),
+_nBackBufferHeight(0)
 {
 	GraphicsDevice::HandleRegistering(true);
 }

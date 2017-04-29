@@ -338,9 +338,10 @@ void GeometryGenerator::CreateGeosphere(float radius, UINT numSubdivisions, Mesh
 		meshData.Vertices[i].TexC.y = phi / DirectX::XM_PI;
 
 		// Partial derivative of P with respect to theta
-		meshData.Vertices[i].TangentU.x = -radius*sinf(phi)*sinf(theta);
-		meshData.Vertices[i].TangentU.y = 0.0f;
-		meshData.Vertices[i].TangentU.z = +radius*sinf(phi)*cosf(theta);
+		auto& tangant = meshData.Vertices[i].TangentU;
+		tangant.x = -radius*sinf(phi)*sinf(theta);
+		tangant.y = 0.0f;
+		tangant.z = +radius*sinf(phi)*cosf(theta);
 
 		meshData.Vertices[i].TangentU.Normalize();
 	}
@@ -538,13 +539,14 @@ void GeometryGenerator::CreateGrid(float width, float depth, UINT m, UINT n, Mes
 		{
 			float x = -halfWidth + j*dx;
 
-			meshData.Vertices[i*n+j].Position = Vector3(x, 0.0f, z);
-			meshData.Vertices[i*n + j].Normal = Vector3(0.0f, 1.0f, 0.0f);
-			meshData.Vertices[i*n + j].TangentU = Vector3(1.0f, 0.0f, 0.0f);
+			auto& vertex = meshData.Vertices[i*n + j];
+			vertex.Position = Vector3(x, 0.0f, z);
+			vertex.Normal = Vector3(0.0f, 1.0f, 0.0f);
+			vertex.TangentU = Vector3(1.0f, 0.0f, 0.0f);
 
 			// Stretch texture over grid.
-			meshData.Vertices[i*n+j].TexC.x = j*du;
-			meshData.Vertices[i*n+j].TexC.y = i*dv;
+			vertex.TexC.x = j*du;
+			vertex.TexC.y = i*dv;
 		}
 	}
  

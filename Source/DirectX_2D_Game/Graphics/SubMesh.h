@@ -37,7 +37,8 @@ private:
 	SubMesh(VertexIndexPair pair, D3D11_PRIMITIVE_TOPOLOGY topo) : 
 		_VertexBuffer(pair.first),
 		_IndexBuffer(pair.second),
-		_Topology(topo)
+		_Topology(topo),
+		_BoundingShapeType(BoundingShapeType::Box)
 	{
 	}
 

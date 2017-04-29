@@ -7,7 +7,7 @@
 Level* Level::_pCurrentLevel = nullptr;
 
 Level::Level(const std::string& levelName, std::shared_ptr<ActorFactory> actorFactory) 
-	: _actorFactory(actorFactory), _sLevelName(levelName),  _ambientColor(0.2f, 0.2f, 0.2f, 1.0f)
+	: _actorFactory(actorFactory), _sLevelName(levelName),  _ambientColor(0.2f, 0.2f, 0.2f, 1.0f), _bWasLoaded(false)
 {
 	assert(_pCurrentLevel == nullptr && "There can only be one level at any time");
 	_pCurrentLevel = this;
@@ -118,7 +118,7 @@ bool Level::SaveLevel(const std::string& fileName)
 
 	TiXmlElement* actorsE = DBG_NEW TiXmlElement("Actors");
 	actorsE->SetDoubleAttribute("Count", ActorsCount());
-	for (auto it = _actors.begin(); it != _actors.end(); it++)
+	for (auto it = _actors.begin(); it != _actors.end(); ++it)
 	{
 		auto actorE = (*it)->ToXML();
 		actorsE->LinkEndChild(actorE);

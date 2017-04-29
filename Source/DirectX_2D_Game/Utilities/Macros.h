@@ -6,7 +6,7 @@
 	varType _ ## varName; \
 	public: \
 	varType	Get ## varName() const { return _ ## varName; } \
-	void	Set ## varName(varType val) { _ ## varName = val; }
+	void	Set ## varName(const varType& val) { _ ## varName = val; }
 
 #define DECLARE_PROPERTY_READ_ONLY(varType, varName) \
 	protected: \

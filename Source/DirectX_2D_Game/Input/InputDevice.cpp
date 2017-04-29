@@ -100,8 +100,8 @@ bool InputDevice::Init(HINSTANCE hInstance, HWND hWnd, bool isEditor /* = false 
 
 	_prevKeyStates = DBG_NEW char[kKeyboardBufferSize];
 	_currKeyStates = DBG_NEW char[kKeyboardBufferSize];
-	ZeroMemory(_currKeyStates, sizeof(kKeyboardBufferSize));
-	ZeroMemory(_prevKeyStates, sizeof(kKeyboardBufferSize));
+	ZeroMemory(_currKeyStates, sizeof(char) * kKeyboardBufferSize);
+	ZeroMemory(_prevKeyStates, sizeof(char) * kKeyboardBufferSize);
 
 	ZeroMemory(&_mouseState, sizeof(_mouseState));
 

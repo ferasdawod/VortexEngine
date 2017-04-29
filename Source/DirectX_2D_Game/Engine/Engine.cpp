@@ -29,7 +29,7 @@
 
 namespace Core
 {
-	Engine::Engine() : _isPaused(true), _isRunning(false)
+	Engine::Engine() : _isPaused(true), _isRunning(false), _updateRate(60)
 	{
 	}
 
