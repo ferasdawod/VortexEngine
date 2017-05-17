@@ -32,7 +32,8 @@ Material::Material(const std::string& name, const Color& diffuseColor, const Col
 
 Material::~Material()
 {
-	HandleRegistering(false);
+	if (this != _pDefaultMaterial.get())
+		HandleRegistering(false);
 }
 
 TiXmlElement* Material::ToXML() const
@@ -161,7 +162,7 @@ std::shared_ptr<Material> Material::CreateFromXML(TiXmlElement* element)
 	}
 	else
 	{
-		return std::shared_ptr<Material>(DBG_NEW Material);
+		return GetDefault();
 	}
 }
 
