@@ -418,6 +418,12 @@ void Core::GuiController::DrawPropertiesWindow()
 		name.reserve(255);
 		ImGui::InputText("##name", &name[0], 255);
 		actor->SetName(name);
+
+		ImGui::Text("Enabled");
+		ImGui::SameLine(100);
+		auto enabled = actor->IsEnabled();
+		ImGui::Checkbox("##enabled", &enabled);
+		actor->SetEnabled(enabled);
 	}
 
 	auto& components = actor->GetComponents();
