@@ -167,19 +167,21 @@ namespace Core
 			_gameTimer.Tick();
 
 			timeSinceLastUpdate += _gameTimer.DeltaTime();
+			
+			UpdateSystems(updateInterval);
 
 			while (timeSinceLastUpdate >= updateInterval)
 			{
-				UpdateSystems(updateInterval);
 				
 				if (!_isPaused)
 				{
 					Update(updateInterval);
-					Render();
 				}
 
 				timeSinceLastUpdate -= updateInterval;
 			}
+
+			Render();
 		}
 	}
 
