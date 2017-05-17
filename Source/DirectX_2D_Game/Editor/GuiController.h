@@ -6,6 +6,7 @@ class GraphicsDevice;
 class Level;
 class Camera;
 class Actor;
+class ActorFactory;
 
 namespace Core
 {
@@ -15,7 +16,7 @@ namespace Core
 		GuiController();
 		~GuiController();
 
-		bool Initialize(std::weak_ptr<IWindow> window, std::weak_ptr<Level> level);
+		bool Initialize(std::weak_ptr<IWindow> window, std::weak_ptr<Level> level, std::weak_ptr<ActorFactory> actorFactory);
 		void Shutdown();
 
 		void Render();
@@ -36,6 +37,7 @@ namespace Core
 		std::weak_ptr<IWindow> _pWindow;
 		std::weak_ptr<Level> _pLevel;
 		std::weak_ptr<Camera> _pCamera;
+		std::weak_ptr<ActorFactory> _pActorFactory;
 
 		bool _isDarkTheme;
 		float _windowsAlpha;

@@ -5,6 +5,7 @@
 #include <3rd Party/imgui/ImGuizmo.h>
 #include <Components/Transform.h>
 #include <Components/Camera.h>
+#include <Actors/ActorFactory.h>
 
 #include "3rd Party/imgui/imgui_impl_dx11.h"
 #include "Graphics/Rendering/GraphicsDevice.h"
@@ -115,10 +116,11 @@ Core::GuiController::~GuiController()
 	HandleRegistering(false);
 }
 
-bool Core::GuiController::Initialize(std::weak_ptr<IWindow> window, std::weak_ptr<Level> level)
+bool Core::GuiController::Initialize(std::weak_ptr<IWindow> window, std::weak_ptr<Level> level, std::weak_ptr<ActorFactory> actorFactory)
 {
 	_pWindow = window;
 	_pLevel = level;
+	_pActorFactory = actorFactory;
 
 	auto win = window.lock();
 	auto device = GraphicsDevice::GetPtr();
@@ -201,6 +203,8 @@ void Core::GuiController::DrawMenuBar()
 			if (ImGui::MenuItem("Save", "CTRL+S"))
 			{
 				LOG_M("Save Pressed");
+				auto level = _pLevel.lock();
+				level->SaveLevel();
 			}
 
 			ImGui::Separator();
@@ -218,6 +222,57 @@ void Core::GuiController::DrawMenuBar()
 		{
 			ImGui::MenuItem("Use Dark Theme", nullptr, &_isDarkTheme);
 			ImGui::SliderFloat("Windows Alpha", &_windowsAlpha, 0.f, 1.f);
+
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Actors"))
+		{
+			if (ImGui::BeginMenu("Creat New"))
+			{
+				auto factory = _pActorFactory.lock();
+				auto level = _pLevel.lock();
+
+				auto actor = std::shared_ptr<Actor>();
+
+				if (ImGui::MenuItem("Empty Actor"))
+					actor = factory->CreateEmptyActor();
+				if (ImGui::MenuItem("Box Actor"))
+					actor = factory->CreateBoxActor();
+				if (ImGui::MenuItem("Sphere Actor"))
+					actor = factory->CreateSphereActor();
+				if (ImGui::MenuItem("Cylinder Actor"))
+					actor = factory->CreateCylinderActor();
+				if (ImGui::MenuItem("Plane Actor"))
+					actor = factory->CreatePlaneActor();
+
+				ImGui::Separator();
+
+				if (ImGui::MenuItem("Directional Light"))
+					actor = factory->CreateDirectionalLight();
+
+				if (actor)
+				{
+					level->AddActor(actor);
+					_pSelectedActor = actor;
+					_selectedActorId = actor->GetId().GetUnderlyingValue();
+				}
+
+				ImGui::EndMenu();
+			}
+
+			auto actor = _pSelectedActor.lock();
+			if (actor)
+			{
+				if (ImGui::MenuItem("Delete", "DELETE"))
+				{
+					auto level = _pLevel.lock();
+					level->DestroyActor(actor->GetId());
+					
+					_pSelectedActor.reset();
+					_selectedActorId = -1;
+				}
+			}
 
 			ImGui::EndMenu();
 		}
@@ -252,98 +307,76 @@ void Core::GuiController::DrawActorsWindow()
 
 	ImGui::Begin("Actors", nullptr, windowFlags);
 
-	if (ImGui::TreeNode("Scene Root"))
+	for (auto actor : actors)
 	{
-		for (auto actor : actors)
+		auto name = actor->GetName();
+
+		// gizmo testing
+
+		if (actor->GetId().GetUnderlyingValue() == _selectedActorId)
 		{
-			auto name = actor->GetName();
+			auto camera = _pCamera.lock();
+			if (!camera) continue;;
 
-			// gizmo testing
+			static ImGuizmo::OPERATION operation = ImGuizmo::TRANSLATE;
+			static ImGuizmo::MODE mode = ImGuizmo::WORLD;
 
-			if (actor->GetId().GetUnderlyingValue() == _selectedActorId)
+			if (!Input::IsMouseButtonDown(MouseKeys::RightButton))
 			{
-				auto camera = _pCamera.lock();
-				if (!camera) continue;;
+				if (Input::IsKeyPressed(KeyCode::Q))
+					operation = ImGuizmo::TRANSLATE;
+				else if (Input::IsKeyPressed(KeyCode::W))
+					operation = ImGuizmo::ROTATE;
+				else if (Input::IsKeyPressed(KeyCode::E))
+					operation = ImGuizmo::SCALE;
 
-				static ImGuizmo::OPERATION operation = ImGuizmo::TRANSLATE;
-				static ImGuizmo::MODE mode = ImGuizmo::WORLD;
-
-				if (!Input::IsMouseButtonDown(MouseKeys::RightButton))
-				{
-					if (Input::IsKeyPressed(KeyCode::Q))
-						operation = ImGuizmo::TRANSLATE;
-					else if (Input::IsKeyPressed(KeyCode::W))
-						operation = ImGuizmo::ROTATE;
-					else if (Input::IsKeyPressed(KeyCode::E))
-						operation = ImGuizmo::SCALE;
-
-					if (Input::IsKeyPressed(KeyCode::Z))
-						mode = ImGuizmo::WORLD;
-					else if (Input::IsKeyPressed(KeyCode::X))
-						mode = ImGuizmo::LOCAL;
-				}
-				auto transform = actor->GetComponent<Transform>().lock();
-
-				auto position = transform->GetPosition();
-				Quaternion rotation;
-				auto scale = transform->GetScale();
-
-
-				auto matrix = transform->GetWorldMat();
-				auto mat = (float*)matrix.m;
-
-				auto& io = ImGui::GetIO();
-
-				auto viewMatrix = camera->GetViewMatrix();
-				auto projectionMatrix = camera->GetProjectionMatrix();
-
-				auto view = (float*)viewMatrix.m;
-				auto projection = (float*)projectionMatrix.m;
-
-
-				ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
-				ImGuizmo::Manipulate(view, projection, operation, mode, mat);
-
-				matrix.Decompose(scale, rotation, position);
-
-				if (operation == ImGuizmo::TRANSLATE)
-					transform->SetPosition(position);
-				else if (operation == ImGuizmo::ROTATE)
-					transform->SetRotation(rotation);
-				else 
-					transform->SetScale(scale);
+				if (Input::IsKeyPressed(KeyCode::Z))
+					mode = ImGuizmo::WORLD;
+				else if (Input::IsKeyPressed(KeyCode::X))
+					mode = ImGuizmo::LOCAL;
 			}
+			auto transform = actor->GetComponent<Transform>().lock();
+
+			auto position = transform->GetPosition();
+			Quaternion rotation;
+			auto scale = transform->GetScale();
 
 
-			// end gizmo testing
+			auto matrix = transform->GetWorldMat();
+			auto mat = (float*)matrix.m;
 
-			/*if (ImGui::TreeNode(actor.get(), name.c_str()))
-			{
-				ImGui::SameLine(200);
-				ImGui::Button("Edit");
+			auto& io = ImGui::GetIO();
 
-				const std::vector<StrongComponentPtr>& components = actor->GetComponents();
+			auto viewMatrix = camera->GetViewMatrix();
+			auto projectionMatrix = camera->GetProjectionMatrix();
 
-				for (auto component : components)
-				{
-					ImGui::Text(component->GetName().c_str());
-					ImGui::SameLine(200);
-					ImGui::Button("Edit");
-				}
+			auto view = (float*)viewMatrix.m;
+			auto projection = (float*)projectionMatrix.m;
 
-				ImGui::TreePop();
-			}*/
 
-			ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | (_selectedActorId == actor->GetId().GetUnderlyingValue() ? ImGuiTreeNodeFlags_Selected : 0);
-			ImGui::TreeNodeEx(actor.get(), node_flags | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen, name.c_str());
-			if (ImGui::IsItemClicked())
-			{
-				_selectedActorId = actor->GetId().GetUnderlyingValue();
-				_pSelectedActor = actor;
-			}
+			ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+			ImGuizmo::Manipulate(view, projection, operation, mode, mat);
+
+			matrix.Decompose(scale, rotation, position);
+
+			if (operation == ImGuizmo::TRANSLATE)
+				transform->SetPosition(position);
+			else if (operation == ImGuizmo::ROTATE)
+				transform->SetRotation(rotation);
+			else
+				transform->SetScale(scale);
 		}
 
-		ImGui::TreePop();
+
+		// end gizmo testing
+
+		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | (_selectedActorId == actor->GetId().GetUnderlyingValue() ? ImGuiTreeNodeFlags_Selected : 0);
+		ImGui::TreeNodeEx(actor.get(), node_flags | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen, name.c_str());
+		if (ImGui::IsItemClicked())
+		{
+			_selectedActorId = actor->GetId().GetUnderlyingValue();
+			_pSelectedActor = actor;
+		}
 	}
 
 	ImGui::End();
