@@ -209,8 +209,7 @@ bool RenderManager::ValidateRenderRequest(StrongRenderRequestPtr renderRequest, 
 {
 	FUNC_PROFILE();
 
-	if (renderRequest->GetMaterialsCount() == 0 || renderRequest->GetMeshName().empty() ||
-		renderRequest->GetTransform().expired() || renderRequest->GetOwner().expired())
+	if (renderRequest->GetMeshName().empty() || renderRequest->GetTransform().expired() || renderRequest->GetOwner().expired())
 	{
 		LOG_M("Detected a render request with missing parameters");
 		return false;
