@@ -27,7 +27,7 @@ StrongActorPtr ActorFactory::CreatePlaneActor()
 {
 	auto actor = CreateEmptyActor("Plane");
 
-	StrongComponentPtr planeRenderer(DBG_NEW MeshRenderer("PlaneMesh.mesh"));
+	StrongComponentPtr planeRenderer(DBG_NEW MeshRenderer("Plane.mesh"));
 	actor->AddComponent(planeRenderer);
 
 	return actor;
@@ -37,7 +37,7 @@ StrongActorPtr ActorFactory::CreateBoxActor()
 {
 	auto actor = CreateEmptyActor("Box");
 
-	StrongComponentPtr boxRender(DBG_NEW MeshRenderer("BoxMesh.mesh"));
+	StrongComponentPtr boxRender(DBG_NEW MeshRenderer("Box.mesh"));
 	actor->AddComponent(boxRender);
 
 	return actor;
@@ -47,7 +47,7 @@ StrongActorPtr ActorFactory::CreateCylinderActor()
 {
 	auto actor = CreateEmptyActor("Cylinder");
 
-	StrongComponentPtr cylinderRender(DBG_NEW MeshRenderer("CylinderMesh.mesh"));
+	StrongComponentPtr cylinderRender(DBG_NEW MeshRenderer("Cylinder.mesh"));
 	actor->AddComponent(cylinderRender);
 
 	return actor;
@@ -57,7 +57,7 @@ StrongActorPtr ActorFactory::CreateSphereActor()
 {
 	auto actor = CreateEmptyActor("Sphere");
 
-	StrongComponentPtr sphereRender(DBG_NEW MeshRenderer("SphereMesh.mesh"));
+	StrongComponentPtr sphereRender(DBG_NEW MeshRenderer("Sphere.mesh"));
 	actor->AddComponent(sphereRender);
 
 	return actor;
