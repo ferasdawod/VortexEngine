@@ -98,7 +98,7 @@ namespace Core
 			return false;
 
 		_pGuiController.reset(DBG_NEW GuiController());
-		result = _pGuiController->Initialize(_pWindow, _pLevel);
+		result = _pGuiController->Initialize(_pWindow, _pLevel, _pActorFactory);
 		if (!result)
 			return false;
 
