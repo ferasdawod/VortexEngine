@@ -99,8 +99,7 @@ void Transform::Initialize(TiXmlElement* xmlData)
 void Transform::RegisterProperties()
 {
 	RegisterProperty("Position", Core::PropertyType::Vector3, &_Position);
-	// TODO register rotation property
-	// the rotation property type needs to be changed to eular angles
+	RegisterProperty("Rotation", Core::PropertyType::Quaternion, &_Rotation);
 	RegisterProperty("Scale", Core::PropertyType::Vector3, &_Scale);
 }
 

@@ -390,6 +390,27 @@ void Core::GuiController::DrawLogWindow()
 {
 }
 
+static void toEulerianAngle(const Quaternion& q, float& roll, float& pitch, float& yaw)
+{
+	double ysqr = q.y * q.y;
+
+	// roll (x-axis rotation)
+	double t0 = +2.0 * (q.w * q.x + q.y * q.z);
+	double t1 = +1.0 - 2.0 * (q.x * q.x + ysqr);
+	roll = std::atan2(t0, t1);
+
+	// pitch (y-axis rotation)
+	double t2 = +2.0 * (q.w * q.y - q.z * q.x);
+	t2 = t2 > 1.0 ? 1.0 : t2;
+	t2 = t2 < -1.0 ? -1.0 : t2;
+	pitch = std::asin(t2);
+
+	// yaw (z-axis rotation)
+	double t3 = +2.0 * (q.w * q.z + q.x * q.y);
+	double t4 = +1.0 - 2.0 * (ysqr + q.z * q.z);
+	yaw = std::atan2(t3, t4);
+}
+
 void Core::GuiController::DrawPropertiesWindow()
 {
 	auto actor = _pSelectedActor.lock();
@@ -437,8 +458,15 @@ void Core::GuiController::DrawPropertiesWindow()
 				ImGui::Text(prop.name);
 				ImGui::SameLine(100);
 
+				// TEMP DATA
 				string* str;
 				char* buff;
+
+				float roll, pitch, yaw;
+				float vec[3];
+				
+
+				// END TEMP DATA
 
 				ImGui::PushID(prop.value);
 				switch (prop.type)
@@ -463,6 +491,25 @@ void Core::GuiController::DrawPropertiesWindow()
 					str = (string*)prop.value;
 					buff = &((*str)[0]);
 					ImGui::InputText("", buff, 255);
+					break;
+
+				case PropertyType::Quaternion:
+
+					toEulerianAngle(*(Quaternion*)prop.value, roll, pitch, yaw);
+					
+					vec[0] = DirectX::XMConvertToDegrees(roll);
+					vec[1] = DirectX::XMConvertToDegrees(pitch);
+					vec[2] = DirectX::XMConvertToDegrees(yaw);
+					
+					ImGui::DragFloat3("", vec);
+
+					roll = DirectX::XMConvertToRadians(vec[0]);
+					pitch = DirectX::XMConvertToRadians(vec[1]);
+					yaw = DirectX::XMConvertToRadians(vec[2]);
+
+					//*(Quaternion*)prop.value = Quaternion::CreateFromYawPitchRoll(yaw, pitch, roll);
+					//actor->GetTransform().lock()->SetRotation(Quaternion::CreateFromYawPitchRoll(vec[2], vec[1], vec[0]));
+
 					break;
 
 				case PropertyType::Vector2: 

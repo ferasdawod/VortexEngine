@@ -10,6 +10,8 @@ namespace Core
 		Color,
 		String,
 
+		Quaternion,
+
 		Vector2,
 		Vector3,
 		Vector4,
