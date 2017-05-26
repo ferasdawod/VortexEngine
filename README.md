@@ -1,10 +1,10 @@
 # 3D Graphics and Game Engine
 
 ## Description
-Fast and open source 3D Graphics and Game Engine written in C++ and DirectX 11 currenly a work in proggress, some features are complete while others are still WIP and others are highly unstable
+Fast and open source 3D Graphics and Game Engine written in C++ and DirectX 11 currently a work in progress, some features are complete while others are still WIP and others are highly unstable
 
 ## Features
-- Actors and Componenets based architecture
+- Actors and Components based architecture
 - Prefabs System (for components and actors re-usability)
 - High Level Rendering Manager
 - Complete Material System
@@ -13,31 +13,31 @@ Fast and open source 3D Graphics and Game Engine written in C++ and DirectX 11 c
 - Interactive level editor using the own engine rendering pipeline
 - XML Serialization and DeSerialization using the [TinyXml library](https://github.com/leethomason/tinyxml2)
 - Performance and profiling support using custom built profiling manager
-- Configurable engine paramaters using external config files
-- Events Managment and dispatching system for communication between the engine's systems, the componenets and the actors
-- Resources Managment and on-demand loading using custom built Resource Cache and Handles
-- Easy Packages Managment using Microsoft's [vcpkg](https://github.com/Microsoft/vcpkg)
+- Configurable engine parameters using external configuration files
+- Events Management and dispatching system for communication between the engine's systems, the components and the actors
+- Resources Management and on-demand loading using custom built Resource Cache and Handles
+- Easy Packages Management using Microsoft's [vcpkg](https://github.com/Microsoft/vcpkg) Package Manager
 - Rendering Features:
   - Diffuse textures
-  - Normalmap textures
+  - Normal map textures
   - Specular maps textures
-  - Realtime shadows using shadow mapping technology
+  - Real time shadows using shadow mapping technology
   - Directional lights
   - Point lights
   - Spot lights
   - Occlusion Culling (for limiting the number of rendered objects)
-  - High level managment for graphics objects and their lifespan (Buffers, Shaders, etc...)
+  - High level management for graphics objects and their lifespan (Buffers, Shaders, etc...)
   - Offline Render Targets Support
   - Multi-Viewport Support
 
 ## Installation
 - start with cloning this repo
-```git
+```
 git clone https://github.com/Feras94/GraphicsEngine.git GraphicsEngine
 ```
 - clone and setup vcpkg ([See how to clone and compile the tool](https://github.com/Microsoft/vcpkg#quick-start))
 
-- setup global package installation for vcpjg (requires admin account)
+- setup global package installation for vcpkg (requires admin account)
 ```
 vcpkg integrate install
 ```
