@@ -1,5 +1,14 @@
 # 3D Graphics and Game Engine
 
+[![Language](https://img.shields.io/badge/Language-C++-blue.svg?style=flat-square)]()
+[![DirectX11](https://img.shields.io/badge/DirectX-11-red.svg?style=flat-square)]()
+
+[![Windows-10](https://img.shields.io/badge/windows-10-blue.svg?style=flat-square)]()
+[![Windows-8.1](https://img.shields.io/badge/windows-8.1-orange.svg?style=flat-square)]()
+[![Windows-8](https://img.shields.io/badge/windows-8-green.svg?style=flat-square)]()
+[![Windows-7](https://img.shields.io/badge/windows-7-yellow.svg?style=flat-square)]()
+
+
 ## Description
 Fast and open source 3D Graphics and Game Engine written in C++ and DirectX 11 currently a work in progress, some features are complete while others are still WIP and others are highly unstable
 
