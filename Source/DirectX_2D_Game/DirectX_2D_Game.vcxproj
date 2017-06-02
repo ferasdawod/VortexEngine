@@ -319,6 +319,7 @@
     <ClInclude Include="Performance\ProfilingSample.h" />
     <ClInclude Include="Performance\ScopedProfilerSample.h" />
     <ClInclude Include="Performance\ProfilingManager.h" />
+    <ClInclude Include="resource2.h" />
     <ClInclude Include="Serialization\PropertyBag.h" />
     <ClInclude Include="Serialization\PropertyDescription.h" />
     <ClInclude Include="resource1.h" />
@@ -452,6 +453,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="arrow.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

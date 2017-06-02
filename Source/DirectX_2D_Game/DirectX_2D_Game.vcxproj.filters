@@ -233,6 +233,7 @@
     <ClInclude Include="Serialization\PropertyDescription.h" />
     <ClInclude Include="Serialization\PropertyBag.h" />
     <ClInclude Include="Serialization\PropertyType.h" />
+    <ClInclude Include="resource2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp">
@@ -396,5 +397,10 @@
     <None Include="arrow.cur">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
