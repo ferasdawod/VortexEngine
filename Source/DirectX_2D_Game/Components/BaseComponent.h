@@ -22,7 +22,7 @@ public:
 	void OnUpdate(float deltaTime) override = 0;
 	TiXmlElement* ToXML() const override;
 
-	virtual void RegisterProperties() = 0;
+	virtual void RegisterProperties() override;
 
 	ComponentTypeId GetTypeID() const override = 0;
 	std::weak_ptr<Transform> GetTransform() const { return _pOwner->GetTransform(); }

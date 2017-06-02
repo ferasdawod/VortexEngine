@@ -28,6 +28,8 @@ void LightComponent::Initialize()
 
 void LightComponent::RegisterProperties()
 {
+	BaseComponent::RegisterProperties();
+	
 	RegisterProperty("Strength", Core::PropertyType::Float, &_Strength);
 	RegisterProperty("DiffuseColor", Core::PropertyType::Color, &_DiffuseColor);
 }

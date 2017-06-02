@@ -22,6 +22,12 @@ BaseComponent::BaseComponent(const std::string& componentName) : _name(component
 {
 }
 
+void BaseComponent::RegisterProperties()
+{
+	RegisterProperty("Enabled", Core::PropertyType::Bool, &_enabled);
+}
+
+
 TiXmlElement* BaseComponent::ToXML() const
 {
 	TiXmlElement* element =  DBG_NEW TiXmlElement("Component");
@@ -98,6 +104,8 @@ void Transform::Initialize(TiXmlElement* xmlData)
 
 void Transform::RegisterProperties()
 {
+	BaseComponent::RegisterProperties();
+
 	RegisterProperty("Position", Core::PropertyType::Vector3, &_Position);
 	RegisterProperty("Rotation", Core::PropertyType::Quaternion, &_Rotation);
 	RegisterProperty("Scale", Core::PropertyType::Vector3, &_Scale);
@@ -243,6 +251,8 @@ void Camera::OnUpdate(float deltaTime)
 
 void Camera::RegisterProperties()
 {
+	BaseComponent::RegisterProperties();
+	
 	RegisterProperty("FOV", Core::PropertyType::Float, &_FOV);
 	RegisterProperty("Near Clip", Core::PropertyType::Float, &_NearClip);
 	RegisterProperty("Far Clip", Core::PropertyType::Float, &_FarClip);
