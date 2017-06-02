@@ -18,6 +18,7 @@ bool ComponentFactory::RegisterComponent(const string& name, std::function<Stron
 	if (findResult == _factory.end())
 	{
 		_factory.emplace(std::make_pair(hash, func));
+		_componentsNames.push_back(name);
 		return true;
 	}
 
