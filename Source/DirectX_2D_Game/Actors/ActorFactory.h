@@ -29,6 +29,8 @@ public:
 	StrongActorPtr	CreateCameraActor();
 
 	StrongActorPtr	CreateDirectionalLight();
+	StrongActorPtr	CreateSpotLight();
+	StrongActorPtr	CreatePointLight();
 
 	StrongActorPtr	CreateFromXML(const string& fileName);
 	StrongActorPtr	CreateFromXML(TiXmlElement* actorElement);

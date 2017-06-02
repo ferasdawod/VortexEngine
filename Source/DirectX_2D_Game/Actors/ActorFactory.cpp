@@ -96,6 +96,26 @@ StrongActorPtr ActorFactory::CreateDirectionalLight()
 	return actor;
 }
 
+StrongActorPtr ActorFactory::CreatePointLight()
+{
+	auto actor = CreateEmptyActor("Point Light");
+
+	StrongComponentPtr light(DBG_NEW PointLight());
+	actor->AddComponent(light);
+
+	return actor;
+}
+
+StrongActorPtr ActorFactory::CreateSpotLight()
+{
+	auto actor = CreateEmptyActor("Spot Light");
+
+	StrongComponentPtr light(DBG_NEW SpotLight());
+	actor->AddComponent(light);
+
+	return actor;
+}
+
 //template <typename T>
 //void ActorFactory::RegisterComponent()
 //{
