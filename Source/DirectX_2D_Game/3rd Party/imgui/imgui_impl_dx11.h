@@ -9,6 +9,7 @@
 struct ID3D11Device;
 struct ID3D11DeviceContext;
 
+#define IMGUI_INCLUDE_IMGUI_USER_H
 #include "imgui.h"
 
 IMGUI_API bool        ImGui_ImplDX11_Init(void* hwnd, ID3D11Device* device, ID3D11DeviceContext* device_context);

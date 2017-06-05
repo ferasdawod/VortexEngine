@@ -234,6 +234,8 @@
     <ClInclude Include="Serialization\PropertyBag.h" />
     <ClInclude Include="Serialization\PropertyType.h" />
     <ClInclude Include="resource2.h" />
+    <ClInclude Include="3rd Party\imgui\imgui_dock.h" />
+    <ClInclude Include="3rd Party\imgui\imgui_user.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp">
@@ -386,6 +388,7 @@
     <ClCompile Include="Editor\GuiController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="3rd Party\imgui\imgui_dock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />

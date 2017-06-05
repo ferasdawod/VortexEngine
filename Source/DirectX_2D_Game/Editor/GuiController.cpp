@@ -6,6 +6,7 @@
 #include <Components/Transform.h>
 #include <Components/Camera.h>
 #include <Actors/ActorFactory.h>
+#include <Components/ComponentFactory.h>
 
 #include "3rd Party/imgui/imgui_impl_dx11.h"
 #include "Graphics/Rendering/GraphicsDevice.h"
@@ -159,7 +160,7 @@ void Core::GuiController::Render()
 	DrawAssetsWindow();
 	DrawLogWindow();
 	DrawPropertiesWindow();
-
+	
 	DrawExtraWindows();
 }
 
@@ -191,103 +192,156 @@ void Core::GuiController::HandleRegistering(bool isRegistering)
 
 void Core::GuiController::DrawMenuBar()
 {
+
 	if (ImGui::BeginMainMenuBar())
 	{
-		if (ImGui::BeginMenu("File"))
-		{
-			if (ImGui::MenuItem("New", "CTRL+N"))
-			{
-				LOG_M("New Pressed");
-			}
+		DrawFileMenu();
+		DrawViewMenu();
+		DrawActorsMenu();
+		DrawComponentsMenu();
+		DrawHelpMenu();		
 
-			if (ImGui::MenuItem("Save", "CTRL+S"))
-			{
-				LOG_M("Save Pressed");
-				auto level = _pLevel.lock();
-				level->SaveLevel();
-			}
+		ImGui::EndMainMenuBar();
+	}
+}
+
+void Core::GuiController::DrawFileMenu() const
+{
+	if (ImGui::BeginMenu("File"))
+	{
+		if (ImGui::MenuItem("New", "CTRL+N"))
+		{
+			LOG_M("New Pressed");
+		}
+
+		if (ImGui::MenuItem("Save", "CTRL+S"))
+		{
+			LOG_M("Save Pressed");
+			auto level = _pLevel.lock();
+			level->SaveLevel();
+		}
+
+		ImGui::Separator();
+		if (ImGui::MenuItem("Exit", "ALT+F4"))
+		{
+			auto window = _pWindow.lock();
+			PostMessage(window->GetHandle(), WM_CLOSE, 0, 0);
+			LOG_M("Exit Pressed");
+		}
+
+		ImGui::EndMenu();
+	}
+}
+
+void Core::GuiController::DrawViewMenu()
+{
+	if (ImGui::BeginMenu("View"))
+	{
+		ImGui::MenuItem("Use Dark Theme", nullptr, &_isDarkTheme);
+		ImGui::SliderFloat("Windows Alpha", &_windowsAlpha, 0.f, 1.f);
+
+		ImGui::EndMenu();
+	}
+}
+
+void Core::GuiController::DrawActorsMenu()
+{
+	auto actor = _pSelectedActor.lock();
+	if (ImGui::BeginMenu("Actors"))
+	{
+		if (ImGui::BeginMenu("Creat New"))
+		{
+			auto factory = _pActorFactory.lock();
+			auto level = _pLevel.lock();
+
+			auto actor = std::shared_ptr<Actor>();
+
+			if (ImGui::MenuItem("Empty Actor"))
+				actor = factory->CreateEmptyActor();
+			if (ImGui::MenuItem("Box Actor"))
+				actor = factory->CreateBoxActor();
+			if (ImGui::MenuItem("Sphere Actor"))
+				actor = factory->CreateSphereActor();
+			if (ImGui::MenuItem("Cylinder Actor"))
+				actor = factory->CreateCylinderActor();
+			if (ImGui::MenuItem("Plane Actor"))
+				actor = factory->CreatePlaneActor();
 
 			ImGui::Separator();
-			if (ImGui::MenuItem("Exit", "ALT+F4"))
+
+			if (ImGui::MenuItem("Directional Light"))
+				actor = factory->CreateDirectionalLight();
+			if (ImGui::MenuItem("Spot Light"))
+				actor = factory->CreateSpotLight();
+			if (ImGui::MenuItem("Point Light"))
+				actor = factory->CreatePointLight();
+
+			if (actor)
 			{
-				auto window = _pWindow.lock();
-				PostMessage(window->GetHandle(), WM_CLOSE, 0, 0);
-				LOG_M("Exit Pressed");
+				level->AddActor(actor);
+				_pSelectedActor = actor;
+				_selectedActorId = actor->GetId().GetUnderlyingValue();
 			}
 
 			ImGui::EndMenu();
 		}
 
-		if (ImGui::BeginMenu("View"))
+		if (actor)
 		{
-			ImGui::MenuItem("Use Dark Theme", nullptr, &_isDarkTheme);
-			ImGui::SliderFloat("Windows Alpha", &_windowsAlpha, 0.f, 1.f);
+			if (ImGui::MenuItem("Delete", "DELETE"))
+			{
+				auto level = _pLevel.lock();
+				level->DestroyActor(actor->GetId());
 
-			ImGui::EndMenu();
+				_pSelectedActor.reset();
+				_selectedActorId = -1;
+			}
 		}
 
-		if (ImGui::BeginMenu("Actors"))
+		ImGui::EndMenu();
+	}
+}
+
+void Core::GuiController::DrawComponentsMenu() const
+{
+	auto actor = _pSelectedActor.lock();
+	if (actor)
+	{
+		if (ImGui::BeginMenu("Components"))
 		{
-			if (ImGui::BeginMenu("Creat New"))
+			if (ImGui::BeginMenu("Add New"))
 			{
-				auto factory = _pActorFactory.lock();
-				auto level = _pLevel.lock();
+				auto componentFactory = _pActorFactory.lock()->GetComponentFactory();
+				auto& components = componentFactory->GetRegisteredComponents();
 
-				auto actor = std::shared_ptr<Actor>();
-
-				if (ImGui::MenuItem("Empty Actor"))
-					actor = factory->CreateEmptyActor();
-				if (ImGui::MenuItem("Box Actor"))
-					actor = factory->CreateBoxActor();
-				if (ImGui::MenuItem("Sphere Actor"))
-					actor = factory->CreateSphereActor();
-				if (ImGui::MenuItem("Cylinder Actor"))
-					actor = factory->CreateCylinderActor();
-				if (ImGui::MenuItem("Plane Actor"))
-					actor = factory->CreatePlaneActor();
-
-				ImGui::Separator();
-
-				if (ImGui::MenuItem("Directional Light"))
-					actor = factory->CreateDirectionalLight();
-
-				if (actor)
+				for (auto component : components)
 				{
-					level->AddActor(actor);
-					_pSelectedActor = actor;
-					_selectedActorId = actor->GetId().GetUnderlyingValue();
+					if (ImGui::MenuItem(component.c_str()))
+					{
+						auto com = componentFactory->CreateComponent(component);
+						actor->AddComponent(com);
+					}
 				}
 
 				ImGui::EndMenu();
 			}
 
-			auto actor = _pSelectedActor.lock();
-			if (actor)
-			{
-				if (ImGui::MenuItem("Delete", "DELETE"))
-				{
-					auto level = _pLevel.lock();
-					level->DestroyActor(actor->GetId());
-					
-					_pSelectedActor.reset();
-					_selectedActorId = -1;
-				}
-			}
-
 			ImGui::EndMenu();
 		}
+	}
+}
 
-		if (ImGui::BeginMenu("Help"))
+void Core::GuiController::DrawHelpMenu()
+{
+	if (ImGui::BeginMenu("Help"))
+	{
+		if (ImGui::MenuItem("About", "CTRL+I"))
 		{
-			if (ImGui::MenuItem("About", "CTRL+I"))
-			{
-				_bShowAboutWindow = true;
-			}
-
-			ImGui::EndMenu();
+			_bShowAboutWindow = true;
 		}
+		
 
-		ImGui::EndMainMenuBar();
+		ImGui::EndMenu();
 	}
 }
 
@@ -540,10 +594,27 @@ void Core::GuiController::DrawExtraWindows()
 {
 	if (_bShowAboutWindow)
 	{
-		//ImGui::SetNextWindowPos(ImVec2(200, 200));
-		ImGuiWindowFlags windowFlags = ImGuiWindowFlags_Modal | ImGuiWindowFlags_AlwaysAutoResize;
-		ImGui::Begin("About", &_bShowAboutWindow, windowFlags);
-		ImGui::Text("Hello and welcome to our great editor");
-		ImGui::End();
-	}
+		////ImGui::SetNextWindowPos(ImVec2(200, 200));
+		//ImGuiWindowFlags windowFlags = ImGuiWindowFlags_Modal | ImGuiWindowFlags_AlwaysAutoResize;
+		//ImGui::Begin("About", &_bShowAboutWindow, windowFlags);
+		//ImGui::Text("Hello and welcome to our great editor");
+		//ImGui::End();
+
+		ImGui::OpenPopup("About");
+		if (ImGui::BeginPopupModal("About", &_bShowAboutWindow, ImGuiWindowFlags_AlwaysAutoResize))
+		{
+			ImGui::Text("Welcome to the great Graphics Engine");
+			ImGui::Text("Version: 1.0.0");
+			ImGui::Separator();
+
+
+			if (ImGui::Button("OK", ImVec2(150, 20)))
+			{
+				_bShowAboutWindow = false;
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
+	}	
 }

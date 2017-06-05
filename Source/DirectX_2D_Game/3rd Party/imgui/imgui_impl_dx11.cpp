@@ -7,6 +7,7 @@
 // https://github.com/ocornut/imgui
 
 #include "pch.h"
+#define IMGUI_INCLUDE_IMGUI_USER_H
 #include "imgui.h"
 #include "imgui_impl_dx11.h"
 

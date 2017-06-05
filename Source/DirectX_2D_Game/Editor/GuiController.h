@@ -25,7 +25,17 @@ namespace Core
 		void HandleRegistering(bool isRegistering) override;
 
 	protected:
+		
+		// Menu bar stuff
 		void DrawMenuBar();
+		void DrawFileMenu() const;
+		void DrawViewMenu();
+		void DrawActorsMenu();
+		void DrawComponentsMenu() const;
+		void DrawHelpMenu();
+
+
+
 		void DrawActorsWindow();
 		void DrawAssetsWindow();
 		void DrawLogWindow();

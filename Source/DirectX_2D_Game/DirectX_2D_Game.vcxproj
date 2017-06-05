@@ -283,8 +283,10 @@
     <ClInclude Include="3rd Party\imgui\imconfig.h" />
     <ClInclude Include="3rd Party\imgui\imgui.h" />
     <ClInclude Include="3rd Party\imgui\ImGuizmo.h" />
+    <ClInclude Include="3rd Party\imgui\imgui_dock.h" />
     <ClInclude Include="3rd Party\imgui\imgui_impl_dx11.h" />
     <ClInclude Include="3rd Party\imgui\imgui_internal.h" />
+    <ClInclude Include="3rd Party\imgui\imgui_user.h" />
     <ClInclude Include="3rd Party\imgui\stb_rect_pack.h" />
     <ClInclude Include="3rd Party\imgui\stb_textedit.h" />
     <ClInclude Include="3rd Party\imgui\stb_truetype.h" />
@@ -452,6 +454,9 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3rd Party\imgui\imgui_dock.cpp">
+      <FileType>Document</FileType>
+    </ClCompile>
     <None Include="arrow.cur" />
   </ItemGroup>
   <ItemGroup>
