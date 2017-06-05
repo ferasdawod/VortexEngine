@@ -1,0 +1,14 @@
+<Actor Name="Camera">
+    <Components Count="2">
+        <Component Name="Transform" TypeID="2645638309">
+            <Position X="0" Y="0" Z="0" />
+            <Rotation X="0" Y="0" Z="0" W="1" />
+            <Scale X="1" Y="1" Z="1" />
+        </Component>
+        <Component Name="Camera" TypeID="1500981874">
+            <FOV Value="0.785398" />
+            <FarClip Value="100.000000" />
+            <NearClip Value="0.100000" />
+        </Component>
+    </Components>
+</Actor>

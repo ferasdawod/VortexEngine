@@ -1,0 +1,16 @@
+<Actor Name="Wall Demo 1">
+    <Components Count="2">
+        <Component Name="Transform" TypeID="2645638309">
+            <Position X="1.5" Y="0.5" Z="2" />
+            <Rotation X="0" Y="0" Z="0" W="1" />
+            <Scale X="2" Y="2" Z="2" />
+        </Component>
+		<Component Name="MeshRenderer" TypeID="1803461764">
+			<Enabled Value="1" />
+			<MeshName Value="Box.mesh" />
+			<Materials Count="1">
+				<Material PrefabPath="Assets\\Materials\\Box2Material.material" />
+			</Materials>
+        </Component>
+    </Components>
+</Actor>

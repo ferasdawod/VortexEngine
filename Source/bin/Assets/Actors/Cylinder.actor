@@ -1,0 +1,16 @@
+<Actor Name="Rolled Grass 1">
+    <Components Count="2">
+        <Component Name="Transform" TypeID="2645638309">
+            <Position X="-3" Y="0.5" Z="0" />
+            <Rotation X="0" Y="0" Z="0" W="1" />
+            <Scale X="1" Y="1" Z="1" />
+        </Component>
+		<Component Name="MeshRenderer" TypeID="1803461764">
+			<Enabled Value="1" />
+			<MeshName Value="Cylinder.mesh" />
+			<Materials Count="1">
+				<Material PrefabPath="Assets\\Materials\\CylinderMaterial.material" />
+			</Materials>
+        </Component>
+    </Components>
+</Actor>

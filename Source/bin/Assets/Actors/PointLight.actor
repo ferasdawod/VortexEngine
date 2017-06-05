@@ -1,0 +1,26 @@
+<Actor Name="Point Light">
+	<Enabled Value="1" />
+    <Components Count="3">
+        <Component Name="Transform" TypeID="2645638309">
+            <Position X="0" Y="0" Z="0" />
+            <Rotation X="0" Y="0" Z="0" />
+            <Scale X="0.25" Y="0.25" Z="0.25" />
+        </Component>
+        <Component Name="PointLight" TypeID="1270432536">
+			<Enabled Value="1" />
+            <!--LightType : Directional = 0, Point = 1, Spot = 2-->
+            <LightType Value="1" />
+            <DiffuseColor R="0" G="0" B="1" A="1" />
+            <Strength Value="1" />
+			<Falloff Value="10" />
+			<Range Value="2" />
+		</Component>
+		<Component Name="MeshRenderer" TypeID="1803461764">
+			<Enabled Value="1" />
+			<MeshName Value="Sphere.mesh" />
+			<Materials Count="1">
+				<Material PrefabPath="Assets\\Materials\\PointLight.material" />
+			</Materials>
+        </Component>
+    </Components>
+</Actor>

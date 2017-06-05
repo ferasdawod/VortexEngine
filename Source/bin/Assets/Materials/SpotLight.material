@@ -1,0 +1,15 @@
+<Material Name="SpotLight">
+	<Diffuse R="1" G="1" B="1" A="1" />
+	<Ambient R="1" G="1" B="1" A="1" />
+	<Specular R="0" G="0" B="0" A="1" />
+	<SpecularPower Value="32" />
+	<IsLit Value="0" />
+	<CastShadows Value="0" />
+	<ReceiveShadows Value="0" />
+	<IsTextured Value="0" />
+	<TexturePath Value="Assets\\Textures\\Earth.jpg" />
+	<!--Available Samplers : PointClamp = 0, PointWrap = 1, LinearClamp = 2, LinearWrap = 3, AnisotropicClamp = 4, 	AnisotropicWrap = 5-->
+	<SamplingType Value="5" />
+	<TextureOffset X="0" Y="0" />
+	<TextureScale X="1" Y="1" />
+</Material>

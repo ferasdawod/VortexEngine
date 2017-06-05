@@ -1,0 +1,33 @@
+<Level Name="SuperMegaLevel">
+	<AmbientColor R="0.1" G="0.1" B="0.1" A="1" />
+    <Actors Count="13">
+        <Actor PrefabPath="Assets\\Actors\\SimpleLight.actor" />
+		<Actor PrefabPath="Assets\\Actors\\PointLight.actor" />
+		<Actor PrefabPath="Assets\\Actors\\SpotLight.actor" />
+        <Actor PrefabPath="Assets\\Actors\\Box.actor" />
+        <Actor PrefabPath="Assets\\Actors\\Box2.actor" />
+        <Actor PrefabPath="Assets\\Actors\\Box3.actor" />
+        <Actor PrefabPath="Assets\\Actors\\Cylinder.actor" />
+        <Actor PrefabPath="Assets\\Actors\\Cylinder2.actor" />
+        <Actor PrefabPath="Assets\\Actors\\Plane.actor" />
+        <Actor PrefabPath="Assets\\Actors\\Plane1.actor" />
+        <Actor PrefabPath="Assets\\Actors\\Plane2.actor" />
+		<Actor PrefabPath="Assets\\Actors\\MeshActor.actor" />
+        <Actor Name="Earth Sphere">
+			<Components Count="2">
+				<Component Name="Transform" TypeID="2645638309">
+					<Position X="0" Y="2" Z="-2" />
+					<Rotation X="0" Y="0" Z="0" />
+					<Scale X="1" Y="1" Z="1" />
+				</Component>
+				<Component Name="MeshRenderer" TypeID="1803461764">
+					<Enabled Value="1" />
+					<MeshName Value="Sphere.mesh" />
+					<Materials Count="1">
+						<Material PrefabPath="Assets\\Materials\\SphereMaterial.material" />
+					</Materials>
+				</Component>
+			</Components>
+		</Actor>
+    </Actors>
+</Level>

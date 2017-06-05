@@ -1,0 +1,19 @@
+<Settings>
+    <Window>
+        <X Value="0" />
+        <Y Value="0" />
+        <Width Value="1280" />
+        <Height Value="720" />
+        <Title Value="Graphics Engine" />
+    </Window>
+    <Graphics>
+        <VSyncCount Value="0" />
+        <ClearColor R="0.2" G="0.2" B="0.2" A="1" />
+    </Graphics>
+    <Engine>
+        <UpdateRate Value="60" />
+    </Engine>
+    <Application>
+        <DefaultLevel Value="Assets\\Levels\\SuperMegaLevel.level" />
+    </Application>
+</Settings>
