@@ -61,8 +61,8 @@ vcpkg install directxtk
 
 ## Usage
 the included project comes with a demo project showing how to reference the engine code and also how to setup a basic scene
-**currenlty the Assets folder needed to launch the demo application is missing from git and will be pushed as soon as possible**
-More usage instruction will be posted soon!
+
+you can find example asset files in the bin folder (bin\Assets), More usage instruction will be posted soon!
 
 ## Contributing
 Feel free to clone and fork the project and send pull requests or submit issues and we'll work on them as soon as possible!
