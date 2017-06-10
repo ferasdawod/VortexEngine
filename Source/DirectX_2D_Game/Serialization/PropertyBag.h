@@ -17,9 +17,9 @@ namespace Core
 	protected:
 		virtual void RegisterProperties() = 0;
 		
-		void RegisterProperty(const char* propertyName, PropertyType type, void* value)
+		void RegisterProperty(const char* propertyName, PropertyType type, void* value, float min = 0.f, float max = 100.f)
 		{
-			_properties.push_back(PropertyDescription(propertyName, type, value));
+			_properties.push_back(PropertyDescription(propertyName, type, value, min, max));
 		}
 
 	private:

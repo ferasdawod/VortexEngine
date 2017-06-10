@@ -106,7 +106,7 @@ void Transform::RegisterProperties()
 {
 	BaseComponent::RegisterProperties();
 
-	RegisterProperty("Position", Core::PropertyType::Vector3, &_Position);
+	RegisterProperty("Position", Core::PropertyType::Vector3, &_Position, -1000.f, 1000.f);
 	RegisterProperty("Rotation", Core::PropertyType::Quaternion, &_Rotation);
 	RegisterProperty("Scale", Core::PropertyType::Vector3, &_Scale);
 }
