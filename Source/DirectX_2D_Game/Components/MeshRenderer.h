@@ -33,12 +33,15 @@ public:
 	virtual void OnUpdate(float deltaTime) override { }
 
 	void RegisterProperties() override;
+	void RemoveMaterial(ObjectId materialId);
 
 	virtual TiXmlElement* ToXML() const override;
 
 	DECLARE_STRING_PROPERTY(MeshFilePath);
 	DECLARE_PROPERTY_READ_ONLY(RenderRequestPtr, RenderRequest);
 	DECLARE_PROPERTY_READ_ONLY(MaterialsVector, Materials);
+
+	void AddMaterial(std::shared_ptr<Material> material);
 };
 
 __declspec(selectany) const ComponentTypeId MeshRenderer::kComponentID = 0x6B7EA484;

@@ -57,6 +57,15 @@ void MeshRenderer::RegisterProperties()
 	RegisterProperty("Mesh Name", Core::PropertyType::String, (void*)&_MeshFilePath);
 }
 
+void MeshRenderer::RemoveMaterial(ObjectId materialId)
+{
+	auto itr = std::find_if(_Materials.begin(), _Materials.end(),
+		[&](std::shared_ptr<Material> material) { return material->GetId() == materialId; });
+
+	if (itr != _Materials.end())
+		_Materials.erase(itr);
+}
+
 TiXmlElement* MeshRenderer::ToXML() const
 {
 	auto element = BaseComponent::ToXML();
@@ -73,4 +82,14 @@ TiXmlElement* MeshRenderer::ToXML() const
 	element->LinkEndChild(materialsE);
 
 	return element;
+}
+
+void MeshRenderer::AddMaterial(std::shared_ptr<Material> material)
+{
+	if (material)
+	{
+		_Materials.push_back(material);
+	}
+	else
+		LOG_W("Trying to add a null material");
 }
