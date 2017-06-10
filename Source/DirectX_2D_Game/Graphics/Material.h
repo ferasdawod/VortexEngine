@@ -10,6 +10,7 @@
 #include "Debugging/Debug.h"
 
 #include "Events/EventListener.h"
+#include <Utilities/UniqueObject.h>
 
 using DirectX::SimpleMath::Color;
 using DirectX::SimpleMath::Vector2;
@@ -17,9 +18,16 @@ using DirectX::SimpleMath::Matrix;
 
 class TiXmlElement;
 
-class Material : public EventListener
+namespace Core
 {
-private:
+	class GuiController;
+}
+
+class Material : public EventListener, public UniqueObject
+{
+public:
+	friend class Core::GuiController;
+
 	Material();
 	Material(const std::string& matName);
 

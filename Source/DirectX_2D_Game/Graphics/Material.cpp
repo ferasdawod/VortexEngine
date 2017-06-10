@@ -27,6 +27,7 @@ Material::Material(const std::string& name, const Color& diffuseColor, const Col
 				   _UseSpecularTexture(useSpecularTexture), _SpecularTexturePath(specTexName),
 				   _UseNormalMap(false), _NormalMapTexturePath("")
 {
+	_Name.reserve(255);
 	HandleRegistering(true);
 }
 
