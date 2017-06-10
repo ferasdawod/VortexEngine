@@ -136,6 +136,8 @@ bool Material::LoadFromXML(TiXmlElement* element)
 	XmlHelper::FromXml(element, "SamplingType", sampleInt);
 	_TextureSampler = static_cast<SamplingType>(sampleInt);
 
+	CleanTexturesPaths();
+
 	return true;
 }
 
@@ -197,4 +199,20 @@ bool Material::HandleEvent(StrongEventDataPtr eventData)
 void Material::HandleRegistering(bool isRegistering)
 {
 	ToggleRegisteration(Event_ReloadMaterial::kEventID, isRegistering);
+}
+
+void myReplace(std::string& str, const std::string& oldStr, const std::string& newStr)
+{
+	std::string::size_type pos = 0u;
+	while ((pos = str.find(oldStr, pos)) != std::string::npos) {
+		str.replace(pos, oldStr.length(), newStr);
+		pos += newStr.length();
+	}
+}
+
+void Material::CleanTexturesPaths()
+{
+	myReplace(_TexturePath, "\\\\", "\\");
+	myReplace(_SpecularTexturePath, "\\\\", "\\");
+	myReplace(_NormalMapTexturePath, "\\\\", "\\");
 }

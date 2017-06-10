@@ -40,6 +40,7 @@ public:
 	static std::shared_ptr<Material>	CreateFromXML(TiXmlElement* element);
 private:
 	bool								LoadFromXML(TiXmlElement* element);
+	void								CleanTexturesPaths();
 
 public:
 	static std::shared_ptr<Material>	GetDefault()
