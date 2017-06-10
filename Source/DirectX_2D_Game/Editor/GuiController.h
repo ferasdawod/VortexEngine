@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include "Graphics/Window/IWindow.h"
 #include <Events/EventListener.h>
 
@@ -7,9 +8,12 @@ class Level;
 class Camera;
 class Actor;
 class ActorFactory;
+class Material;
 
 namespace Core
 {
+	class AssetManager;
+
 	class GuiController : public EventListener
 	{
 	public:
@@ -40,6 +44,7 @@ namespace Core
 		void DrawAssetsWindow();
 		void DrawLogWindow();
 		void DrawPropertiesWindow();
+		void DrawMaterialProperties(std::shared_ptr<Material> material) const;
 
 		void DrawExtraWindows();
 
@@ -48,6 +53,8 @@ namespace Core
 		std::weak_ptr<Level> _pLevel;
 		std::weak_ptr<Camera> _pCamera;
 		std::weak_ptr<ActorFactory> _pActorFactory;
+
+		std::unique_ptr<AssetManager> _pAssetManager;
 
 		bool _isDarkTheme;
 		float _windowsAlpha;

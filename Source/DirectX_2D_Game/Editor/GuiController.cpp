@@ -7,6 +7,8 @@
 #include <Components/Camera.h>
 #include <Actors/ActorFactory.h>
 #include <Components/ComponentFactory.h>
+#include <Components/MeshRenderer.h>
+#include <Graphics/Material.h>
 
 #include "3rd Party/imgui/imgui_impl_dx11.h"
 #include "Graphics/Rendering/GraphicsDevice.h"
@@ -16,6 +18,7 @@
 #include <Debugging/Logger.h>
 
 #include <Input/Input.h>
+#include "AssetManager.h"
 
 namespace ImGuizmo {
 	struct matrix_t;
@@ -123,6 +126,9 @@ bool Core::GuiController::Initialize(std::weak_ptr<IWindow> window, std::weak_pt
 	_pLevel = level;
 	_pActorFactory = actorFactory;
 
+	_pAssetManager.reset(DBG_NEW AssetManager);
+	_pAssetManager->LoadAssets();
+
 	auto win = window.lock();
 	auto device = GraphicsDevice::GetPtr();
 
@@ -154,7 +160,7 @@ void Core::GuiController::Render()
 	ImGuizmo::BeginFrame();
 
 	ImGui::ShowTestWindow();
-
+	
 	DrawMenuBar();
 	DrawActorsWindow();
 	DrawAssetsWindow();
@@ -258,6 +264,9 @@ void Core::GuiController::DrawActorsMenu()
 
 			if (ImGui::MenuItem("Empty Actor"))
 				actor = factory->CreateEmptyActor();
+
+			ImGui::Separator();
+
 			if (ImGui::MenuItem("Box Actor"))
 				actor = factory->CreateBoxActor();
 			if (ImGui::MenuItem("Sphere Actor"))
@@ -471,7 +480,7 @@ void Core::GuiController::DrawPropertiesWindow()
 	if (!actor) return;
 
 
-	auto width = _windowWidth * 0.3f;
+	auto width = _windowWidth * 0.35f;
 	auto height = _windowHeight;
 
 	ImGui::SetNextWindowPos(ImVec2(_windowWidth - width, 25));
@@ -502,9 +511,11 @@ void Core::GuiController::DrawPropertiesWindow()
 	}
 
 	auto& components = actor->GetComponents();
+	std::vector<ObjectId> componentsToRemove;
 	for (auto component : components)
 	{
-		if (ImGui::CollapsingHeader(component->GetName().c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+		bool componentOpen = true;
+		if (ImGui::CollapsingHeader(component->GetName().c_str(), &componentOpen, ImGuiTreeNodeFlags_DefaultOpen))
 		{
 			auto& props = component->GetProperties();
 			for (auto& prop : props)
@@ -526,11 +537,11 @@ void Core::GuiController::DrawPropertiesWindow()
 				switch (prop.type)
 				{
 				case PropertyType::Float:
-					ImGui::DragFloat("", (float*)prop.value, 0, 100);
+					ImGui::DragFloat("", (float*)prop.value, prop.minValue, prop.maxValue);
 					break;
 				
 				case PropertyType::Int:
-					ImGui::DragInt("", (int*)prop.value, 0, 100);
+					ImGui::DragInt("", (int*)prop.value, prop.minValue, prop.maxValue);
 					break;
 				
 				case PropertyType::Bool:
@@ -567,15 +578,15 @@ void Core::GuiController::DrawPropertiesWindow()
 					break;
 
 				case PropertyType::Vector2: 
-					ImGui::DragFloat2("", (float*)prop.value, 0.1, 0, 100);
+					ImGui::DragFloat2("", (float*)prop.value, 0.1, prop.minValue, prop.maxValue);
 					break;
 
 				case PropertyType::Vector3:
-					ImGui::DragFloat3("", (float*)prop.value, 0.1, 0, 100);
+					ImGui::DragFloat3("", (float*)prop.value, 0.1, prop.minValue, prop.maxValue);
 					break;
 
 				case PropertyType::Vector4: 
-					ImGui::DragFloat4("", (float*)prop.value, 0.1, 0, 100);
+					ImGui::DragFloat4("", (float*)prop.value, 0.1, prop.minValue, prop.maxValue);
 					break;
 
 				default:
@@ -583,11 +594,169 @@ void Core::GuiController::DrawPropertiesWindow()
 				}
 				ImGui::PopID();
 			}
+
+			if (component->GetTypeID() == MeshRenderer::kComponentID)
+			{
+				std::shared_ptr<MeshRenderer> mesh_renderer = std::dynamic_pointer_cast<MeshRenderer>(component);
+
+				ImGui::Separator();
+				ImGui::Text("Materials");
+				ImGui::SameLine(100);
+				if (ImGui::Button("Add New Material"))
+				{
+					mesh_renderer->AddMaterial(std::shared_ptr<Material>(DBG_NEW Material));
+					LOG_M("New Material Added");
+				}
+
+				const auto& materials = mesh_renderer->GetMaterials();
+				std::vector<ObjectId> materialsToRemove;
+				for (auto itr = materials.begin(); itr < materials.end(); ++itr)
+				{
+					auto material = *itr;
+
+					ImGui::PushID(material.get());
+					bool open = true;
+					if (ImGui::CollapsingHeader(material->GetName().c_str(), &open, ImGuiTreeNodeFlags_DefaultOpen))
+					{
+						DrawMaterialProperties(material);
+					}
+					if (!open) materialsToRemove.push_back(material->GetId());
+					ImGui::PopID();
+				}
+
+				for (auto materialId : materialsToRemove)
+				{
+					mesh_renderer->RemoveMaterial(materialId);
+				}
+			}
 		}
+
+		if (component->GetTypeID() != Transform::kComponentID && !componentOpen) componentsToRemove.push_back(component->GetId());
 	}
+
+	for (auto componentId : componentsToRemove)
+		actor->RemoveComponent(componentId);
 
 
 	ImGui::End();
+}
+
+// callback to get the combo list items (to work with vector<string>)
+bool get_combo_item(void* data, int index, const char** outdata)
+{
+	auto list = static_cast<std::vector<string>*>(data);
+	*outdata = (*list)[index].c_str();
+	return true;
+}
+
+void Core::GuiController::DrawMaterialProperties(std::shared_ptr<Material> material) const
+{
+	auto& textures = _pAssetManager->GetTextures();
+
+	ImGui::Text("Diffuse Color");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_DiffuseColor);
+	ImGui::ColorEdit4("", (float*)&material->_DiffuseColor, false);
+	ImGui::PopID();
+
+	ImGui::Text("Specular Color");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_SpecularColor);
+	ImGui::ColorEdit4("", (float*)&material->_SpecularColor, false);
+	ImGui::PopID();
+
+	ImGui::Text("Specular Power");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_SpecularPower);
+	ImGui::DragFloat("", &material->_SpecularPower, 1, 0, 1000);
+	ImGui::PopID();
+
+	ImGui::Text("Ambient Color");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_AmbientColor);
+	ImGui::ColorEdit4("", (float*)&material->_AmbientColor, false);
+	ImGui::PopID();
+
+	ImGui::Text("Is Lit");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_IsLit);
+	ImGui::Checkbox("", &material->_IsLit);
+	ImGui::PopID();
+
+	ImGui::Text("Is Textured");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_IsTextured);
+	ImGui::Checkbox("", &material->_IsTextured);
+	ImGui::PopID();
+
+	ImGui::Text("Texture Scale");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_TextureScale);
+	ImGui::DragFloat2("", (float*)&material->_TextureScale, 1, 1, 1000);
+	ImGui::PopID();
+
+	ImGui::Text("Texture Offset");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_TextureOffset);
+	ImGui::DragFloat2("", (float*)&material->_TextureOffset, 0.1, -1, 1);
+	ImGui::PopID();
+
+	ImGui::Text("Texture Rotation");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_TextureRotation);
+	ImGui::DragFloat("", &material->_TextureRotation, 1, -360, 360);
+	ImGui::PopID();
+
+	ImGui::Text("Texture Path");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_TexturePath);
+	auto index = std::find(textures.begin(), textures.end(), material->_TexturePath);
+	auto selected = std::distance(textures.begin(), index);
+	if (ImGui::Combo("", &selected, get_combo_item, (void*)&textures, textures.size()))
+		if (selected < textures.size()) material->SetTexturePath(textures[selected]);
+	ImGui::PopID();
+
+	ImGui::Text("Use Specular Texture");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_UseSpecularTexture);
+	ImGui::Checkbox("", &material->_UseSpecularTexture);
+	ImGui::PopID();
+
+	ImGui::Text("Specular Texture");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_SpecularTexturePath);
+	index = std::find(textures.begin(), textures.end(), material->_SpecularTexturePath);
+	selected = std::distance(textures.begin(), index);
+	if (ImGui::Combo("", &selected, get_combo_item, (void*)&textures, textures.size()))
+		if (selected < textures.size()) material->SetSpecularTexturePath(textures[selected]);
+	ImGui::PopID();
+
+	ImGui::Text("Use Normal Map");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_UseNormalMap);
+	ImGui::Checkbox("", &material->_UseNormalMap);
+	ImGui::PopID();
+
+	ImGui::Text("Normal Map Texture");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_NormalMapTexturePath);
+	index = std::find(textures.begin(), textures.end(), material->_NormalMapTexturePath);
+	selected = std::distance(textures.begin(), index);
+	if (ImGui::Combo("", &selected, get_combo_item, (void*)&textures, textures.size()))
+		if (selected < textures.size()) material->SetNormalMapTexturePath(textures[selected]);
+	ImGui::PopID();
+
+	ImGui::Text("Cast Shadows");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_CastShadows);
+	ImGui::Checkbox("", &material->_CastShadows);
+	ImGui::PopID();
+
+	ImGui::Text("Receive Shadows");
+	ImGui::SameLine(125);
+	ImGui::PushID(&material->_ReceiveShadows);
+	ImGui::Checkbox("", &material->_ReceiveShadows);
+	ImGui::PopID();
 }
 
 void Core::GuiController::DrawExtraWindows()
