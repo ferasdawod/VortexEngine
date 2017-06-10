@@ -145,7 +145,7 @@ void Effect::UpdateMaterial(std::shared_ptr<Material> mat)
 	if (texturingEnabled)
 	{
 		// setting the textures only if we are not in the shadow pass
-		if (mat->GetIsTextured() && _currentTech != RenderTechnique::ShadowTech)
+		if (mat->GetIsTextured() && !mat->GetTexturePath().empty() && _currentTech != RenderTechnique::ShadowTech)
 		{
 			auto textureHandle = ResCache::GetPtr()->GetHandle(mat->GetTexturePath());
 			auto texture = std::static_pointer_cast<Texture2D>(textureHandle->GetResource().lock());
@@ -156,14 +156,14 @@ void Effect::UpdateMaterial(std::shared_ptr<Material> mat)
 			_pDiffuseTexture->SetResource(texture->GetShaderResourceView().Get());
 			_pDiffuseSampler->SetSampler(0, _pGraphicsDevice->GetSampler(mat->GetTextureSampler()).Get());
 		}
-		if (mat->GetUseSpecularTexture() && lightingEnabled && _currentTech != RenderTechnique::ShadowTech)
+		if (mat->GetUseSpecularTexture() && !mat->GetSpecularTexturePath().empty() && lightingEnabled && _currentTech != RenderTechnique::ShadowTech)
 		{
 			auto textureHandle = ResCache::GetPtr()->GetHandle(mat->GetSpecularTexturePath());
 			auto texture = std::static_pointer_cast<Texture2D>(textureHandle->GetResource().lock());
 
 			_pSpecularTexture->SetResource(texture->GetShaderResourceView().Get());
 		}
-		if (mat->GetUseNormalMap() && lightingEnabled && _currentTech != RenderTechnique::ShadowTech)
+		if (mat->GetUseNormalMap() && !mat->GetNormalMapTexturePath().empty() && lightingEnabled && _currentTech != RenderTechnique::ShadowTech)
 		{
 			auto textureHandle = ResCache::GetPtr()->GetHandle(mat->GetNormalMapTexturePath());
 			auto texture = std::static_pointer_cast<Texture2D>(textureHandle->GetResource().lock());
