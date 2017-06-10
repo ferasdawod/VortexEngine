@@ -292,6 +292,7 @@
     <ClInclude Include="3rd Party\imgui\stb_truetype.h" />
     <ClInclude Include="Actors\Actor.h" />
     <ClInclude Include="Components\ComponentFactory.h" />
+    <ClInclude Include="Editor\AssetManager.h" />
     <ClInclude Include="Editor\GuiController.h" />
     <ClInclude Include="Engine\GameTimer.h" />
     <ClInclude Include="Components\IComponent.h" />
@@ -396,6 +397,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Components\ComponentFactory.cpp" />
+    <ClCompile Include="Editor\AssetManager.cpp" />
     <ClCompile Include="Editor\GuiController.cpp" />
     <ClCompile Include="Engine\GameTimer.cpp" />
     <ClCompile Include="Components\MeshRenderer.cpp" />

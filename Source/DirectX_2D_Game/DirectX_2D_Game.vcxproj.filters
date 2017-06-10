@@ -236,6 +236,7 @@
     <ClInclude Include="resource2.h" />
     <ClInclude Include="3rd Party\imgui\imgui_dock.h" />
     <ClInclude Include="3rd Party\imgui\imgui_user.h" />
+    <ClInclude Include="Editor\AssetManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp">
@@ -389,6 +390,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="3rd Party\imgui\imgui_dock.cpp" />
+    <ClCompile Include="Editor\AssetManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />
