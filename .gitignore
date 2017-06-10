@@ -21,6 +21,7 @@
 bld/
 [Tt]emp/
 [Oo]bj/
+Source/bin/Logs/
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -240,3 +241,4 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+Source/bin/imgui.ini
