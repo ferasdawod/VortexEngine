@@ -290,8 +290,31 @@
     <ClInclude Include="3rd Party\imgui\stb_rect_pack.h" />
     <ClInclude Include="3rd Party\imgui\stb_textedit.h" />
     <ClInclude Include="3rd Party\imgui\stb_truetype.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\detail\CFunctions.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\detail\ClassInfo.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\detail\Constructor.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\detail\dump.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\detail\FuncTraits.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\detail\Iterator.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\detail\LuaException.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\detail\LuaHelpers.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\detail\LuaRef.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\detail\Namespace.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\detail\Stack.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\detail\TypeList.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\detail\TypeTraits.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\detail\Userdata.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\LuaBridge.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\RefCountedObject.h" />
+    <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\RefCountedPtr.h" />
+    <ClInclude Include="3rd Party\Lua\include\lauxlib.h" />
+    <ClInclude Include="3rd Party\Lua\include\lua.h" />
+    <ClInclude Include="3rd Party\Lua\include\lua.hpp" />
+    <ClInclude Include="3rd Party\Lua\include\luaconf.h" />
+    <ClInclude Include="3rd Party\Lua\include\lualib.h" />
     <ClInclude Include="Actors\Actor.h" />
     <ClInclude Include="Components\ComponentFactory.h" />
+    <ClInclude Include="Components\ScriptComponent.h" />
     <ClInclude Include="Editor\AssetManager.h" />
     <ClInclude Include="Editor\GuiController.h" />
     <ClInclude Include="Engine\GameTimer.h" />
@@ -397,6 +420,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Components\ComponentFactory.cpp" />
+    <ClCompile Include="Components\ScriptComponent.cpp" />
     <ClCompile Include="Editor\AssetManager.cpp" />
     <ClCompile Include="Editor\GuiController.cpp" />
     <ClCompile Include="Engine\GameTimer.cpp" />
@@ -459,6 +483,13 @@
     <ClCompile Include="3rd Party\imgui\imgui_dock.cpp">
       <FileType>Document</FileType>
     </ClCompile>
+    <None Include="3rd Party\LuaBridge\.gitattributes" />
+    <None Include="3rd Party\LuaBridge\.gitignore" />
+    <None Include="3rd Party\LuaBridge\CHANGES" />
+    <None Include="3rd Party\LuaBridge\Doxyfile" />
+    <None Include="3rd Party\LuaBridge\index.html" />
+    <None Include="3rd Party\LuaBridge\Manual.html" />
+    <None Include="3rd Party\LuaBridge\README.md" />
     <None Include="arrow.cur" />
   </ItemGroup>
   <ItemGroup>
