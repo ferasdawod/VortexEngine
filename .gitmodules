@@ -1,0 +1,3 @@
+[submodule "Source/DirectX_2D_Game/3rd Party/LuaBridge"]
+	path = Source/DirectX_2D_Game/3rd Party/LuaBridge
+	url = https://github.com/vinniefalco/LuaBridge
