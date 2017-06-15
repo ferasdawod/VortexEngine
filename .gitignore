@@ -242,3 +242,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 Source/bin/imgui.ini
+Source/bin/Assets/Scripts/.vscode/
