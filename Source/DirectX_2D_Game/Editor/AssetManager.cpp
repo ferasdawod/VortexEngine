@@ -3,6 +3,7 @@
 #include "AssetManager.h"
 #include <stack>
 #include <string.h>
+#include "Components/MeshRenderer.h"
 
 bool Core::AssetManager::ListFiles(std::string path, const std::string& mask, std::vector<string>& files) 
 {
@@ -54,10 +55,31 @@ bool Core::AssetManager::ListFiles(std::string path, const std::string& mask, st
 	return true;
 }
 
+void Core::AssetManager::AddDefaultMeshes()
+{
+	_meshes.push_back("Box.mesh");
+	_meshes.push_back("Cylinder.mesh");
+	_meshes.push_back("Plane.mesh");
+	_meshes.push_back("Sphere.mesh");
+}
+
 void Core::AssetManager::LoadAssets()
 {
 	ListFiles("Assets\\Textures", "*", _textures);
 	ListFiles("Assets\\Actors", "*", _actors);
 	ListFiles("Assets\\Materials", "*", _materials);
-	// TODO load levels and actors
+	ListFiles("Assets\\Scripts", "*.lua", _scripts);
+	ListFiles("Assets\\Levels", "*", _levels);
+	ListFiles("Assets\\Sounds", "*", _sounds);
+	
+	AddDefaultMeshes();
+	std::vector<string> tempMeshesVector;
+	ListFiles("Assets\\Meshes", "*", tempMeshesVector);
+	for (auto itr = tempMeshesVector.begin(); itr != tempMeshesVector.end(); ++itr)
+	{
+		if (!Utils::WildcardMatch("*.meta", *itr))
+		{
+			_meshes.push_back(*itr);
+		}
+	}
 }

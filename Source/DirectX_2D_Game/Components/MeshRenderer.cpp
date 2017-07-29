@@ -7,15 +7,17 @@
 #include "Graphics/Mesh.h"
 #include "Graphics/Rendering/RenderRequest.h"
 
+MeshRenderer::MeshRenderer(const std::string& meshName): BaseComponent(STRING(MeshRenderer)), _MeshFilePath(meshName)
+{
+	_MeshFilePath.reserve(255);
+}
+
 void MeshRenderer::Initialize()
 {
 	BaseComponent::Initialize();
 
 	if (_MeshFilePath.empty())
-	{
 		LOG_M("Mesh renderer does not have any mesh to render");
-		return;
-	}
 
 	_RenderRequest.reset(DBG_NEW RenderRequest);
 	_RenderRequest->SetMaterials(_Materials);
@@ -82,6 +84,12 @@ TiXmlElement* MeshRenderer::ToXML() const
 	element->LinkEndChild(materialsE);
 
 	return element;
+}
+
+void MeshRenderer::SetMeshFilePath(const std::string & meshFilePath)
+{
+	_MeshFilePath = meshFilePath;
+	_RenderRequest->SetMeshName(meshFilePath);
 }
 
 void MeshRenderer::AddMaterial(std::shared_ptr<Material> material)

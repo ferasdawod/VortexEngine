@@ -14,7 +14,7 @@
         <Actor PrefabPath="Assets\\Actors\\Plane2.actor" />
 		<Actor PrefabPath="Assets\\Actors\\MeshActor.actor" />
         <Actor Name="Earth Sphere">
-			<Components Count="2">
+			<Components Count="4">
 				<Component Name="Transform" TypeID="2645638309">
 					<Position X="0" Y="2" Z="-2" />
 					<Rotation X="0" Y="0" Z="0" />
@@ -26,6 +26,17 @@
 					<Materials Count="1">
 						<Material PrefabPath="Assets\\Materials\\SphereMaterial.material" />
 					</Materials>
+				</Component>
+				<Component Name="ScriptComponent">
+					<Enabled Value="1" />
+					<ScriptFilePath Value="Assets\Scripts\Car.lua" />
+				</Component>
+				<Component Name="AudioComponent">
+					<Enabled Value="1" />
+					<AutoPlay Value="1" />
+					<IsRepeating Value="1" />
+					<Volume Value="1" />
+					<AudioFilePath Value="Assets\Sounds\Sound1.wav" />
 				</Component>
 			</Components>
 		</Actor>

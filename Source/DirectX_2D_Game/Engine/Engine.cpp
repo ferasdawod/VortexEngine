@@ -27,6 +27,12 @@
 
 #include <Editor/GuiController.h>
 
+#include <Scripting/ScriptManager.h>
+#include <Scripting/Script.h>
+#include <Components/ScriptComponent.h>
+#include <Components/AudioComponent.h>
+#include "Audio/AudioManager.h"
+
 namespace Core
 {
 	Engine::Engine() : _isPaused(true), _isRunning(false), _updateRate(60)
@@ -91,6 +97,11 @@ namespace Core
 		if (!result)
 			return false;
 
+		_pScriptManager.reset(DBG_NEW ScriptManager);
+		result = _pScriptManager->Initialize();
+		if (!result)
+			return false;
+
 		std::string levelPath;
 		SettingsManager::GetPtr()->GetSetting("Application", "DefaultLevel", levelPath);
 		_pLevel.reset(DBG_NEW Level("DefaultLevel", _pActorFactory));
@@ -129,10 +140,15 @@ namespace Core
 		if (!result)
 			return false;
 
+		_pAudioManager.reset(DBG_NEW AudioManager());
+		result = _pAudioManager->Initialize();
+		if (!result)
+			return false;
+
 		return true;
 	}
 
-	void Engine::RegisterComponents()
+	void Engine::RegisterComponents() const
 	{
 		auto componentFactory = _pActorFactory->GetComponentFactory();
 		
@@ -142,6 +158,9 @@ namespace Core
 		componentFactory->RegisterComponent("DirectionalLight", []() { return StrongComponentPtr(DBG_NEW DirectionalLight); });
 		componentFactory->RegisterComponent("PointLight", []() { return StrongComponentPtr(DBG_NEW PointLight); });
 		componentFactory->RegisterComponent("SpotLight", []() { return StrongComponentPtr(DBG_NEW SpotLight); });
+
+		componentFactory->RegisterComponent("ScriptComponent", []() { return StrongComponentPtr(DBG_NEW ScriptComponent); });
+		componentFactory->RegisterComponent("AudioComponent", []() { return StrongComponentPtr(DBG_NEW AudioComponent); });
 
 		_pApplication->RegisterComponents(componentFactory);
 	}
@@ -168,14 +187,14 @@ namespace Core
 
 			timeSinceLastUpdate += _gameTimer.DeltaTime();
 			
-			UpdateSystems(updateInterval);
+			UpdateSystems(static_cast<float>(updateInterval));
 
 			while (timeSinceLastUpdate >= updateInterval)
 			{
 				
 				if (!_isPaused)
 				{
-					Update(updateInterval);
+					Update(static_cast<float>(updateInterval));
 				}
 
 				timeSinceLastUpdate -= updateInterval;
@@ -185,13 +204,13 @@ namespace Core
 		}
 	}
 
-	void Engine::UpdateSystems(float deltaTime)
+	void Engine::UpdateSystems(float deltaTime) const
 	{
 		_pInputDevice->OnUpdate();
 		_pEventManager->OnUpdate(deltaTime);
 	}
 
-	void Engine::Update(float deltaTime)
+	void Engine::Update(float deltaTime) const
 	{
 		_pLevel->OnUpdate(deltaTime);
 	}

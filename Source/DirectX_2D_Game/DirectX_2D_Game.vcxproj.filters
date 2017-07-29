@@ -77,9 +77,6 @@
     <ClInclude Include="Actors\ActorsDefenitions.h">
       <Filter>Source Files\Game\Actors</Filter>
     </ClInclude>
-    <ClInclude Include="Components\LightComponents\LightComponent.h">
-      <Filter>Source Files\Game\Actors\Components\LightComponents</Filter>
-    </ClInclude>
     <ClInclude Include="3rd Party\TinyXml\tinystr.h" />
     <ClInclude Include="3rd Party\TinyXml\tinyxml.h" />
     <ClInclude Include="Debugging\Debug.h">
@@ -173,9 +170,6 @@
     <ClInclude Include="Components\Transform.h">
       <Filter>Source Files\Game\Actors\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Components\LightComponents\DirectionalLight.h">
-      <Filter>Source Files\Game\Actors\Components\LightComponents</Filter>
-    </ClInclude>
     <ClInclude Include="Components\IComponent.h">
       <Filter>Source Files\Game\Actors\Components</Filter>
     </ClInclude>
@@ -183,8 +177,6 @@
       <Filter>Source Files\Game\Systems\Graphics\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Rendering\Effects\EffectsStructures.h" />
-    <ClInclude Include="Components\LightComponents\PointLight.h" />
-    <ClInclude Include="Components\LightComponents\SpotLight.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\ResHandle.h" />
     <ClInclude Include="Resources\ResCache.h" />
@@ -260,6 +252,20 @@
     <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\RefCountedObject.h" />
     <ClInclude Include="3rd Party\LuaBridge\Source\LuaBridge\RefCountedPtr.h" />
     <ClInclude Include="Components\ScriptComponent.h" />
+    <ClInclude Include="Scripting\ScriptManager.h" />
+    <ClInclude Include="Scripting\Script.h" />
+    <ClInclude Include="Scripting\ScriptInterface.h" />
+    <ClInclude Include="Scripting\ScriptClasses\ScriptVector3.h" />
+    <ClInclude Include="Components\LightComponents\DirectionalLight.h">
+      <Filter>Source Files\Game\Actors\Components\LightComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\LightComponents\LightComponent.h">
+      <Filter>Source Files\Game\Actors\Components\LightComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\LightComponents\PointLight.h" />
+    <ClInclude Include="Components\LightComponents\SpotLight.h" />
+    <ClInclude Include="Components\AudioComponent.h" />
+    <ClInclude Include="Audio\AudioManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actors\Actor.cpp">
@@ -267,9 +273,6 @@
     </ClCompile>
     <ClCompile Include="Actors\ActorFactory.cpp">
       <Filter>Source Files\Game\Actors</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\LightComponents\LightComponentsDefinitions.cpp">
-      <Filter>Source Files\Game\Actors\Components\LightComponents</Filter>
     </ClCompile>
     <ClCompile Include="3rd Party\TinyXml\tinystr.cpp">
       <Filter>Source Files</Filter>
@@ -417,6 +420,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Components\ScriptComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripting\ScriptManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripting\Script.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripting\ScriptInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\LightComponents\LightComponentsDefinitions.cpp">
+      <Filter>Source Files\Game\Actors\Components\LightComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\AudioComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\AudioManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

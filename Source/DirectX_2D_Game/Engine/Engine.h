@@ -20,6 +20,8 @@ namespace Core
 	class WindowsWindow;
 	class Application;
 	class GuiController;
+	class ScriptManager;
+	class AudioManager;
 
 	class Engine : EventListener
 	{
@@ -31,13 +33,13 @@ namespace Core
 
 	protected:
 		bool Initialize();
-		void RegisterComponents();
+		void RegisterComponents() const;
 
 		void Shutdown() const;
 
-		void UpdateSystems(float deltaTime);
+		void UpdateSystems(float deltaTime) const;
 		void RunMainLoop();
-		void Update(float deltaTime);
+		void Update(float deltaTime) const;
 
 		void Render() const;
 
@@ -54,6 +56,7 @@ namespace Core
 		bool _isRunning;
 		int _updateRate;
 
+		std::shared_ptr<ScriptManager>		_pScriptManager;
 		std::shared_ptr<Logger>				_pLogger;
 		std::shared_ptr<EventManager>		_pEventManager;
 		std::shared_ptr<WindowsWindow>		_pWindow;
@@ -69,6 +72,7 @@ namespace Core
 		std::shared_ptr<Level>				_pLevel;
 		std::shared_ptr<RenderManager>		_pRenderManager;
 
-		std::shared_ptr<GuiController>			_pGuiController;
+		std::shared_ptr<GuiController>		_pGuiController;
+		std::shared_ptr<AudioManager>		_pAudioManager;
 	};
 }

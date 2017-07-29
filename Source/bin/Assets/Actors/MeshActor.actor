@@ -8,7 +8,7 @@
         </Component>
 		<Component Name="MeshRenderer" TypeID="1803461764">
 			<Enabled Value="1" />
-			<MeshName Value="Assets\\Meshes\\Glass.obj" />
+			<MeshName Value="Assets\Meshes\Glass.obj" />
 			<Materials Count="1">
 				<Material PrefabPath="Assets\\Materials\\MeshMaterial.material" />
 			</Materials>

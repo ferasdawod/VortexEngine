@@ -2,6 +2,7 @@
 
 #include "Graphics/Window/IWindow.h"
 #include <Events/EventListener.h>
+#include "Components/ScriptComponent.h"
 
 class GraphicsDevice;
 class Level;
@@ -9,6 +10,7 @@ class Camera;
 class Actor;
 class ActorFactory;
 class Material;
+class MeshRenderer;
 
 namespace Core
 {
@@ -43,7 +45,10 @@ namespace Core
 		void DrawActorsWindow();
 		void DrawAssetsWindow();
 		void DrawLogWindow();
+		void DrawScriptProperties(std::shared_ptr<ScriptComponent> script_component);
 		void DrawPropertiesWindow();
+
+		void DrawMeshRendererProperties(std::shared_ptr<MeshRenderer> mesh_renderer);
 		void DrawMaterialProperties(std::shared_ptr<Material> material) const;
 
 		void DrawExtraWindows();

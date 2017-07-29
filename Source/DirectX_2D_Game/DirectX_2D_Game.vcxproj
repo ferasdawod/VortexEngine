@@ -313,6 +313,8 @@
     <ClInclude Include="3rd Party\Lua\include\luaconf.h" />
     <ClInclude Include="3rd Party\Lua\include\lualib.h" />
     <ClInclude Include="Actors\Actor.h" />
+    <ClInclude Include="Audio\AudioManager.h" />
+    <ClInclude Include="Components\AudioComponent.h" />
     <ClInclude Include="Components\ComponentFactory.h" />
     <ClInclude Include="Components\ScriptComponent.h" />
     <ClInclude Include="Editor\AssetManager.h" />
@@ -346,6 +348,10 @@
     <ClInclude Include="Performance\ScopedProfilerSample.h" />
     <ClInclude Include="Performance\ProfilingManager.h" />
     <ClInclude Include="resource2.h" />
+    <ClInclude Include="Scripting\Script.h" />
+    <ClInclude Include="Scripting\ScriptClasses\ScriptVector3.h" />
+    <ClInclude Include="Scripting\ScriptInterface.h" />
+    <ClInclude Include="Scripting\ScriptManager.h" />
     <ClInclude Include="Serialization\PropertyBag.h" />
     <ClInclude Include="Serialization\PropertyDescription.h" />
     <ClInclude Include="resource1.h" />
@@ -419,6 +425,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Audio\AudioManager.cpp" />
+    <ClCompile Include="Components\AudioComponent.cpp" />
     <ClCompile Include="Components\ComponentFactory.cpp" />
     <ClCompile Include="Components\ScriptComponent.cpp" />
     <ClCompile Include="Editor\AssetManager.cpp" />
@@ -443,6 +451,9 @@
     <ClCompile Include="Resources\GeometryGenerator.cpp" />
     <ClCompile Include="Resources\ResCache.cpp" />
     <ClCompile Include="Resources\ResourceLoaders.cpp" />
+    <ClCompile Include="Scripting\Script.cpp" />
+    <ClCompile Include="Scripting\ScriptInterface.cpp" />
+    <ClCompile Include="Scripting\ScriptManager.cpp" />
     <ClCompile Include="Utilities\D3DUtils.cpp" />
     <ClCompile Include="Graphics\Rendering\Effects\Effect.cpp" />
     <ClCompile Include="Events\EventManager.cpp" />

@@ -19,6 +19,8 @@
 
 #include <Input/Input.h>
 #include "AssetManager.h"
+#include "Components/ScriptComponent.h"
+#include <Components/AudioComponent.h>
 
 namespace ImGuizmo {
 	struct matrix_t;
@@ -255,7 +257,7 @@ void Core::GuiController::DrawActorsMenu()
 	auto actor = _pSelectedActor.lock();
 	if (ImGui::BeginMenu("Actors"))
 	{
-		if (ImGui::BeginMenu("Creat New"))
+		if (ImGui::BeginMenu("Create New"))
 		{
 			auto factory = _pActorFactory.lock();
 			auto level = _pLevel.lock();
@@ -323,7 +325,7 @@ void Core::GuiController::DrawComponentsMenu() const
 				auto componentFactory = _pActorFactory.lock()->GetComponentFactory();
 				auto& components = componentFactory->GetRegisteredComponents();
 
-				for (auto component : components)
+				for (auto& component : components)
 				{
 					if (ImGui::MenuItem(component.c_str()))
 					{
@@ -474,11 +476,18 @@ static void toEulerianAngle(const Quaternion& q, float& roll, float& pitch, floa
 	yaw = std::atan2(t3, t4);
 }
 
+// callback to get the combo list items (to work with vector<string>)
+bool get_combo_item(void* data, int index, const char** outdata)
+{
+	auto list = static_cast<std::vector<string>*>(data);
+	*outdata = (*list)[index].c_str();
+	return true;
+}
+
 void Core::GuiController::DrawPropertiesWindow()
 {
 	auto actor = _pSelectedActor.lock();
 	if (!actor) return;
-
 
 	auto width = _windowWidth * 0.35f;
 	auto height = _windowHeight;
@@ -517,121 +526,131 @@ void Core::GuiController::DrawPropertiesWindow()
 		bool componentOpen = true;
 		if (ImGui::CollapsingHeader(component->GetName().c_str(), &componentOpen, ImGuiTreeNodeFlags_DefaultOpen))
 		{
-			auto& props = component->GetProperties();
-			for (auto& prop : props)
-			{
-				ImGui::Text(prop.name);
-				ImGui::SameLine(100);
-
-				// TEMP DATA
-				string* str;
-				char* buff;
-
-				float roll, pitch, yaw;
-				float vec[3];
-				
-
-				// END TEMP DATA
-
-				ImGui::PushID(prop.value);
-				switch (prop.type)
-				{
-				case PropertyType::Float:
-					ImGui::DragFloat("", (float*)prop.value, prop.minValue, prop.maxValue);
-					break;
-				
-				case PropertyType::Int:
-					ImGui::DragInt("", (int*)prop.value, prop.minValue, prop.maxValue);
-					break;
-				
-				case PropertyType::Bool:
-					ImGui::Checkbox("", (bool*)prop.value);
-					break;
-				
-				case PropertyType::Color:
-					ImGui::ColorEdit4("", (float*)prop.value, false);
-					break;
-				
-				case PropertyType::String: 
-					str = (string*)prop.value;
-					buff = &((*str)[0]);
-					ImGui::InputText("", buff, 255);
-					break;
-
-				case PropertyType::Quaternion:
-
-					toEulerianAngle(*(Quaternion*)prop.value, roll, pitch, yaw);
-					
-					vec[0] = DirectX::XMConvertToDegrees(roll);
-					vec[1] = DirectX::XMConvertToDegrees(pitch);
-					vec[2] = DirectX::XMConvertToDegrees(yaw);
-					
-					ImGui::DragFloat3("", vec);
-
-					roll = DirectX::XMConvertToRadians(vec[0]);
-					pitch = DirectX::XMConvertToRadians(vec[1]);
-					yaw = DirectX::XMConvertToRadians(vec[2]);
-
-					//*(Quaternion*)prop.value = Quaternion::CreateFromYawPitchRoll(yaw, pitch, roll);
-					//actor->GetTransform().lock()->SetRotation(Quaternion::CreateFromYawPitchRoll(vec[2], vec[1], vec[0]));
-
-					break;
-
-				case PropertyType::Vector2: 
-					ImGui::DragFloat2("", (float*)prop.value, 0.1, prop.minValue, prop.maxValue);
-					break;
-
-				case PropertyType::Vector3:
-					ImGui::DragFloat3("", (float*)prop.value, 0.1, prop.minValue, prop.maxValue);
-					break;
-
-				case PropertyType::Vector4: 
-					ImGui::DragFloat4("", (float*)prop.value, 0.1, prop.minValue, prop.maxValue);
-					break;
-
-				default:
-					LOG_W("Unknown property type");
-				}
-				ImGui::PopID();
-			}
-
 			if (component->GetTypeID() == MeshRenderer::kComponentID)
 			{
 				std::shared_ptr<MeshRenderer> mesh_renderer = std::dynamic_pointer_cast<MeshRenderer>(component);
-
-				ImGui::Separator();
-				ImGui::Text("Materials");
-				ImGui::SameLine(100);
-				if (ImGui::Button("Add New Material"))
+				DrawMeshRendererProperties(mesh_renderer);
+			}
+			if (component->GetTypeID() == ScriptComponent::kComponentID)
+			{
+				auto scriptComponent = std::dynamic_pointer_cast<ScriptComponent>(component);
+				DrawScriptProperties(scriptComponent);
+			}
+			else
+			{
+				auto& props = component->GetProperties();
+				for (auto& prop : props)
 				{
-					mesh_renderer->AddMaterial(std::shared_ptr<Material>(DBG_NEW Material));
-					LOG_M("New Material Added");
-				}
+					ImGui::Text(prop.name);
+					ImGui::SameLine(100);
 
-				const auto& materials = mesh_renderer->GetMaterials();
-				std::vector<ObjectId> materialsToRemove;
-				for (auto itr = materials.begin(); itr < materials.end(); ++itr)
-				{
-					auto material = *itr;
+					// TEMP DATA
+					string* str;
+					char* buff;
 
-					ImGui::PushID(material.get());
-					bool open = true;
-					if (ImGui::CollapsingHeader(material->GetName().c_str(), &open, ImGuiTreeNodeFlags_DefaultOpen))
+					float roll, pitch, yaw;
+					float vec[3];
+
+
+					// END TEMP DATA
+
+					ImGui::PushID(prop.value);
+					switch (prop.type)
 					{
-						DrawMaterialProperties(material);
+					case PropertyType::Float:
+						ImGui::DragFloat("", (float*)prop.value, prop.minValue, prop.maxValue);
+						break;
+
+					case PropertyType::Int:
+						ImGui::DragInt("", (int*)prop.value, prop.minValue, prop.maxValue);
+						break;
+
+					case PropertyType::Bool:
+						ImGui::Checkbox("", (bool*)prop.value);
+						break;
+
+					case PropertyType::Color:
+						ImGui::ColorEdit4("", (float*)prop.value, false);
+						break;
+
+					case PropertyType::String:
+						str = (string*)prop.value;
+						buff = &((*str)[0]);
+						ImGui::InputText("", buff, 255);
+						break;
+
+					case PropertyType::Quaternion:
+
+						toEulerianAngle(*(Quaternion*)prop.value, roll, pitch, yaw);
+
+						vec[0] = DirectX::XMConvertToDegrees(roll);
+						vec[1] = DirectX::XMConvertToDegrees(pitch);
+						vec[2] = DirectX::XMConvertToDegrees(yaw);
+
+						ImGui::DragFloat3("", vec);
+
+						roll = DirectX::XMConvertToRadians(vec[0]);
+						pitch = DirectX::XMConvertToRadians(vec[1]);
+						yaw = DirectX::XMConvertToRadians(vec[2]);
+
+						//*(Quaternion*)prop.value = Quaternion::CreateFromYawPitchRoll(yaw, pitch, roll);
+						//actor->GetTransform().lock()->SetRotation(Quaternion::CreateFromYawPitchRoll(vec[2], vec[1], vec[0]));
+
+						break;
+
+					case PropertyType::Vector2:
+						ImGui::DragFloat2("", (float*)prop.value, 0.1, prop.minValue, prop.maxValue);
+						break;
+
+					case PropertyType::Vector3:
+						ImGui::DragFloat3("", (float*)prop.value, 0.1, prop.minValue, prop.maxValue);
+						break;
+
+					case PropertyType::Vector4:
+						ImGui::DragFloat4("", (float*)prop.value, 0.1, prop.minValue, prop.maxValue);
+						break;
+
+					default:
+						LOG_W("Unknown property type");
 					}
-					if (!open) materialsToRemove.push_back(material->GetId());
 					ImGui::PopID();
 				}
 
-				for (auto materialId : materialsToRemove)
-				{
-					mesh_renderer->RemoveMaterial(materialId);
-				}
+			}
+
+			if (component->GetTypeID() == AudioComponent::kComponentID)
+			{
+				auto audioComponent = std::dynamic_pointer_cast<AudioComponent>(component);
+				auto sounds = _pAssetManager->GetSounds();
+
+				ImGui::Text("Audio File");
+				ImGui::SameLine(100);
+				
+				auto index = std::find(sounds.begin(), sounds.end(), audioComponent->GetAudioFilePath());
+				auto selected = std::distance(sounds.begin(), index);
+				
+				ImGui::PushID(component.get());
+				
+				if (ImGui::Combo("", &selected, get_combo_item, (void*)&sounds, sounds.size()))
+					if (selected < sounds.size()) audioComponent->SetAudioFilePath(sounds[selected]);
+				
+				ImGui::PopID();
+
+				if (ImGui::Button("Play", ImVec2(100, 25)))
+					audioComponent->Play();
+				ImGui::SameLine(120);
+				
+				if (ImGui::Button("Pause", ImVec2(100, 25)))
+					audioComponent->Pause();
+				ImGui::SameLine(240);
+
+				if (ImGui::Button("Stop", ImVec2(100, 25)))
+					audioComponent->Stop();
 			}
 		}
 
-		if (component->GetTypeID() != Transform::kComponentID && !componentOpen) componentsToRemove.push_back(component->GetId());
+		if (component->GetTypeID() != Transform::kComponentID && !componentOpen) 
+			componentsToRemove.push_back(component->GetId());
 	}
 
 	for (auto componentId : componentsToRemove)
@@ -641,12 +660,89 @@ void Core::GuiController::DrawPropertiesWindow()
 	ImGui::End();
 }
 
-// callback to get the combo list items (to work with vector<string>)
-bool get_combo_item(void* data, int index, const char** outdata)
+void Core::GuiController::DrawScriptProperties(std::shared_ptr<ScriptComponent> script_component)
 {
-	auto list = static_cast<std::vector<string>*>(data);
-	*outdata = (*list)[index].c_str();
-	return true;
+	auto& scripts = _pAssetManager->GetScripts();
+
+	ImGui::Text("Enabled");
+	ImGui::SameLine(100);
+	auto enabled = script_component->IsEnabled();
+	ImGui::PushID(&enabled);
+	if (ImGui::Checkbox("", &enabled))
+		script_component->SetEnabled(enabled);
+
+	ImGui::PopID();
+
+	ImGui::Text("Script");
+	ImGui::SameLine(100);
+	auto scriptFile = script_component->GetScriptFilePath();
+	auto index = std::find(scripts.begin(), scripts.end(), scriptFile);
+	auto selected = std::distance(scripts.begin(), index);
+	ImGui::PushID(script_component.get());
+	if (ImGui::Combo("", &selected, get_combo_item, (void*)&scripts, scripts.size()))
+	{
+		if (selected < scripts.size())
+		{
+			script_component->SetScriptFilePath(scripts[selected]);
+			script_component->ReloadScript();
+		}
+	}
+
+	ImGui::PopID();
+
+	// TODO add id for this button
+	if (ImGui::Button("Reload Script"))
+	{
+		script_component->ReloadScript();
+	}
+}
+
+void Core::GuiController::DrawMeshRendererProperties(std::shared_ptr<MeshRenderer> mesh_renderer)
+{
+	auto& meshes = _pAssetManager->GetMeshes();
+	
+	ImGui::Text("Enabled");
+	ImGui::SameLine(100);
+	auto isEnabled = mesh_renderer->IsEnabled();
+	if (ImGui::Checkbox("##mesh_renderer_enabled", &isEnabled))
+		mesh_renderer->SetEnabled(isEnabled);
+	
+	ImGui::Text("Mesh File");
+	ImGui::SameLine(100);
+	auto index = std::find(meshes.begin(), meshes.end(), mesh_renderer->GetMeshFilePath());
+	auto selected = std::distance(meshes.begin(), index);
+	if (ImGui::Combo("##mesh_renderer_file_path", &selected, get_combo_item, (void*)&meshes, meshes.size()))
+		if (selected < meshes.size()) mesh_renderer->SetMeshFilePath(meshes[selected]);
+	
+
+	ImGui::Separator();
+	ImGui::Text("Materials");
+	ImGui::SameLine(100);
+	if (ImGui::Button("Add New Material"))
+	{
+		mesh_renderer->AddMaterial(std::shared_ptr<Material>(DBG_NEW Material));
+	}
+
+	const auto& materials = mesh_renderer->GetMaterials();
+	std::vector<ObjectId> materialsToRemove;
+	for (auto itr = materials.begin(); itr < materials.end(); ++itr)
+	{
+		auto material = *itr;
+
+		ImGui::PushID(material.get());
+		bool open = true;
+		if (ImGui::CollapsingHeader(material->GetName().c_str(), &open, ImGuiTreeNodeFlags_DefaultOpen))
+		{
+			DrawMaterialProperties(material);
+		}
+		if (!open) materialsToRemove.push_back(material->GetId());
+		ImGui::PopID();
+	}
+
+	for (auto materialId : materialsToRemove)
+	{
+		mesh_renderer->RemoveMaterial(materialId);
+	}
 }
 
 void Core::GuiController::DrawMaterialProperties(std::shared_ptr<Material> material) const

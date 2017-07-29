@@ -40,7 +40,7 @@ bool Level::LoadLevel(const std::string& fileName)
 	std::shared_ptr<TiXmlDocument> lvlD(DBG_NEW TiXmlDocument(fileName));
 	if (!lvlD->LoadFile())
 	{
-		auto msg = "Failed to load the level from the file " + fileName;
+		auto msg = "Failed to load the level from the file " + fileName + "\n" + lvlD->ErrorDesc();
 		LOG_E(msg.c_str(), 0);
 		return false;
 	}

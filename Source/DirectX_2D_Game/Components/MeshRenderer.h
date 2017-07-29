@@ -22,7 +22,7 @@ public:
 	static const ComponentTypeId	kComponentID;
 
 public:
-	MeshRenderer(const std::string& meshName = "") : BaseComponent(STRING(MeshRenderer)), _MeshFilePath(meshName) {}
+	MeshRenderer(const std::string& meshName = "");
 	virtual ~MeshRenderer() {}
 
 	EXPOSE_ID(kComponentID);
@@ -37,11 +37,16 @@ public:
 
 	virtual TiXmlElement* ToXML() const override;
 
-	DECLARE_STRING_PROPERTY(MeshFilePath);
+	const std::string& GetMeshFilePath() const { return _MeshFilePath; }
+	void SetMeshFilePath(const std::string& meshFilePath);
+
 	DECLARE_PROPERTY_READ_ONLY(RenderRequestPtr, RenderRequest);
 	DECLARE_PROPERTY_READ_ONLY(MaterialsVector, Materials);
 
 	void AddMaterial(std::shared_ptr<Material> material);
+
+protected:
+	std::string _MeshFilePath;
 };
 
 __declspec(selectany) const ComponentTypeId MeshRenderer::kComponentID = 0x6B7EA484;
