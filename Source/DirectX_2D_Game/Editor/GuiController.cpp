@@ -376,7 +376,7 @@ void Core::GuiController::DrawActorsWindow()
 	auto level = _pLevel.lock();
 	if (!level) return;
 
-	const std::vector<StrongActorPtr>& actors = level->GetActors();
+	const auto& actors = level->GetActors();
 
 
 	ImGui::SetNextWindowPos(ImVec2(0, 25));
@@ -389,7 +389,7 @@ void Core::GuiController::DrawActorsWindow()
 
 	for (auto actor : actors)
 	{
-		auto name = actor->GetName();
+		const auto& name = actor->GetName();
 
 		// gizmo testing
 
@@ -415,10 +415,10 @@ void Core::GuiController::DrawActorsWindow()
 				else if (Input::IsKeyPressed(KeyCode::X))
 					mode = ImGuizmo::LOCAL;
 			}
-			auto transform = actor->GetComponent<Transform>().lock();
+			auto transform = actor->GetTransform().lock();
 
 			auto position = transform->GetPosition();
-			Quaternion rotation;
+			auto rotation = transform->GetRotation();
 			auto scale = transform->GetScale();
 
 
@@ -427,12 +427,11 @@ void Core::GuiController::DrawActorsWindow()
 
 			auto& io = ImGui::GetIO();
 
-			auto viewMatrix = camera->GetViewMatrix();
-			auto projectionMatrix = camera->GetProjectionMatrix();
+			const auto& viewMatrix = camera->GetViewMatrix();
+			const auto& projectionMatrix = camera->GetProjectionMatrix();
 
 			auto view = (float*)viewMatrix.m;
 			auto projection = (float*)projectionMatrix.m;
-
 
 			ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
 			ImGuizmo::Manipulate(view, projection, operation, mode, mat);
@@ -632,13 +631,12 @@ void Core::GuiController::DrawPropertiesWindow()
 					}
 					ImGui::PopID();
 				}
-
 			}
 
 			if (component->GetTypeID() == AudioComponent::kComponentID)
 			{
 				auto audioComponent = std::dynamic_pointer_cast<AudioComponent>(component);
-				auto sounds = _pAssetManager->GetSounds();
+				auto& sounds = _pAssetManager->GetSounds();
 
 				ImGui::Text("Audio File");
 				ImGui::SameLine(100);
