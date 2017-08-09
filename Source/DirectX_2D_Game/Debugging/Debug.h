@@ -4,6 +4,7 @@
 
 using std::string;
 
+// Assert Macro
 #if defined(DEBUG) || defined(_DEBUG)
 #ifndef Assert
 #define Assert(experssion, msg) assert((experssion) && msg)
@@ -14,13 +15,14 @@ using std::string;
 #endif
 #endif
 
+// Debug Leak Check
 #if defined(DEBUG) || defined(_DEBUG)
 #define DEBUG_LEAK_CHECK() _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF)
 #else
 #define DEBUG_LEAK_CHECK() do { } while(0)
 #endif
 
-/// redefine the new keyword to catch memory leaks
+// Redefine new key word
 #if defined(DEBUG) || defined(_DEBUG)
 #ifndef DBG_NEW
 #define DBG_NEW_ new(_NORMAL_BLOCK, __FILE__, __LINE__)
@@ -32,12 +34,12 @@ using std::string;
 #endif
 #endif // DEBUG
 
-/// helper macros for releasing com objects
+// Helper Macros For COM Objects
 #define SAFE_RELEASE(p)			do { if (p) { p->Release(); p = nullptr; } } while(0)
 #define SAFE_DELETE(p)			do { if (p) { delete p; p = nullptr; } } while (0)
 #define SAFE_DELETE_ARRAY(p)	do { if (p) { delete[] p; p = nullptr; } } while (0)
 
-/// helper macros for logging messages and errors
+// Logging Macros
 #if defined(DEBUG) || defined(_DEBUG)
 #define LOG(msg, cat) \
 do \
