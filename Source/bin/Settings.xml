@@ -4,7 +4,7 @@
         <Y Value="0" />
         <Width Value="1280" />
         <Height Value="720" />
-        <Title Value="Graphics Engine" />
+        <Title Value="Vortex Engine" />
     </Window>
     <Graphics>
         <VSyncCount Value="0" />
