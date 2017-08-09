@@ -12,7 +12,7 @@
 
 double ProfilingSample::_nSecondsPerCount = -1.0;
 
-ProfilingSample::ProfilingSample() : _MaxTime(0.0f), _MinTime(0.0f), _nStartTime(0), _nCounter(0), _nSumMilliSeconds(0), _nAvarageTime(0)
+ProfilingSample::ProfilingSample() : _MaxTime(0.0f), _MinTime(0.0f), _nStartTime(0), _Counter(0), _nAvarageTime(0), _nSumMilliSeconds(0)
 {
 	if (_nSecondsPerCount < 0.0)
 	{
@@ -32,7 +32,7 @@ void ProfilingSample::Start()
 
 void ProfilingSample::Stop()
 {
-	++_nCounter;
+	++_Counter;
 
 	__int64 currentTime = 0;
 	QueryPerformanceCounter((LARGE_INTEGER*)&currentTime);
@@ -48,15 +48,15 @@ void ProfilingSample::Stop()
 
 double ProfilingSample::GetAvarageTime() const
 {
-	if (_nCounter == 1) return _nSumMilliSeconds;
+	if (_Counter == 1) return _nSumMilliSeconds;
 
-	if (_nCounter < 3) return _nSumMilliSeconds / static_cast<double>(_nCounter);
+	if (_Counter < 3) return _nSumMilliSeconds / static_cast<double>(_Counter);
 
 	auto sum = _nSumMilliSeconds;
 	sum -= _MaxTime;
 	sum -= _MinTime;
 
 
-	return sum / static_cast<double>(_nCounter - 2);
+	return sum / static_cast<double>(_Counter - 2);
 }
 

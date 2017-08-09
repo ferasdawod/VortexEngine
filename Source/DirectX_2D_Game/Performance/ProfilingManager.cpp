@@ -35,13 +35,13 @@ void ProfilingManager::DumpInfo() const
 
 	stringstream stream;
 	stream << "Profiling Results : " << endl;
-	stream << setw(50) << "Sample Name" << setw(20) << "Average" << setw(20) << "Min Time" << setw(20) << "Max Time" << endl;
+	stream << setw(50) << "Sample Name" << setw(20) << "Average" << setw(20) << "Min Time" << setw(20) << "Max Time" << setw(20) << "Hits" << endl;
 	
 	for (auto itr = _profilingSamples.cbegin(); itr != _profilingSamples.cend(); ++itr)
 	{
 		ProfilingSamplePtr sample = itr->second;
 
-		stream << setw(50) << itr->first << setw(20) << sample->GetAvarageTime() << setw(20) << sample->GetMinTime() << setw(20) << sample->GetMaxTime() << endl;
+		stream << setw(50) << itr->first << setw(20) << sample->GetAvarageTime() << setw(20) << sample->GetMinTime() << setw(20) << sample->GetMaxTime() << setw(20) << sample->GetCounter() << endl;
 	}
 
 	LOG_M(stream.str());

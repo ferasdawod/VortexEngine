@@ -13,12 +13,12 @@ public:
 
 	DECLARE_PROPERTY_READ_ONLY(double, MaxTime);
 	DECLARE_PROPERTY_READ_ONLY(double, MinTime);
+	DECLARE_PROPERTY_READ_ONLY(__int64, Counter);
 
 	double			GetAvarageTime() const;
 
 private:
 	__int64			_nStartTime;
-	__int64			_nCounter;
 
 	double			_nAvarageTime;
 	long double		_nSumMilliSeconds;
