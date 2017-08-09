@@ -54,9 +54,6 @@ void MeshRenderer::Initialize(TiXmlElement* xmlData)
 void MeshRenderer::RegisterProperties()
 {
 	BaseComponent::RegisterProperties();
-	
-	_MeshFilePath.reserve(255);
-	RegisterProperty("Mesh Name", Core::PropertyType::String, (void*)&_MeshFilePath);
 }
 
 void MeshRenderer::RemoveMaterial(ObjectId materialId)
