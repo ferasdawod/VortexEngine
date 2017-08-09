@@ -38,13 +38,13 @@ public:
 	
 	void RegisterProperties() override;
 
-	Matrix GetViewMatrix()
+	const Matrix& GetViewMatrix()
 	{ 
 		if (_bViewDirty) RebuildView(); 
 		return _viewMatrix; 
 	}
 
-	Matrix GetProjectionMatrix()
+	const Matrix& GetProjectionMatrix()
 	{
 		if (_bProjectionDirty) RebuildProjection();
 		return _projectionMatrix;
