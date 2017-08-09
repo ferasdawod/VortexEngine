@@ -21,13 +21,11 @@ void Actor::OnUpdate(float deltaTime)
 		return;
 	}
 
-	auto it = _components.begin();
-	auto end = _components.end();
-
-	while (it != end)
+	for (auto itr = _components.cbegin(); itr != _components.cend(); ++itr)
 	{
-		(*it)->OnUpdate(deltaTime);
-		++it;
+		auto component = *itr;
+		if (component->IsEnabled())
+			component->OnUpdate(deltaTime);
 	}
 }
 
