@@ -97,8 +97,6 @@ bool EventManager::QueueEvent(StrongEventDataPtr eventData)
 
 bool EventManager::TriggerEvent(StrongEventDataPtr eventData)
 {
-	FUNC_PROFILE();
-
 	assert(_activeQueue >= 0);
 	assert(_activeQueue < 2);
 

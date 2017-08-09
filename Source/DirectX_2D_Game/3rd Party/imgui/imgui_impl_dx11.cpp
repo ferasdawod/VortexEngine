@@ -49,7 +49,9 @@ struct VERTEX_CONSTANT_BUFFER
 // - in your Render function, try translating your projection matrix by (0.5f,0.5f) or (0.375f,0.375f)
 void ImGui_ImplDX11_RenderDrawLists(ImDrawData* draw_data)
 {
-    ID3D11DeviceContext* ctx = g_pd3dDeviceContext;
+	FUNC_PROFILE();
+
+	ID3D11DeviceContext* ctx = g_pd3dDeviceContext;
 
     // Create and grow vertex/index buffers if needed
     if (!g_pVB || g_VertexBufferSize < draw_data->TotalVtxCount)
@@ -551,7 +553,9 @@ void ImGui_ImplDX11_Shutdown()
 
 void ImGui_ImplDX11_NewFrame()
 {
-    if (!g_pFontSampler)
+	FUNC_PROFILE();
+
+	if (!g_pFontSampler)
         ImGui_ImplDX11_CreateDeviceObjects();
 
     ImGuiIO& io = ImGui::GetIO();

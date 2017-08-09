@@ -7,6 +7,8 @@
 
 bool Core::AssetManager::ListFiles(std::string path, const std::string& mask, std::vector<string>& files) 
 {
+	FUNC_PROFILE();
+
 	HANDLE hFind = INVALID_HANDLE_VALUE;
 	WIN32_FIND_DATA ffd;
 	std::string spec;

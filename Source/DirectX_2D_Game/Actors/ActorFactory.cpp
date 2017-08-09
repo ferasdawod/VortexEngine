@@ -150,8 +150,6 @@ StrongActorPtr ActorFactory::CreateFromXML(const std::string& fileName)
 
 StrongActorPtr ActorFactory::CreateFromXML(TiXmlElement* actorElement)
 {
-	FUNC_PROFILE();
-
 	Assert(actorElement->ValueStr() == std::string("Actor"), "the element is not an actor");
 
 	string prefabPath;

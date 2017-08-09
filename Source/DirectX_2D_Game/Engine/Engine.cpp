@@ -206,12 +206,16 @@ namespace Core
 
 	void Engine::UpdateSystems(float deltaTime) const
 	{
+		FUNC_PROFILE();
+
 		_pInputDevice->OnUpdate();
 		_pEventManager->OnUpdate(deltaTime);
 	}
 
 	void Engine::Update(float deltaTime) const
 	{
+		FUNC_PROFILE();
+
 		_pLevel->OnUpdate(deltaTime);
 	}
 

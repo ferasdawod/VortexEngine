@@ -41,6 +41,8 @@ void ScriptComponent::Initialize(TiXmlElement * xmlData)
 
 void ScriptComponent::OnUpdate(float deltaTime)
 {
+	FUNC_PROFILE();
+
 	if (_script)
 		_script->CallUpdate(deltaTime);
 }

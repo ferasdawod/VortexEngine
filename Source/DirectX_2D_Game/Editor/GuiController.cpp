@@ -156,6 +156,8 @@ void Core::GuiController::Shutdown()
 
 void Core::GuiController::Render()
 {
+	FUNC_PROFILE();
+
 	SetupImGuiStyle(_isDarkTheme, _windowsAlpha);
 
 	ImGui_ImplDX11_NewFrame();
@@ -200,6 +202,7 @@ void Core::GuiController::HandleRegistering(bool isRegistering)
 
 void Core::GuiController::DrawMenuBar()
 {
+	FUNC_PROFILE();
 
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -215,6 +218,8 @@ void Core::GuiController::DrawMenuBar()
 
 void Core::GuiController::DrawFileMenu() const
 {
+	FUNC_PROFILE();
+	
 	if (ImGui::BeginMenu("File"))
 	{
 		if (ImGui::MenuItem("New", "CTRL+N"))
@@ -243,6 +248,8 @@ void Core::GuiController::DrawFileMenu() const
 
 void Core::GuiController::DrawViewMenu()
 {
+	FUNC_PROFILE();
+	
 	if (ImGui::BeginMenu("View"))
 	{
 		ImGui::MenuItem("Use Dark Theme", nullptr, &_isDarkTheme);
@@ -254,6 +261,8 @@ void Core::GuiController::DrawViewMenu()
 
 void Core::GuiController::DrawActorsMenu()
 {
+	FUNC_PROFILE();
+	
 	auto actor = _pSelectedActor.lock();
 	if (ImGui::BeginMenu("Actors"))
 	{
@@ -315,6 +324,8 @@ void Core::GuiController::DrawActorsMenu()
 
 void Core::GuiController::DrawComponentsMenu() const
 {
+	FUNC_PROFILE();
+	
 	auto actor = _pSelectedActor.lock();
 	if (actor)
 	{
@@ -344,6 +355,8 @@ void Core::GuiController::DrawComponentsMenu() const
 
 void Core::GuiController::DrawHelpMenu()
 {
+	FUNC_PROFILE();
+
 	if (ImGui::BeginMenu("Help"))
 	{
 		if (ImGui::MenuItem("About", "CTRL+I"))
@@ -358,6 +371,8 @@ void Core::GuiController::DrawHelpMenu()
 
 void Core::GuiController::DrawActorsWindow()
 {
+	FUNC_PROFILE();
+
 	auto level = _pLevel.lock();
 	if (!level) return;
 
@@ -486,6 +501,8 @@ bool get_combo_item(void* data, int index, const char** outdata)
 
 void Core::GuiController::DrawPropertiesWindow()
 {
+	FUNC_PROFILE();
+
 	auto actor = _pSelectedActor.lock();
 	if (!actor) return;
 

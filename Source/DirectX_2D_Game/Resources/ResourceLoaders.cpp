@@ -31,8 +31,6 @@ using DirectX::BoundingSphere;
 
 std::shared_ptr<Resource> Texture2DLoader::LoadResource(const std::string& resourceName)
 {
-	FUNC_PROFILE();
-
 	ComPtr<ID3D11ShaderResourceView> shaderView;
 	std::wstring wideFileName = Utils::Str2WideStr(resourceName);
 	HRESULT hr = S_OK;
@@ -115,8 +113,6 @@ const float		MeshLoader::kCylinderHeight = 2.0f;
 
 std::shared_ptr<Resource> MeshLoader::LoadResource(const std::string& resourceName)
 {
-	FUNC_PROFILE();
-
 	if (resourceName == kBoxMeshName || resourceName == kCylinderMeshName || resourceName == kPlaneMeshName || resourceName == kSphereMeshName)
 	{
 		return CreateSimpleMesh(resourceName);

@@ -136,6 +136,8 @@ void Effect::PrepareFrame(LightsMap& lightsMap, std::shared_ptr<Camera> camera, 
 
 void Effect::UpdateMaterial(std::shared_ptr<Material> mat)
 {
+	FUNC_PROFILE();
+
 	EffectMaterialBuffer materialBuff(mat);
 	_pMaterialBuffer->SetRawValue(&materialBuff, 0, sizeof(materialBuff));
 
@@ -175,12 +177,16 @@ void Effect::UpdateMaterial(std::shared_ptr<Material> mat)
 
 void Effect::UpdateMatrices(std::shared_ptr<Transform> transform)
 {
+	FUNC_PROFILE();
+
 	EffectMatricesBuffer matricesBuff(transform->GetWorldMat());
 	_pMatricesBuffer->SetRawValue(&matricesBuff, 0, sizeof(matricesBuff));
 }
 
 bool Effect::Apply()
 {
+	FUNC_PROFILE();
+
 	_pGraphicsDevice->GetContext()->IASetInputLayout(_pInputLayout.Get());
 	
 	HRESULT hr = S_OK;

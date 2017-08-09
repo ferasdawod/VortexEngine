@@ -20,7 +20,7 @@ bool Core::AudioManager::Initialize()
 	_pSoundEngine = irrklang::createIrrKlangDevice();
 	if (!_pSoundEngine)
 	{
-		LOG_E("Failed to create the sound device");
+		LOG_E("Failed to create the sound device", 0);
 		return false;
 	}
 
