@@ -221,8 +221,16 @@ namespace Core
 
 	void Engine::Render() const
 	{
-		_pGuiController->Render();
-		_pRenderManager->OnRender();
+		FUNC_PROFILE();
+
+		static bool renderGui = true;
+		if (Input::IsKeyPressed(KeyCode::F1))
+			renderGui = !renderGui;
+
+		if (renderGui)
+			_pGuiController->Render();
+
+		_pRenderManager->OnRender(renderGui);
 	}
 
 	void Engine::Shutdown() const

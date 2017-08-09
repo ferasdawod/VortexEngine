@@ -42,7 +42,7 @@ public:
 	virtual			~RenderManager();
 
 	bool			Initialize(HWND hWnd);
-	void			OnRender();
+	void			OnRender(bool renderGui);
 
 	void			ToggleWireframe() { _pRenderSettings->WireframeEnabled = !_pRenderSettings->WireframeEnabled; }
 	void			ToggleLighting() { _pRenderSettings->LightingEnabled = !_pRenderSettings->LightingEnabled; }

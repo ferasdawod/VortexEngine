@@ -61,7 +61,7 @@ bool RenderManager::Initialize(HWND hWnd)
 	return true;
 }
 
-void RenderManager::OnRender()
+void RenderManager::OnRender(bool renderGui)
 {
 	FUNC_PROFILE();
 
@@ -94,8 +94,8 @@ void RenderManager::OnRender()
 		RenderToBackBuffer(camera);
 	}
 
-
-	ImGui::Render();
+	if (renderGui)
+		ImGui::Render();
 	
 	_pGraphicsDevice->Present();
 }
@@ -131,8 +131,6 @@ void RenderManager::RenderToBackBuffer(std::shared_ptr<Camera> camera)
 
 void RenderManager::Render(std::function< bool(std::shared_ptr<Material>, std::shared_ptr<SubMesh>) > validationCallback, std::shared_ptr<Camera> camera)
 {
-	FUNC_PROFILE();
-
 	for (auto it = _renderRequests.cbegin(); it != _renderRequests.cend(); ++it)
 	{
 		if (it->expired())
